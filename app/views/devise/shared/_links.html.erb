@@ -1,0 +1,13 @@
+<div class="mt-6 space-y-2 text-center">
+  <% unless controller_name == 'sessions' %>
+    <p><%= link_to t("devise.views.links.log_in"), new_session_path(resource_name), class: "text-sm text-blue-600 hover:text-blue-800" %></p>
+  <% end %>
+
+  <% unless controller_name == 'registrations' %>
+    <p><%= link_to t("devise.views.links.sign_up"), new_registration_path(resource_name), class: "text-sm text-blue-600 hover:text-blue-800" %></p>
+  <% end %>
+
+  <% unless controller_name == 'passwords' %>
+    <p><%= link_to t("devise.views.links.forgot_password"), new_password_path(resource_name), class: "text-sm text-blue-600 hover:text-blue-800" %></p>
+  <% end %>
+</div>

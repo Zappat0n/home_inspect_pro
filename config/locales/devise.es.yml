@@ -53,6 +53,70 @@ es:
       send_instructions: "Recibirás un correo con instrucciones para desbloquear tu cuenta en unos minutos."
       send_paranoid_instructions: "Si tu cuenta existe, recibirás un correo con instrucciones para desbloquearla en unos minutos."
       unlocked: "Tu cuenta ha sido desbloqueada exitosamente. Por favor, inicia sesión para continuar."
+    views:
+      links:
+        back: "Volver"
+        cancel_account: "Cancelar mi cuenta"
+        cancel_account_confirm: "¿Estás seguro?"
+        forgot_password: "¿Olvidaste tu contraseña?"
+        log_in: "Iniciar sesión"
+        sign_up: "Registrarse"
+      mailers:
+        confirmation:
+          confirm_link: "Confirmar mi cuenta"
+          confirm_through_link: "Puedes confirmar el correo electrónico de tu cuenta a través del siguiente enlace:"
+          welcome: "¡Bienvenido %{email}!"
+        email_changed:
+          being_changed: "Te contactamos para notificarte que tu correo electrónico está siendo cambiado a %{new_email}."
+          has_been_changed: "Te contactamos para notificarte que tu correo electrónico ha sido cambiado a %{new_email}."
+          hello: "¡Hola %{email}!"
+        password_change:
+          hello: "¡Hola %{email}!"
+          notification: "Te contactamos para notificarte que tu contraseña ha sido cambiada."
+        password_reset:
+          change_link: "Cambiar mi contraseña"
+          hello: "¡Hola %{email}!"
+          ignore_if_not_requested: "Si no solicitaste esto, por favor ignora este correo."
+          password_hint: "(%{count} caracteres mínimo)"
+          password_wont_change: "Tu contraseña no cambiará hasta que accedas al enlace anterior y crees una nueva."
+          requested_change: "Alguien ha solicitado un enlace para cambiar tu contraseña. Puedes hacerlo a través del siguiente enlace."
+        unlock:
+          account_locked: "Tu cuenta ha sido bloqueada debido a un número excesivo de intentos de inicio de sesión fallidos."
+          click_to_unlock: "Haz clic en el siguiente enlace para desbloquear tu cuenta:"
+          hello: "¡Hola %{email}!"
+          unlock_link: "Desbloquear mi cuenta"
+      passwords:
+        edit:
+          password_label: "Nueva contraseña"
+          password_confirmation_label: "Confirmar nueva contraseña"
+          submit: "Cambiar mi contraseña"
+          title: "Cambiar tu contraseña"
+        submit: "Enviarme instrucciones para restablecer la contraseña"
+        title: "¿Olvidaste tu contraseña?"
+      registrations:
+        edit:
+          cancel_account: "Cancelar mi cuenta"
+          cancel_account_confirm: "¿Estás seguro?"
+          current_password_hint: "(necesitamos tu contraseña actual para confirmar los cambios)"
+          password_hint: "(deja en blanco si no quieres cambiarla)"
+          password_minimum: "%{count} caracteres mínimo"
+          pending_confirmation: "Actualmente esperando confirmación para %{email}"
+          submit: "Actualizar"
+          title: "Editar %{resource}"
+          unhappy: "¿No estás contento?"
+        password_hint: "(%{count} caracteres mínimo)"
+        submit: "Registrarse"
+        title: "Registrarse"
+      confirmations:
+        submit: "Reenviar instrucciones de confirmación"
+        title: "Reenviar instrucciones de confirmación"
+      unlocks:
+        submit: "Reenviar instrucciones para desbloquear"
+        title: "Reenviar instrucciones para desbloquear"
+      sessions:
+        remember_me: "Recordarme"
+        submit: "Iniciar sesión"
+        title: "Iniciar sesión"
   errors:
     messages:
       already_confirmed: "ya fue confirmado, por favor intenta iniciar sesión"

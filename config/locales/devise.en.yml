@@ -68,6 +68,78 @@ en:
       send_paranoid_instructions: If your account exists, you will receive an email
         with instructions for how to unlock it in a few minutes.
       unlocked: Your account has been unlocked successfully. Please sign in to continue.
+    views:
+      confirmations:
+        submit: Resend confirmation instructions
+        title: Resend confirmation instructions
+      links:
+        back: Back
+        cancel_account: Cancel my account
+        cancel_account_confirm: Are you sure?
+        forgot_password: Forgot your password?
+        log_in: Log in
+        sign_up: Sign up
+      mailers:
+        confirmation:
+          confirm_link: Confirm my account
+          confirm_through_link: 'You can confirm your account email through the link
+            below:'
+          welcome: Welcome %{email}!
+        email_changed:
+          being_changed: We're contacting you to notify you that your email is being
+            changed to %{new_email}.
+          has_been_changed: We're contacting you to notify you that your email has
+            been changed to %{new_email}.
+          hello: Hello %{email}!
+        password_change:
+          hello: Hello %{email}!
+          notification: We're contacting you to notify you that your password has
+            been changed.
+        password_reset:
+          change_link: Change my password
+          hello: Hello %{email}!
+          ignore_if_not_requested: If you didn't request this, please ignore this
+            email.
+          password_hint: "(%{count} characters minimum)"
+          password_wont_change: Your password won't change until you access the link
+            above and create a new one.
+          requested_change: Someone has requested a link to change your password.
+            You can do this through the link below.
+        unlock:
+          account_locked: Your account has been locked due to an excessive number
+            of unsuccessful sign in attempts.
+          click_to_unlock: 'Click the link below to unlock your account:'
+          hello: Hello %{email}!
+          unlock_link: Unlock my account
+      passwords:
+        edit:
+          password_confirmation_label: Confirm new password
+          password_label: New password
+          submit: Change my password
+          title: Change your password
+        submit: Send me password reset instructions
+        title: Forgot your password?
+      registrations:
+        edit:
+          cancel_account: Cancel my account
+          cancel_account_confirm: Are you sure?
+          current_password_hint: "(we need your current password to confirm your changes)"
+          password_hint: "(leave blank if you don't want to change it)"
+          password_minimum: "%{count} characters minimum"
+          pending_confirmation: Currently waiting confirmation for %{email}
+          submit: Update
+          title: Edit %{resource}
+          unhappy: Unhappy?
+        password_hint: "(%{count} characters minimum)"
+        submit: Sign up
+        title: Sign up
+      sessions:
+        remember_me: Remember me
+        submit: Log in
+        title: Log in
+      unlocks:
+        submit: Resend unlock instructions
+        title: Resend unlock instructions
   errors:
     messages:
       already_confirmed: was already confirmed, please try signing in
