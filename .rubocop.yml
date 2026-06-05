@@ -1,12 +1,1922 @@
-# Omakase Ruby styling for Rails
-inherit_gem: { rubocop-rails-omakase: rubocop.yml }
+require:
+  - ./lib/rubocop/cop/custom.rb
+  - ./lib/rubocop/cop/custom/forbid_feature_spec_page_expectations.rb
+  - ./lib/rubocop/cop/custom/forbid_rspec_helpers.rb
 
+plugins:
+  - rubocop-rspec
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-factory_bot
+  - rubocop-capybara
+  - rubocop-rspec_rails
+
+# Limits allowed Rails env names to known list.
+Rails/UnknownEnv:
+  Environments:
+    - production
+    - development
+    - test
+
+# Global RuboCop configuration for Ruby version and excludes.
 AllCops:
-    # This configuration should be kept in sync with `config/bootsnap.rb`
-    StringLiteralsFrozenByDefault: true
+  SuggestExtensions: false
+  Exclude:
+    - "bin/**/*"
+    - "db/**/*"
 
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
+# Blocks use of custom RSpec helper methods defined in specs.
+Custom/ForbidRspecHelpers:
+  Enabled: true
+
+# Forbids expect(page) assertions in feature specs.
+Custom/ForbidFeatureSpecPageExpectations:
+  Enabled: true
+  Include:
+    - "spec/features/**/*_spec.rb"
+
+# Enforces maximum allowed line length.
+Layout/LineLength:
+  Enabled: true
+  Max: 120
+
+# Requires parentheses when calling methods with arguments.
+Style/MethodCallWithArgsParentheses:
+  Enabled: true
+  Exclude:
+    - "spec/**/*"
+
+# Checks if examples contain too many `expect` calls.
+RSpec/MultipleExpectations:
+  Enabled: false
+
+# Enforces consistency between `return nil` and bare `return`.
+Style/ReturnNil:
+  Enabled: true
+
+# Prefers predicate matchers over direct predicate method calls in specs.
+RSpec/PredicateMatcher:
+  Enabled: false
+
+# Checks that message expectations do not set return values.
+RSpec/StubbedMock:
+  Enabled: false
+
+# Detects ambiguous block associations in method calls.
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+# Enforces consistent string literal quoting.
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+# Requires documentation comments for public classes and modules.
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# Prefers predicate methods over comparison to numeric literals.
+Style/NumericPredicate:
+  Enabled: false
+
+# Prefer `%i` arrays over arrays of symbol literals.
+Style/SymbolArray:
+  Enabled: false
+
+# Enforces consistent numbering style in variable names.
+Naming/VariableNumber:
+  Enabled: false
+
+# Enforces memoized instance variables to match reader name.
+Naming/MemoizedInstanceVariableName:
+  Enabled: true
+  EnforcedStyleForLeadingUnderscores: required
+  Exclude:
+    - "app/helpers/admin/**/*"
+    - "app/controllers/admin/**/*"
+
+# Requires `expect { ... }.to change` style around state changes.
+RSpec/ExpectChange:
+  EnforcedStyle: block
+
+# Disallows `and`/`or` in favor of `&&`/`||`.
+Style/AndOr:
+  Enabled: false
+
+# Prefers `module_function` usage in modules.
+Style/ModuleFunction:
+  Enabled: false
+
+# Prevents unsafe YAML loading calls.
+Security/YAMLLoad:
+  Enabled: false
+
+# Controls nested class/module definition style.
+Style/ClassAndModuleChildren:
+  Enabled: true
+  EnforcedStyle: compact
+
+# Sets maximum method length.
+Metrics/MethodLength:
+  Max: 42
+  Exclude:
+    - "spec/**/*"
+
+# Measures ABC complexity of methods.
+Metrics/AbcSize:
+  Enabled: false
+  Exclude:
+    - "spec/**/*"
+
+# Checks cyclomatic complexity of methods.
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+# Checks perceived complexity of methods.
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+# Limits number of lines in classes.
+Metrics/ClassLength:
+  Enabled: false
+
+# Disallows double negation like `!!var`.
+Style/DoubleNegation:
+  Enabled: false
+
+# Enforces consistent regexp literal delimiters.
+Style/RegexpLiteral:
+  Enabled: false
+
+# Enforces indentation for multiline method calls.
+Layout/MultilineMethodCallIndentation:
+  Enabled: true
+  EnforcedStyle: indented
+
+# Enforces style for empty method definitions.
+Style/EmptyMethod:
+  Enabled: false
+
+# Disallows non-ASCII comments.
+Style/AsciiComments:
+  Enabled: false
+
+# Enforces lambda literal style.
+Style/Lambda:
+  Enabled: false
+
+# Disallows safe navigation operator use.
+Style/SafeNavigation:
+  Enabled: false
+
+# Disallows inheriting from Struct.new.
+Style/StructInheritance:
+  Enabled: false
+
+# Controls brace layout for multiline arrays.
+Layout/MultilineArrayBraceLayout:
+  Enabled: true
+  EnforcedStyle: new_line
+
+# Enforces consistent percent literal delimiters.
+Style/PercentLiteralDelimiters:
+  Enabled: false
+
+# Disallows modifier form while/until.
+Style/WhileUntilModifier:
+  Enabled: false
+
+# Flags literal conditions that are always truthy or falsy.
+Lint/LiteralAsCondition:
+  Enabled: false
+
+# Detects ineffective access modifiers.
+Lint/IneffectiveAccessModifier:
+  Enabled: false
+
+# Enforces rescued exception variable name.
+Naming/RescuedExceptionsVariableName:
+  Enabled: true
+  PreferredName: "exception"
+
+# Limits block nesting depth.
+Metrics/BlockNesting:
+  Enabled: false
+
+# Suggests inverse method usage where clearer.
+Style/InverseMethods:
+  Enabled: false
+
+# Prefers modifier if/unless for single-line bodies.
+Style/IfUnlessModifier:
+  Enabled: false
+
+# Limits number of lines in modules.
+Metrics/ModuleLength:
+  Enabled: false
+
+# Enforces token style in format strings.
+Style/FormatStringToken:
+  Enabled: false
+
+# Disallows use of Perl-style special globals.
+Style/SpecialGlobalVars:
+  Enabled: true
+
+# Disallows chaining multiline blocks.
+Style/MultilineBlockChain:
+  Enabled: false
+
+# Enforces Rails controllers to inherit from ApplicationController.
+Rails/ApplicationController:
+  Enabled: false
+
+# Controls spacing around lambda arrows.
+Layout/SpaceInLambdaLiteral:
+  Enabled: false
+
+# Ensures files end with a trailing blank line.
+Layout/TrailingEmptyLines:
+  Enabled: true
+
+# Enforces dot position at line breaks.
+Layout/DotPosition:
+  Enabled: true
+  EnforcedStyle: leading
+
+# Disallows rescue modifier form.
+Style/RescueModifier:
+  Enabled: false
+
+# Limits maximum example length in specs.
+RSpec/ExampleLength:
+  Enabled: false
+
+# Flags pending examples without execution.
+RSpec/Pending:
+  Enabled: false
+
+# Ensures describe blocks refer to classes instead of strings.
+RSpec/DescribeClass:
+  Enabled: true
+  Exclude:
+    - spec/features/**/*.rb
+    - spec/views/**/*.rb
+    - spec/requests/**/*.rb
+    - spec/job_pricings_spec.rb
+    - spec/config/**/*.rb
+
+# Enforces named subjects in specs.
+RSpec/NamedSubject:
+  Enabled: false
+
+# Warns when using message expectations in spies.
+RSpec/MessageSpies:
+  Enabled: false
+
+# Prevents duplicate example group descriptions.
+RSpec/RepeatedDescription:
+  Enabled: true
+  Exclude:
+    - spec/policies/**/*.rb
+
+# Prevents identical example definitions.
+RSpec/RepeatedExample:
+  Enabled: true
+  Exclude:
+    - spec/policies/**/*.rb
+
+# Requires verifying test doubles exist.
+RSpec/VerifiedDoubles:
+  Enabled: true
+
+# Guides wording for context blocks.
+RSpec/ContextWording:
+  Enabled: false
+
+# Limits nested example group depth.
+RSpec/NestedGroups:
+  Enabled: false
+
+# Disallows message chains in expectations.
+RSpec/MessageChain:
+  Enabled: false
+
+# Requires describe blocks to reference methods.
+RSpec/DescribeMethod:
+  Enabled: false
+
+# Disallows expectations in hooks.
+RSpec/ExpectInHook:
+  Enabled: false
+
+# Prevents multiple top-level describes per file.
+RSpec/MultipleDescribes:
+  Enabled: false
+
+# Disallows stubbing `subject`.
+RSpec/SubjectStub:
+  Enabled: false
+
+# Limits total lines in blocks.
+Metrics/BlockLength:
+  Enabled: false
+  Exclude:
+    - "Rakefile"
+    - "**/*.rake"
+
+# Flags skipped validations in models.
+Rails/SkipsModelValidations:
+  Enabled: false
+
+# Requires inverse_of on associations when needed.
+Rails/InverseOf:
+  Enabled: false
+
+# Enforces use of `delegate` helpers.
+Rails/Delegate:
+  Enabled: false
+
+# Disallows trailing underscore variable names.
+Style/TrailingUnderscoreVariable:
+  Enabled: false
+
+# Enforces use of Time.zone helpers.
+Rails/TimeZone:
+  Enabled: false
+
+# Prefer Date.current/Date.today handling.
+Rails/Date:
+  Enabled: false
+
+# Requires dependent options on associations.
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+# Disallows dynamic finders like find_by_name.
+Rails/DynamicFindBy:
+  Enabled: false
+
+# Ensures output helpers are marked safe explicitly.
+Rails/OutputSafety:
+  Enabled: false
+
+Rails/Output:
+  Enabled: true
+  Exclude:
+    - "db/seeds/**/*.rb"
+
+# Disallows controller instance variables in helpers.
+Rails/HelperInstanceVariable:
+  Enabled: true
+  Exclude:
+    - "app/helpers/admin/**/*"
+
+# Encourages guard clauses over nested conditionals.
+Style/GuardClause:
+  Enabled: true
+  Exclude:
+    - "app/helpers/admin/**/*"
+
+# Prefers symbol proc shorthand where possible.
+Style/SymbolProc:
+  Enabled: false
+
+# Discourages HABTM associations in favor of has_many :through.
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
+# Prefer `match?` and `match` for regex matching.
+Performance/RegexpMatch:
+  Enabled: true
+
+# Disallows multiline when/then on single line.
+Style/MultilineWhenThen:
+  Enabled: false
+
+# Enforces empty lines around attr_* declarations.
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: true
+
+# Ensures spacing around method call dot operator.
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+
+# Flags deprecated OpenSSL constants.
+Lint/DeprecatedOpenSSLConstant:
+  Enabled: true
+
+# Disallows mixing numbered and named captures.
+Lint/MixedRegexpCaptureTypes:
+  Enabled: false
+
+# Prefer `raise` over `fail` for exceptions.
+Lint/RaiseException:
+  Enabled: true
+
+# Prevents redefining Struct#new.
+Lint/StructNewOverride:
+  Enabled: true
+
+# Enforces canonical use of exponential notation.
+Style/ExponentialNotation:
+  Enabled: true
+
+# Prefer `each_key`/`each_value` over `keys.each`/`values.each`.
+Style/HashEachMethods:
+  Enabled: true
+
+# Prefer `transform_keys` for key transformations.
+Style/HashTransformKeys:
+  Enabled: true
+
+# Prefer `transform_values` for value transformations.
+Style/HashTransformValues:
+  Enabled: false
+
+# Flags redundant character classes in regex.
+Style/RedundantRegexpCharacterClass:
+  Enabled: true
+
+# Flags redundant escapes in regex.
+Style/RedundantRegexpEscape:
+  Enabled: true
+
+# Checks slicing with range instead of `[start, length]`.
+Style/SlicingWithRange:
+  Enabled: true
+
+# Enforces `content_tag` usage rules.
+Rails/ContentTag:
+  Enabled: false
+
+# Flags redundant block forms of `Hash#fetch`.
+Style/RedundantFetchBlock:
+  Enabled: true
+
+# Detects binary ops with identical operands.
+Lint/BinaryOperatorWithIdenticalOperands:
+  Enabled: true
+
+# Flags duplicated elsif conditions.
+Lint/DuplicateElsifCondition:
+  Enabled: true
+
+# Flags duplicated rescue exception handlers.
+Lint/DuplicateRescueException:
+  Enabled: true
+
+# Flags empty branches in conditionals.
+Lint/EmptyConditionalBody:
+  Enabled: true
+
+# Warns about precision issues in float comparisons.
+Lint/FloatComparison:
+  Enabled: true
+
+# Ensures calling super when overriding certain methods.
+Lint/MissingSuper:
+  Enabled: false
+
+# Flags out-of-range backreferences in regexps.
+Lint/OutOfRangeRegexpRef:
+  Enabled: true
+
+# Detects self-assignment without effect.
+Lint/SelfAssignment:
+  Enabled: true
+
+# Disallows top-level return with arguments.
+Lint/TopLevelReturnWithArgument:
+  Enabled: true
+
+# Flags loops that can never exit.
+Lint/UnreachableLoop:
+  Enabled: true
+
+# Groups accessors of same kind together.
+Style/AccessorGrouping:
+  Enabled: true
+
+# Prefer `Array()` for coercion.
+Style/ArrayCoercion:
+  Enabled: true
+
+# Discourages mixing attr_accessor/reader/writer.
+Style/BisectedAttrAccessor:
+  Enabled: true
+
+# Prefers `case` expression over chained ifs.
+Style/CaseLikeIf:
+  Enabled: true
+
+# Enforces explicit block argument forwarding.
+Style/ExplicitBlockArgument:
+  Enabled: false
+
+# Avoids writing to global STDOUT/STDERR/STDIN directly.
+Style/GlobalStdStream:
+  Enabled: true
+
+# Checks hash as last array item style.
+Style/HashAsLastArrayItem:
+  Enabled: false
+
+# Encourages hash-like case expressions.
+Style/HashLikeCase:
+  Enabled: true
+
+# Flags optional boolean keyword parameters.
+Style/OptionalBooleanParameter:
+  Enabled: false
+
+# Flags redundant assignments.
+Style/RedundantAssignment:
+  Enabled: true
+
+# Disallows .rb extension in require calls.
+Style/RedundantFileExtensionInRequire:
+  Enabled: true
+
+# Flags single argument `dig` calls.
+Style/SingleArgumentDig:
+  Enabled: true
+
+# Warns against string concatenation with `+`.
+Style/StringConcatenation:
+  Enabled: true
+
+# Prefers `ancestors.include?` performance tweak.
+Performance/AncestorsInclude:
+  Enabled: true
+
+# Uses numeric argument directly with BigDecimal.
+Performance/BigDecimalWithNumericArgument:
+  Enabled: true
+
+# Prefers sort_by over sort with block using comparator.
+Performance/RedundantSortBlock:
+  Enabled: true
+
+# Removes redundant `chars` call before string ops.
+Performance/RedundantStringChars:
+  Enabled: true
+
+# Prefers `reverse_each.first` over `reverse.first`.
+Performance/ReverseFirst:
+  Enabled: true
+
+# Prefers `sort.reverse` alternatives.
+Performance/SortReverse:
+  Enabled: true
+
+# Flags unnecessary `squeeze` with repeated chars.
+Performance/Squeeze:
+  Enabled: true
+
+# Prefers `include?`/`start_with?` etc. over regex.
+Performance/StringInclude:
+  Enabled: true
+
+# Enforces consistent ordering of AR callbacks.
+Rails/ActiveRecordCallbacksOrder:
+  Enabled: true
+
+# Prefers `find_by(id: ...)` over `find` rescue.
+Rails/FindById:
+  Enabled: true
+
+# Prefers `active?` style inquiry helpers.
+Rails/Inquiry:
+  Enabled: false
+
+# Ensures mailer class names end with Mailer.
+Rails/MailerName:
+  Enabled: false
+
+# Flags negative include? checks recommending `exclude?`.
+Rails/MatchRoute:
+  Enabled: true
+
+# Prefers `where(...).pluck` to `pluck` on relations.
+Rails/NegateInclude:
+  Enabled: true
+
+# Encourages `pluck` usage for performance.
+Rails/Pluck:
+  Enabled: true
+
+# Ensures pluck used within where when appropriate.
+Rails/PluckInWhere:
+  Enabled: false
+
+# Warns against render inline usage.
+Rails/RenderInline:
+  Enabled: false
+
+# Prefers render plain over text/html via strings.
+Rails/RenderPlainText:
+  Enabled: true
+
+# Encourages short I18n keys without full path.
+Rails/ShortI18n:
+  Enabled: true
+
+# Prefers `where.exists?` for existence checks.
+Rails/WhereExists:
+  Enabled: true
+
+# Flags duplicate require statements.
+Lint/DuplicateRequire:
+  Enabled: true
+
+# Flags empty files.
+Lint/EmptyFile:
+  Enabled: true
+
+# Flags trailing commas in attribute declarations.
+Lint/TrailingCommaInAttributeDeclaration:
+  Enabled: true
+
+# Flags useless method definitions.
+Lint/UselessMethodDefinition:
+  Enabled: false
+
+# Merges loops that could be combined.
+Style/CombinableLoops:
+  Enabled: true
+
+# Enforces ordering of keyword parameters.
+Style/KeywordParametersOrder:
+  Enabled: true
+
+# Flags redundant self assignments.
+Style/RedundantSelfAssignment:
+  Enabled: true
+
+# Discourages nested conditionals without guard clauses.
+Style/SoleNestedConditional:
+  Enabled: true
+
+# Limits number of memoized helpers in specs.
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+# Aligns begin/end keywords consistently.
+Layout/BeginEndAlignment:
+  Enabled: true
+
+# Disallows defining constants inside blocks unintentionally.
+Lint/ConstantDefinitionInBlock:
+  Enabled: true
+
+# Flags use of `equal?` for value comparisons.
+Lint/IdentityComparison:
+  Enabled: true
+
+# Flags `times` calls with unused block argument.
+Lint/UselessTimes:
+  Enabled: true
+
+# Prefers `sum` over inject/reduce for addition.
+Performance/Sum:
+  Enabled: true
+
+# Prevents overriding after_commit callbacks incorrectly.
+Rails/AfterCommitOverride:
+  Enabled: true
+
+# Ensures squished SQL heredocs for consistent whitespace.
+Rails/SquishedSQLHeredocs:
+  Enabled: true
+
+# Prefers `where.not` usage.
+Rails/WhereNot:
+  Enabled: false
+
+# Flags creating collection literals in loops.
+Performance/CollectionLiteralInLoop:
+  Enabled: true
+  Exclude:
+    - "spec/**/*"
+
+# Flags hash comparisons by identity.
+Lint/HashCompareByIdentity:
+  Enabled: true
+
+# Flags redundant safe navigation.
+Lint/RedundantSafeNavigation:
+  Enabled: true
+
+# Enforces `===` vs `==` class comparisons.
+Style/ClassEqualityComparison:
+  Enabled: true
+
+# Enforces Ruby 1.9 hash syntax.
+Style/HashSyntax:
+  Enabled: true
+  EnforcedStyle: ruby19
+  EnforcedShorthandSyntax: never
+
+# Enforces indentation of closing parentheses.
+Layout/ClosingParenthesisIndentation:
+  Enabled: true
+
+# Allows trailing commas in multiline argument lists.
+Style/TrailingCommaInArguments:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+
+# Allows trailing commas in multiline hashes.
+Style/TrailingCommaInHashLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+
+# Allows trailing commas in multiline arrays.
+Style/TrailingCommaInArrayLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+
+# Flags deprecated gemspec attribute assignment.
+Gemspec/DeprecatedAttributeAssignment:
+  Enabled: false
+
+# Enforces MFA requirement metadata in gemspec.
+Gemspec/RequireMFA:
+  Enabled: false
+
+# Controls indentation for string concatenation at line end.
+Layout/LineEndStringConcatenationIndentation:
+  Enabled: false
+
+# Disallows spaces before array brackets.
+Layout/SpaceBeforeBrackets:
+  Enabled: false
+
+# Flags ambiguous assignment with default values.
+Lint/AmbiguousAssignment:
+  Enabled: false
+
+# Flags confusing operator precedence situations.
+Lint/AmbiguousOperatorPrecedence:
+  Enabled: false
+
+# Flags ambiguous range literals.
+Lint/AmbiguousRange:
+  Enabled: false
+
+# Warns about deprecated Ruby constants.
+Lint/DeprecatedConstants:
+  Enabled: false
+
+# Flags duplicate branches in conditionals.
+Lint/DuplicateBranch:
+  Enabled: false
+
+# Flags duplicated character classes in regex.
+Lint/DuplicateRegexpCharacterClassElement:
+  Enabled: false
+
+# Flags empty blocks that do nothing.
+Lint/EmptyBlock:
+  Enabled: false
+
+# Flags empty classes/modules.
+Lint/EmptyClass:
+  Enabled: false
+
+# Flags empty in-pattern parts.
+Lint/EmptyInPattern:
+  Enabled: false
+
+# Detects incompatible IO.select with Fiber scheduler.
+Lint/IncompatibleIoSelectWithFiberScheduler:
+  Enabled: false
+
+# Flags lambdas without literal block.
+Lint/LambdaWithoutLiteralBlock:
+  Enabled: false
+
+# Flags returns inside begin/rescue/ensure blocks.
+Lint/NoReturnInBeginEndBlocks:
+  Enabled: false
+
+# Disallows reassigning numbered parameters.
+Lint/NumberedParameterAssignment:
+  Enabled: false
+
+# Prevents ||= on constants.
+Lint/OrAssignmentToConstant:
+  Enabled: false
+
+# Flags redundant Dir.glob sort.
+Lint/RedundantDirGlobSort:
+  Enabled: false
+
+# Warns about refining imported methods improperly.
+Lint/RefinementImportMethods:
+  Enabled: false
+
+# Enforces require_relative paths not pointing to themselves.
+Lint/RequireRelativeSelfPath:
+  Enabled: false
+
+# Flags symbol conversions that rebuild same symbol.
+Lint/SymbolConversion:
+  Enabled: false
+
+# Ensures to_enum/enum_for arguments are correct.
+Lint/ToEnumArguments:
+  Enabled: false
+
+# Flags triple-quoted heredocs.
+Lint/TripleQuotes:
+  Enabled: false
+
+# Detects unexpected block arity uses.
+Lint/UnexpectedBlockArity:
+  Enabled: false
+
+# Flags reduce with unused accumulator modifications.
+Lint/UnmodifiedReduceAccumulator:
+  Enabled: false
+
+# Flags useless Ruby 2 keyword compatibility comments.
+Lint/UselessRuby2Keywords:
+  Enabled: false
+
+# Flags forwarding block arguments without explicit forwarding.
+Naming/BlockForwarding:
+  Enabled: false
+
+# Prevents compound hash literals with unsafe values.
+Security/CompoundHash:
+  Enabled: false
+
+# Flags direct IO method calls that need caution.
+Security/IoMethods:
+  Enabled: false
+
+# Enforces explicit arguments forwarding syntax.
+Style/ArgumentsForwarding:
+  Enabled: false
+
+# Prefers `compact` on collections to remove nils.
+Style/CollectionCompact:
+  Enabled: false
+
+# Disallows dynamic evals in definitions.
+Style/DocumentDynamicEvalDefinition:
+  Enabled: false
+
+# Flags endless method definitions.
+Style/EndlessMethod:
+  Enabled: false
+
+# Prefers ENV.fetch with error handling.
+Style/FetchEnvVar:
+  Enabled: false
+
+# Encourages use of File.read helper.
+Style/FileRead:
+  Enabled: false
+
+# Encourages use of File.write helper.
+Style/FileWrite:
+  Enabled: false
+
+# Warns about hash conversion shortcuts.
+Style/HashConversion:
+  Enabled: false
+
+# Prefers Hash#except for removing keys.
+Style/HashExcept:
+  Enabled: false
+
+# Flags boolean literal branches in conditionals.
+Style/IfWithBooleanLiteralBranches:
+  Enabled: false
+
+# Enforces `then` in pattern matching single line.
+Style/InPatternThen:
+  Enabled: false
+
+# Prefers map with to_h over manual hash building.
+Style/MapToHash:
+  Enabled: false
+
+# Enforces multiline `then` placement in patterns.
+Style/MultilineInPatternThen:
+  Enabled: false
+
+# Flags negated if/else branches.
+Style/NegatedIfElseCondition:
+  Enabled: false
+
+# Flags nested `File.dirname` calls.
+Style/NestedFileDirname:
+  Enabled: false
+
+# Disallows nil-returning lambdas.
+Style/NilLambda:
+  Enabled: false
+
+# Disallows numbered parameters.
+Style/NumberedParameters:
+  Enabled: true
+  EnforcedStyle: disallow
+
+# Limits count of numbered parameters.
+Style/NumberedParametersLimit:
+  Enabled: false
+
+# Flags use of Object#then.
+Style/ObjectThen:
+  Enabled: false
+
+# Discourages OpenStruct usage.
+Style/OpenStructUse:
+  Enabled: false
+
+# Enforces quoted symbols style.
+Style/QuotedSymbols:
+  Enabled: false
+
+# Flags redundant method arguments.
+Style/RedundantArgument:
+  Enabled: false
+
+# Flags redundant initialize methods.
+Style/RedundantInitialize:
+  Enabled: false
+
+# Flags redundant self assignment branches.
+Style/RedundantSelfAssignmentBranch:
+  Enabled: false
+
+# Flags select with regex when simpler methods exist.
+Style/SelectByRegexp:
+  Enabled: false
+
+# Prefers `each_char` over `chars.each`.
+Style/StringChars:
+  Enabled: false
+
+# Flags swap using temp variables.
+Style/SwapValues:
+  Enabled: false
+
+# Enforces be eq matcher usage.
+RSpec/BeEq:
+  Enabled: false
+
+# Enforces be_nil matcher usage.
+RSpec/BeNil:
+  Enabled: false
+
+# Flags excessive spacing in docstrings.
+RSpec/ExcessiveDocstringSpacing:
+  Enabled: false
+
+# Prevents equality assertions using identical methods.
+RSpec/IdenticalEqualityAssertion:
+  Enabled: false
+
+# Enforces subject declarations positioning.
+RSpec/SubjectDeclaration:
+  Enabled: false
+
+# Ensures verified double references are correct.
+RSpec/VerifiedDoubleReference:
+  Enabled: true
+
+# Disables automatic inclusion of FactoryBot syntax methods.
+FactoryBot/SyntaxMethods:
+  Enabled: false
+
+# Discourages setup hooks in request/system specs.
+RSpecRails/AvoidSetupHook:
+  Enabled: false
+
+# Flags block_given? with explicit blocks.
+Performance/BlockGivenWithExplicitBlock:
+  Enabled: false
+
+# Prefers monotonic time over Time.now for duration.
+Performance/ConcurrentMonotonicTime:
+  Enabled: false
+
+# Prefers constant regex objects.
+Performance/ConstantRegexp:
+  Enabled: false
+
+# Suggests map + compact chaining.
+Performance/MapCompact:
+  Enabled: false
+
+# Flags method objects passed as blocks when unnecessary.
+Performance/MethodObjectAsBlock:
+  Enabled: false
+
+# Flags redundant equality comparisons in sort blocks.
+Performance/RedundantEqualityComparisonBlock:
+  Enabled: false
+
+# Flags redundant split regexp arguments.
+Performance/RedundantSplitRegexpArgument:
+  Enabled: false
+
+# Flags string identifier arguments when symbol works.
+Performance/StringIdentifierArgument:
+  Enabled: false
+
+# Discourages ActionController::TestCase usage.
+Rails/ActionControllerTestCase:
+  Enabled: false
+
+# Encourages adding indexes for new columns.
+Rails/AddColumnIndex:
+  Enabled: false
+
+# Flags default attribute blocks unsuitable for DB.
+Rails/AttributeDefaultBlockValue:
+  Enabled: false
+
+# Encourages compact_blank usage.
+Rails/CompactBlank:
+  Enabled: false
+
+# Flags deprecated ActiveModel::Errors methods.
+Rails/DeprecatedActiveModelErrorsMethods:
+  Enabled: false
+
+# Flags duplicate associations in models.
+Rails/DuplicateAssociation:
+  Enabled: false
+
+# Flags duplicate scopes definitions.
+Rails/DuplicateScope:
+  Enabled: false
+
+# Flags arithmetic on Duration values.
+Rails/DurationArithmetic:
+  Enabled: false
+
+# Flags eager evaluation with block given to logger.
+Rails/EagerEvaluationLogMessage:
+  Enabled: false
+
+# Ensures date ranges use explicit bounds.
+Rails/ExpandedDateRange:
+  Enabled: false
+
+# Discourages lazy lookup of I18n keys.
+Rails/I18nLazyLookup:
+  Enabled: false
+
+# Avoids assigning I18n.locale directly.
+Rails/I18nLocaleAssignment:
+  Enabled: true
+
+# Flags storing locale text in code.
+Rails/I18nLocaleTexts:
+  Enabled: true
+  Exclude:
+    - "app/controllers/admin/**/*"
+    - "spec/**/*"
+
+# Ensures migration class names match file names.
+Rails/MigrationClassName:
+  Enabled: false
+
+# Flags redundant presence validation on belongs_to.
+Rails/RedundantPresenceValidationOnBelongsTo:
+  Enabled: false
+
+# Flags redundant travel_back in tests.
+Rails/RedundantTravelBack:
+  Enabled: false
+
+# Warns about chaining root joins.
+Rails/RootJoinChain:
+  Enabled: false
+
+# Flags assigning Time.zone to Time objects.
+Rails/TimeZoneAssignment:
+  Enabled: false
+
+# Flags transaction blocks exiting early.
+Rails/TransactionExitStatement:
+  Enabled: false
+
+# Flags ignored columns unused lists.
+Rails/UnusedIgnoredColumns:
+  Enabled: false
+
+# Prefers where equality over select with equality.
+Rails/WhereEquals:
+  Enabled: false
+
+# Flags leading spaces in line continuations.
+Layout/LineContinuationLeadingSpace:
+  Enabled: false
+
+# Ensures spacing around line continuations.
+Layout/LineContinuationSpacing:
+  Enabled: false
+
+# Flags constants overwritten in rescue blocks.
+Lint/ConstantOverwrittenInRescue:
+  Enabled: false
+
+# Flags duplicate magic comments.
+Lint/DuplicateMagicComment:
+  Enabled: false
+
+# Flags non-atomic file operations.
+Lint/NonAtomicFileOperation:
+  Enabled: false
+
+# Enforces parentheses for require range arguments.
+Lint/RequireRangeParentheses:
+  Enabled: false
+
+# Flags useless rescue spells.
+Lint/UselessRescue:
+  Enabled: false
+
+# Prefers `array & array` helper.
+Style/ArrayIntersect:
+  Enabled: false
+
+# Combines adjacent concatenated array literals.
+Style/ConcatArrayLiterals:
+  Enabled: false
+
+# Flags empty heredocs.
+Style/EmptyHeredoc:
+  Enabled: false
+
+# Prefers `ENV.fetch("HOME")` helpers.
+Style/EnvHome:
+  Enabled: false
+
+# Enforces format of magic comments.
+Style/MagicCommentFormat:
+  Enabled: false
+
+# Prefers map + compact with conditional blocks.
+Style/MapCompactWithConditionalBlock:
+  Enabled: false
+
+# Prefers map.to_set when building sets.
+Style/MapToSet:
+  Enabled: false
+
+# Flags min/max comparisons replacing with clamped forms.
+Style/MinMaxComparison:
+  Enabled: false
+
+# Enforces receiver for operator method calls.
+Style/OperatorMethodCall:
+  Enabled: false
+
+# Flags redundant base in constant paths.
+Style/RedundantConstantBase:
+  Enabled: false
+
+# Flags redundant double splat braces.
+Style/RedundantDoubleSplatHashBraces:
+  Enabled: false
+
+# Flags redundant each enumerations.
+Style/RedundantEach:
+  Enabled: false
+
+# Flags redundant string escape sequences.
+Style/RedundantStringEscape:
+  Enabled: false
+
+# Flags change matcher with zero delta.
+RSpec/ChangeByZero:
+  Enabled: false
+
+# Flags class checks using be_kind_of etc. wrongly.
+RSpec/ClassCheck:
+  Enabled: false
+
+# Prevents duplicated metadata keys.
+RSpec/DuplicatedMetadata:
+  Enabled: false
+
+# Flags specs without expectations.
+RSpec/NoExpectationExample:
+  Enabled: false
+
+# Requires pending examples include a reason.
+RSpec/PendingWithoutReason:
+  Enabled: false
+
+# Enforces sorted metadata hash keys.
+RSpec/SortMetadata:
+  Enabled: false
+
+# Flags negated Capybara matchers.
+Capybara/RSpec/NegationMatcher:
+  Enabled: false
+
+# Prefers specific Capybara actions over generic ones.
+Capybara/SpecificActions:
+  Enabled: false
+
+# Prefers specific Capybara finders over generic find.
+Capybara/SpecificFinders:
+  Enabled: false
+
+# Prefers specific Capybara matchers over have_selector.
+Capybara/RSpec/SpecificMatcher:
+  Enabled: false
+
+# Enforces consistent FactoryBot association syntax.
+FactoryBot/ConsistentParenthesesStyle:
+  Enabled: false
+
+# Enforces factory names match class names style.
+FactoryBot/FactoryNameStyle:
+  Enabled: false
+
+# Ensures using `have_http_status` matcher in request specs.
+RSpecRails/HaveHttpStatus:
+  Enabled: false
+
+# Ensures inferred spec type metadata present.
+RSpecRails/InferredSpecType:
+  Enabled: false
+
+# Flags setting flash before rendering.
+Rails/ActionControllerFlashBeforeRender:
+  Enabled: false
+
+# Enforces deterministic callback order declarations.
+Rails/ActionOrder:
+  Enabled: false
+
+# Ensures ActiveSupport.on_load blocks have bodies.
+Rails/ActiveSupportOnLoad:
+  Enabled: false
+
+# Requires dot separated keys in Rails config.
+Rails/DotSeparatedKeys:
+  Enabled: false
+
+# Encourages freezing time in tests via helpers.
+Rails/FreezeTime:
+  Enabled: false
+
+# Flags ignored columns assignment misuse.
+Rails/IgnoredColumnsAssignment:
+  Enabled: false
+
+# Warns on accessing Rails.root via Pathname methods.
+Rails/RootPathnameMethods:
+  Enabled: false
+
+# Ensures public path uses Rails.root.join.
+Rails/RootPublicPath:
+  Enabled: false
+
+# Flags StripHeredoc usage now deprecated.
+Rails/StripHeredoc:
+  Enabled: true
+
+# Prefers to_formatted_s helpers.
+Rails/ToFormattedS:
+  Enabled: false
+
+# Flags calling to_s with argument unnecessarily.
+Rails/ToSWithArgument:
+  Enabled: false
+
+# Flags top-level HashWithIndifferentAccess creation.
+Rails/TopLevelHashWithIndifferentAccess:
+  Enabled: true
+
+# Flags where missing and encourages presence checks.
+Rails/WhereMissing:
+  Enabled: true
+
+# Flags where.not with multiple conditions readability.
+Rails/WhereNotWithMultipleConditions:
+  Enabled: false
+
+# Ensures gemspec lists development dependencies explicitly.
+Gemspec/DevelopmentDependencies:
+  Enabled: true
+
+# Prefers Comparable#clamp implementation.
+Style/ComparableClamp:
+  Enabled: true
+
+# Flags redundant quotes around heredoc delimiters.
+Style/RedundantHeredocDelimiterQuotes:
+  Enabled: true
+
+# Flags duplicate patterns in pattern matching.
+Lint/DuplicateMatchPattern:
+  Enabled: true
+
+# Enforces limits on collection literal length.
+Metrics/CollectionLiteralLength:
+  Enabled: true
+
+# Flags inheriting from Data where not needed.
+Style/DataInheritance:
+  Enabled: true
+
+# Flags Dir.empty? implementations.
+Style/DirEmpty:
+  Enabled: true
+
+# Prefers `match?` for exact regex matches.
+Style/ExactRegexpMatch:
+  Enabled: true
+
+# Flags completely empty files.
+Style/FileEmpty:
+  Enabled: true
+
+# Removes redundant line continuation characters.
+Style/RedundantLineContinuation:
+  Enabled: true
+
+# Enforces Capybara match style configuration.
+Capybara/RSpec/MatchStyle:
+  Enabled: true
+
+# Enforces Capybara assert style configuration.
+Capybara/AssertStyle:
+  Enabled: true
+
+# Flags usage of `expect(page).to have_current_path`.
+Capybara/RSpec/CurrentPathExpectation:
+  Enabled: true
+
+# Flags usage of `have_content` matcher.
+Capybara/RSpec/HaveContent:
+  Enabled: false
+
+# Flags visibility matcher usage.
+Capybara/RSpec/VisibilityMatcher:
+  Enabled: true
+
+# Flags FactoryBot association style inconsistencies.
+FactoryBot/AssociationStyle:
+  Enabled: false
+
+# Flags FactoryBot associations with explicit strategy.
+FactoryBot/FactoryAssociationWithStrategy:
+  Enabled: false
+
+# Flags redundant factory options.
+FactoryBot/RedundantFactoryOption:
+  Enabled: true
+
+# Prefers `be_empty` matcher over size checks.
+RSpec/BeEmpty:
+  Enabled: true
+
+# Prefers `contain_exactly` matcher usage.
+RSpec/ContainExactly:
+  Enabled: true
+
+# Flags let blocks indexed by number.
+RSpec/IndexedLet:
+  Enabled: false
+
+# Prefers `match_array` matcher usage.
+RSpec/MatchArray:
+  Enabled: true
+
+# Flags redundant around hooks.
+RSpec/RedundantAround:
+  Enabled: true
+
+# Disallows skipping from inside examples with block.
+RSpec/SkipBlockInsideExample:
+  Enabled: true
+
+# Flags using Minitest assertions inside RSpec.
+RSpecRails/MinitestAssertions:
+  Enabled: true
+
+# Checks travel helpers wrap around example execution.
+RSpecRails/TravelAround:
+  Enabled: true
+
+# Flags mixed case ranges in pattern matching.
+Lint/MixedCaseRange:
+  Enabled: true
+
+# Flags redundant quantifiers in regex.
+Lint/RedundantRegexpQuantifiers:
+  Enabled: true
+
+# Flags use of Array.new([]) etc.
+Style/RedundantArrayConstructor:
+  Enabled: true
+
+# Flags redundant `./` current directory paths.
+Style/RedundantCurrentDirectoryInPath:
+  Enabled: true
+
+# Flags redundant filter chains in ActiveSupport.
+Style/RedundantFilterChain:
+  Enabled: true
+
+# Flags redundant regexp arguments.
+Style/RedundantRegexpArgument:
+  Enabled: true
+
+# Flags redundant Regexp.new usage.
+Style/RedundantRegexpConstructor:
+  Enabled: true
+
+# Disallows returning nil in predicate methods.
+Style/ReturnNilInPredicateMethodDefinition:
+  Enabled: false
+
+# Disallows single-line do/end blocks.
+Style/SingleLineDoEndBlock:
+  Enabled: true
+
+# Prefers YAML.load_file wrappers.
+Style/YAMLFileRead:
+  Enabled: true
+
+# Flags accidental assignments inside conditions.
+Lint/LiteralAssignmentInCondition:
+  Enabled: true
+
+# Requires parentheses when calling super with args.
+Style/SuperWithArgsParentheses:
+  Enabled: true
+
+# Enforces consistent click_link_or_button usage.
+Capybara/ClickLinkOrButtonStyle:
+  Enabled: false
+
+# Ensures have_selector matcher is namespaced under RSpec.
+Capybara/RSpec/HaveSelector:
+  Enabled: true
+
+# Prefers predicate matchers in Capybara specs.
+Capybara/RSpec/PredicateMatcher:
+  Enabled: true
+
+# Requires FactoryBot sequences to include :id names.
+FactoryBot/IdSequence:
+  Enabled: true
+
+# Flags empty metadata declarations.
+RSpec/EmptyMetadata:
+  Enabled: true
+
+# Prefers `eq` matcher usage.
+RSpec/Eq:
+  Enabled: true
+
+# Enforces standardized metadata style in specs.
+RSpec/MetadataStyle:
+  Enabled: true
+
+# Ensures receive_messages is used correctly.
+RSpec/ReceiveMessages:
+  Enabled: true
+
+# Enforces spec file path naming conventions.
+RSpec/SpecFilePathFormat:
+  Enabled: true
+
+# Enforces spec file suffix naming conventions.
+RSpec/SpecFilePathSuffix:
+  Enabled: true
+
+# Flags negated be_valid matcher usage.
+RSpecRails/NegationBeValid:
+  Enabled: true
+
+# Flags chained map method calls building arrays.
+Performance/MapMethodChain:
+  Enabled: true
+
+# Flags dangerous column names that clash with Ruby.
+Rails/DangerousColumnNames:
+  Enabled: true
+
+# Ensures environment-specific configuration stored under config/local.
+Rails/EnvLocal:
+  Enabled: true
+
+# Flags redundant `all` on ActiveRecord relations.
+Rails/RedundantActiveRecordAllMethod:
+  Enabled: true
+
+# Validates response parsed_body usage in tests.
+Rails/ResponseParsedBody:
+  Enabled: true
+
+# Flags nullable booleans without defaults.
+Rails/ThreeStateBooleanColumn:
+  Enabled: true
+
+# Flags unused render content assignments.
+Rails/UnusedRenderContent:
+  Enabled: true
+
+# Flags `it` blocks without args inside blocks.
+Lint/ItWithoutArgumentsInBlock:
+  Enabled: true
+
+# Flags redundant `within` wrappers around find.
+Capybara/RedundantWithinFind:
+  Enabled: true
+
+# Flags excessive create_list calls in factories.
+FactoryBot/ExcessiveCreateList:
+  Enabled: true
+
+# Flags redundant predicate matchers when matcher already predicate.
+RSpec/RedundantPredicateMatcher:
+  Enabled: true
+
+# Flags removing constants in specs improperly.
+RSpec/RemoveConst:
+  Enabled: true
+
+# Enforces `is_expected.to` in specify blocks.
+RSpec/IsExpectedSpecify:
+  Enabled: true
+
+# Flags repeated subject evaluations.
+RSpec/RepeatedSubjectCall:
+  Enabled: true
+
+# Flags map used to build arrays unnecessarily.
+Style/MapIntoArray:
+  Enabled: true
+
+# Flags examples that emit output unexpectedly.
+RSpec/EmptyOutput:
+  Enabled: true
+
+# Flags non-descriptive literals in example descriptions.
+RSpec/UndescriptiveLiteralsDescription:
+  Enabled: true
+
+# Flags send calls with literal method names.
+Style/SendWithLiteralMethodName:
+  Enabled: true
+
+# Requires parentheses when calling super with arguments.
+Style/SuperArguments:
+  Enabled: true
+
+# Flags expectations placed inside let blocks.
+RSpec/ExpectInLet:
+  Enabled: true
+
+# Flags where range conditions for readability.
+Rails/WhereRange:
+  Enabled: false
+
+# Ensures gemspec runtime dependencies listed explicitly.
+Gemspec/AddRuntimeDependency:
+  Enabled: true
+
+# Enforces modern enum syntax.
+Rails/EnumSyntax:
+  Enabled: true
+
+# Flags numeric operations that have no effect.
+Lint/UselessNumericOperation:
+  Enabled: true
+
+# Flags redundant String#freeze in interpolation.
+Style/RedundantInterpolationUnfreeze:
+  Enabled: true
+
+# Enforces line break after first method argument when multiline.
+Layout/FirstMethodArgumentLineBreak:
+  Enabled: true
+
+# Enforces hash alignment rules.
+Layout/HashAlignment:
+  Enabled: true
+  EnforcedColonStyle: key
+
+# Enforces spaces around operators without alignment exceptions.
+Layout/SpaceAroundOperators:
+  Enabled: true
+  AllowForAlignment: false
+
+# Enforces argument alignment with first argument.
+Layout/ArgumentAlignment:
+  Enabled: true
+  EnforcedStyle: with_first_argument
+  IndentationWidth: 2
+
+# Controls brace layout for multiline method calls.
+Layout/MultilineMethodCallBraceLayout:
+  Enabled: true
+  EnforcedStyle: new_line
+
+# Enforces line breaks between multiline method arguments.
+Layout/MultilineMethodArgumentLineBreaks:
+  Enabled: true
+
+# Controls brace layout for multiline hashes.
+Layout/MultilineHashBraceLayout:
+  Enabled: true
+  EnforcedStyle: new_line
+
+# Enforces indentation for first parameter.
+Layout/FirstParameterIndentation:
+  EnforcedStyle: consistent
+
+# Aligns parameters with fixed indentation style.
+Layout/ParameterAlignment:
+  Enabled: true
+  EnforcedStyle: with_fixed_indentation
+
+# Enforces indentation for first argument.
+Layout/FirstArgumentIndentation:
+  Enabled: true
+
+# Enforces line breaks for multiline hash keys.
+Layout/MultilineHashKeyLineBreaks:
+  Enabled: true
+  AllowMultilineFinalElement: true
+
+# Enforces line break before first hash element when multiline.
+Layout/FirstHashElementLineBreak:
+  Enabled: true
+
+# Enforces indentation for first hash element.
+Layout/FirstHashElementIndentation:
+  Enabled: true
+  EnforcedStyle: special_inside_parentheses
+
+# Flags duplicate elements added to Set literals.
+Lint/DuplicateSetElement:
+  Enabled: true
+
+# Flags unescaped brackets inside regex.
+Lint/UnescapedBracketInRegexp:
+  Enabled: true
+
+# Flags ambiguous endless method definitions.
+Style/AmbiguousEndlessMethodDefinition:
+  Enabled: true
+
+# Flags bitwise operators used as predicates.
+Style/BitwisePredicate:
+  Enabled: false
+
+# Flags defined? expressions that can be combined.
+Style/CombinableDefined:
+  Enabled: true
+
+# Flags merging keyword arguments unsafely.
+Style/KeywordArgumentsMerging:
+  Enabled: true
+
+# Limits length of safe navigation chains.
+Style/SafeNavigationChainLength:
+  Enabled: true
+
+# Flags misuse of String#bytesize vs size.
+Performance/StringBytesize:
+  Enabled: true
+
+# Flags Hash.new default keyword argument usage.
+Lint/HashNewWithKeywordArgumentsAsDefault:
+  Enabled: true
+
+# Flags numeric operations with constant results.
+Lint/NumericOperationWithConstantResult:
+  Enabled: true
+
+# Flags useless defined? checks.
+Lint/UselessDefined:
+  Enabled: true
+
+# Flags long dig chains that could use fetch.
+Style/DigChain:
+  Enabled: true
+
+# Prefers File::NULL over '/dev/null'.
+Style/FileNull:
+  Enabled: true
+
+# Prefers FileUtils.touch over manual writes.
+Style/FileTouch:
+  Enabled: true
+
+# Flags reassignment of constants.
+Lint/ConstantReassignment:
+  Enabled: true
+
+# Flags shared mutable default values.
+Lint/SharedMutableDefault:
+  Enabled: true
+
+# Flags assignments to implicit `it` variables in tests.
+Style/ItAssignment:
+  Enabled: false
+
+# Flags array literals inside regex.
+Lint/ArrayLiteralInRegexp:
+  Enabled: true
+
+# Prefers Hash#slice helper.
+Style/HashSlice:
+  Enabled: true
+
+# Flags controllers defining multiple route paths.
+Rails/MultipleRoutePaths:
+  Enabled: true
+
+# Ensures strong parameters expectations set correctly.
+Rails/StrongParametersExpect:
+  Enabled: false
+
+# Enforces syntax for cop directives.
+Lint/CopDirectiveSyntax:
+  Enabled: true
+
+# Flags redundant type conversion calls.
+Lint/RedundantTypeConversion:
+  Enabled: true
+
+# Flags suppressed exceptions in numeric conversions.
+Lint/SuppressedExceptionInNumberConversion:
+  Enabled: true
+
+# Flags useless constant scoping.
+Lint/UselessConstantScoping:
+  Enabled: true
+
+# Flags use of Kernel#format when unnecessary.
+Style/RedundantFormat:
+  Enabled: true
+
+# Flags `zip` without block creating interim arrays.
+Performance/ZipWithoutBlock:
+  Enabled: true
+
+# Prefers Comparable#between? wrapper.
+Style/ComparableBetween:
+  Enabled: true
+
+# Flags chains of Hash#fetch calls.
+Style/HashFetchChain:
+  Enabled: true
+
+# Flags block parameters named `it`.
+Style/ItBlockParameter:
+  Enabled: true
+
+# Flags Capybara searches using find_all.first pattern.
+Capybara/FindAllFirst:
+  Enabled: true
+
+# Flags negated matchers immediately after visit.
+Capybara/RSpec/NegationMatcherAfterVisit:
+  Enabled: true
+
+# Requires including shared examples via `include_examples`.
+RSpec/IncludeExamples:
+  Enabled: true
+
+# Flags default value arguments that are useless.
+Lint/UselessDefaultValueArgument:
+  Enabled: true
+
+# Flags boolean expressions with redundant `|| true` etc.
+Lint/UselessOr:
+  Enabled: true
+
+# Checks predicate method names end with question mark.
+Naming/PredicateMethod:
+  Enabled: false
+
+# Flags empty strings inside interpolation.
+Style/EmptyStringInsideInterpolation:
+  Enabled: true
+
+# Flags redundant Array#flatten calls.
+Style/RedundantArrayFlatten:
+  Enabled: true
+
+# Ensures gemspec attributes set via new APIs.
+Gemspec/AttributeAssignment:
+  Enabled: true
+
+# Prefers ActiveSupport collection querying helpers.
+Style/CollectionQuerying:
+  Enabled: false
+
+# Enforces line breaks in multiline arrays.
+Layout/MultilineArrayLineBreaks:
+  Enabled: true
+
+# Enforces indentation for first array element.
+Layout/FirstArrayElementIndentation:
+  Enabled: true
+  EnforcedStyle: special_inside_parentheses
+
+# Requires blank lines after module inclusion statements.
+Layout/EmptyLinesAfterModuleInclusion:
+  Enabled: true
+
+# Flags memoization using find_or_initialize_by with assignment.
+Rails/FindByOrAssignmentMemoization:
+  Enabled: false
+
+# Enforces ordering of arguments in some Rails methods.
+Rails/OrderArguments:
+  Enabled: true
+
+# Flags array intersection with single element inefficiency.
+Style/ArrayIntersectWithSingleElement:
+  Enabled: true
+
+# Flags leaking locals from let blocks.
+RSpec/LeakyLocalVariable:
+  Enabled: true
+
+# Ensures HTTP status names match Rack constants.
+Rails/HttpStatusNameConsistency:
+  Enabled: true
+
+# Enforces use of redirect_back_or_to helper.
+Rails/RedirectBackOrTo:
+  Enabled: true
+
+Style/ModuleMemberExistenceCheck:
+  Enabled: true
+
+RSpec/Output:
+  Enabled: true
+
+Style/EmptyClassDefinition:
+  Enabled: true
+
+Style/NegativeArrayIndex:
+  Enabled: true
+
+Style/ReverseFind:
+  Enabled: true
+
+# new in 1.85
+Lint/DataDefineOverride:
+  Enabled: true
+
+Lint/UnreachablePatternBranch:
+  Enabled: true
+
+Style/FileOpen:
+  Enabled: true
+
+Style/MapJoin:
+  Enabled: true
+
+Style/OneClassPerFile:
+  Enabled: true
+
+Style/PartitionInsteadOfDoubleSelect:
+  Enabled: true
+
+Style/PredicateWithKind:
+  Enabled: true
+
+Style/ReduceToHash:
+  Enabled: true
+
+Style/RedundantMinMaxBy:
+  Enabled: true
+
+Style/RedundantStructKeywordInit:
+  Enabled: true
+
+Style/SelectByKind:
+  Enabled: true
+
+Style/SelectByRange:
+  Enabled: true
+
+Style/TallyMethod:
+  Enabled: true

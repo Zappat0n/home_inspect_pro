@@ -21,12 +21,12 @@ gem "tailwindcss-rails"
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem "tzinfo-data", platforms: %i[windows jruby]
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
+gem "solid_cable"
 gem "solid_cache"
 gem "solid_queue"
-gem "solid_cable"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.24.1", require: false
@@ -41,8 +41,9 @@ gem "ruby-vips", "~> 2.3"
 group :development, :test do
   gem "brakeman", require: false
   gem "bundler-audit", require: false
-  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
-  gem 'rspec-rails', '~> 8.0.0'
+  gem "capybara"
+  gem "debug", platforms: %i[mri windows], require: "debug/prelude"
+  gem "rspec-rails", "~> 8.0.0"
   gem "rubocop-rails-omakase", require: false
 end
 
