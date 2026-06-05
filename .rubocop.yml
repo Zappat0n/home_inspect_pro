@@ -24,8 +24,7 @@ AllCops:
   Exclude:
     - "bin/**/*"
     - "db/**/*"
-
-
+    - "vendor/**/*"
 
 # Blocks use of custom RSpec helper methods defined in specs.
 Custom/ForbidRspecHelpers:
