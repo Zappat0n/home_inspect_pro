@@ -46,6 +46,7 @@ group :development, :test do
   gem "capybara"
   gem "debug", platforms: %i[mri windows], require: "debug/prelude"
   gem "factory_bot_rails"
+  gem "i18n-tasks"
   gem "rspec-rails", "~> 8.0.0"
   gem "rubocop-capybara", require: false
   gem "rubocop-factory_bot", require: false

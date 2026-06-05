@@ -1,0 +1,17 @@
+# i18n-tasks configuration
+# See https://github.com/glebm/i18n-tasks#configuration
+
+base_locale: en
+data:
+  adapter: file_system
+  read:
+    - config/locales/%{locale}.yml
+    - config/locales/**/*.%{locale}.yml
+  write:
+    - config/locales/%{locale}.yml
+    - config/locales/**/*.%{locale}.yml
+
+# Ignore Devise translations (provided by gem, used automatically)
+ignore:
+  - devise.*
+  - errors.messages.*

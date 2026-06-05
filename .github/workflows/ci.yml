@@ -30,6 +30,9 @@ jobs:
       - name: Scan for known security vulnerabilities in gems used
         run: bin/bundler-audit
 
+      - name: Check for missing/unused translations
+        run: bin/i18n-tasks health
+
   scan_js:
     runs-on: ubuntu-latest
 
