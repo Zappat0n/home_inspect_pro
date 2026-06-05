@@ -5,6 +5,7 @@ CI.run do
 
   group "Checks", parallel: 2 do
     step "Style: Ruby", "bin/rubocop"
+    step "Tests: RSpec", "bin/rspec"
 
     step "Security: Gem audit", "bin/bundler-audit"
     step "Security: Importmap vulnerability audit", "bin/importmap audit"

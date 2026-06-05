@@ -25,6 +25,8 @@ AllCops:
     - "bin/**/*"
     - "db/**/*"
 
+
+
 # Blocks use of custom RSpec helper methods defined in specs.
 Custom/ForbidRspecHelpers:
   Enabled: true
@@ -118,6 +120,8 @@ Security/YAMLLoad:
 Style/ClassAndModuleChildren:
   Enabled: true
   EnforcedStyle: compact
+  Exclude:
+    - "config/application.rb"
 
 # Sets maximum method length.
 Metrics/MethodLength:
