@@ -5,7 +5,6 @@
 #  id         :bigint           not null, primary key
 #  available  :boolean
 #  code       :string
-#  is_default :boolean
 #  locale     :string
 #  name       :string
 #  created_at :datetime         not null

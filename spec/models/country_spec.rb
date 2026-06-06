@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: countries
+#
+#  id         :bigint           not null, primary key
+#  available  :boolean
+#  code       :string
+#  locale     :string
+#  name       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 require "rails_helper"
 
 RSpec.describe Country, type: :model do
@@ -40,12 +52,6 @@ RSpec.describe Country, type: :model do
       country = build_stubbed(:country)
 
       expect(country.available).to be true
-    end
-
-    it "defaults is_default to false" do
-      country = build_stubbed(:country)
-
-      expect(country.is_default).to be false
     end
   end
 end
