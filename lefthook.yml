@@ -25,8 +25,8 @@ pre-push:
     i18n-tasks:
       run: bin/i18n-tasks health
 
-    importmap-audit:
-      run: bin/importmap audit
+    yarn-audit:
+      run: yarn npm audit
 
     rspec:
       run: bin/rspec --format progress
