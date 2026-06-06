@@ -76,7 +76,7 @@ RSpec.describe Country, type: :model do
 
     it "is invalid with a duplicate code" do
       create(:country, code: "US")
-      country = build_stubbed(:country, code: "US")
+      country = build(:country, code: "US")
 
       expect(country).not_to be_valid
       expect(country.errors[:code]).to include("has already been taken")
