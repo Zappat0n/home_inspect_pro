@@ -54,4 +54,35 @@ RSpec.describe Country, type: :model do
       expect(country.available).to be true
     end
   end
+
+  describe "validations" do
+    it "is invalid without a name" do
+      country = build_stubbed(:country, name: nil)
+
+      expect(country).not_to be_valid
+      expect(country.errors[:name]).to include("can't be blank")
+    end
+
+    it "is invalid without a code" do
+      country = build_stubbed(:country, code: nil)
+
+      expect(country).not_to be_valid
+      expect(country.errors[:code]).to include("can't be blank")
+    end
+
+    it "is invalid with a duplicate code" do
+      create(:country, code: "US")
+      country = build_stubbed(:country, code: "US")
+
+      expect(country).not_to be_valid
+      expect(country.errors[:code]).to include("has already been taken")
+    end
+
+    it "is invalid without a locale" do
+      country = build_stubbed(:country, locale: nil)
+
+      expect(country).not_to be_valid
+      expect(country.errors[:locale]).to include("can't be blank")
+    end
+  end
 end

@@ -12,4 +12,8 @@
 #
 class Country < ApplicationRecord
   has_many :users
+
+  validates :name, presence: true
+  validates :code, presence: true, uniqueness: true
+  validates :locale, presence: true
 end
