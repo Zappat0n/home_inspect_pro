@@ -10,6 +10,10 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+# Indexes
+#
+#  index_countries_on_code  (code) UNIQUE
+#
 FactoryBot.define do
   factory :country do
     sequence(:name) { |n| "Country #{n}" }

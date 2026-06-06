@@ -1,0 +1,32 @@
+pre-commit:
+  commands:
+    rubocop:
+      glob: "*.rb"
+      run: bin/rubocop --force-exclusion {staged_files}
+      stage_fixed: true
+
+    slim_lint:
+      glob: "*.slim"
+      run: bin/slim-lint {staged_files}
+
+    stylelint:
+      glob: "*.{css,scss}"
+      run: npx stylelint {staged_files}
+      stage_fixed: true
+
+pre-push:
+  commands:
+    brakeman:
+      run: bin/brakeman --no-pager
+
+    bundler-audit:
+      run: bin/bundler-audit
+
+    i18n-tasks:
+      run: bin/i18n-tasks health
+
+    importmap-audit:
+      run: bin/importmap audit
+
+    rspec:
+      run: bin/rspec --format progress

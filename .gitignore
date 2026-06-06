@@ -38,3 +38,6 @@
 
 .DS_Store
 .opencode/
+
+# rails-ai-context (JSON cache — markdown files should be committed)
+.ai-context.json

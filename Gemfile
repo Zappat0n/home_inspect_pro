@@ -60,5 +60,6 @@ end
 group :development do
   gem "annotaterb", require: false
   gem "kamal", require: false
+  gem "rails-ai-context"
   gem "web-console"
 end
