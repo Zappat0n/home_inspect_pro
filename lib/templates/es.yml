@@ -1,0 +1,205 @@
+name: "ITE / IEE Standard"
+country_code: "ES"
+published: true
+
+categories:
+  - name: "Estructura y Cimentación"
+    items:
+      - name: "Grietas en cimentación — verticales, horizontales"
+        severity: critical
+        allows_photo: true
+      - name: "Forjados — flechas, deformaciones, fisuras"
+        severity: critical
+        allows_photo: true
+      - name: "Vigas y jácenas — corrosión de armaduras, hormigón deteriorado"
+        severity: critical
+        allows_photo: true
+      - name: "Pilares — fisuras verticales, desplomes, corrosión"
+        severity: critical
+        allows_photo: true
+      - name: "Muros de carga — grietas, desplomes, humedad por capilaridad"
+        severity: critical
+        allows_photo: true
+      - name: "Carbonatación del hormigón — desprendimientos del recubrimiento"
+        severity: critical
+        allows_photo: true
+      - name: "Oxidación de elementos metálicos estructurales"
+        severity: major
+        allows_photo: true
+      - name: "Asientos diferenciales — grietas inclinadas en fachadas"
+        severity: critical
+        allows_photo: true
+
+  - name: "Fachadas"
+    items:
+      - name: "Revestimiento exterior — fisuras, desprendimientos, abombamientos"
+        severity: critical
+        allows_photo: true
+      - name: "Riesgo de desprendimientos en aplacados y cornisas"
+        severity: critical
+        allows_photo: true
+      - name: "Humedades en fachada — filtraciones, capilaridad, condensación"
+        severity: major
+        allows_photo: true
+      - name: "Juntas de dilatación — separación, sellado"
+        severity: minor
+        allows_photo: true
+      - name: "Carpintería exterior (ventanas, balconeras) — funcionamiento, sellado"
+        severity: minor
+        allows_photo: true
+      - name: "Rejas y barandillas — fijación, corrosión"
+        severity: critical
+        allows_photo: true
+      - name: "Persianas — estado, funcionamiento"
+        severity: minor
+        allows_photo: true
+      - name: "Medianeras — revestimiento, desprendimientos"
+        severity: major
+        allows_photo: true
+
+  - name: "Cubiertas"
+    items:
+      - name: "Tejas — rotas, desplazadas, sueltas"
+        severity: major
+        allows_photo: true
+      - name: "Filtraciones de agua por cubierta"
+        severity: critical
+        allows_photo: true
+      - name: "Impermeabilización — deterioro, burbujas, roturas"
+        severity: major
+        allows_photo: true
+      - name: "Canalones y bajantes — obstrucciones, fugas, roturas"
+        severity: minor
+        allows_photo: true
+      - name: "Aleros y petos de cubierta — grietas, desprendimientos"
+        severity: major
+        allows_photo: true
+      - name: "Lucernarios y claraboyas — sellado, roturas"
+        severity: minor
+        allows_photo: true
+      - name: "Azoteas transitables — pavimento, pendiente, desagües"
+        severity: major
+        allows_photo: true
+      - name: "Chimeneas y conductos de ventilación en cubierta"
+        severity: minor
+        allows_photo: true
+
+  - name: "Instalaciones Eléctricas"
+    items:
+      - name: "Cuadro eléctrico general — estado, protecciones"
+        severity: critical
+        allows_photo: true
+      - name: "Cableado general — estado, diámetro, aislamiento"
+        severity: critical
+        allows_photo: true
+      - name: "Puesta a tierra — existencia, estado"
+        severity: major
+        allows_photo: true
+      - name: "Alumbrado de emergencia y señalización (zonas comunes)"
+        severity: major
+        allows_photo: true
+      - name: "Protección contra sobretensiones"
+        severity: minor
+        allows_photo: true
+      - name: "Ascensores — certificado, mantenimiento"
+        severity: major
+        allows_photo: true
+      - name: "Grupo electrógeno / SAI (si existe)"
+        severity: minor
+        allows_photo: true
+
+  - name: "Instalaciones Hidrosanitarias"
+    items:
+      - name: "Tuberías de agua fría — material (plomo, acero galvanizado), fugas"
+        severity: critical
+        allows_photo: true
+      - name: "Tuberías de agua caliente (ACS) — estado, aislamiento"
+        severity: major
+        allows_photo: true
+      - name: "Depósito de agua / aljibe — limpieza, estado"
+        severity: major
+        allows_photo: true
+      - name: "Grupo de presión — funcionamiento, estado"
+        severity: major
+        allows_photo: true
+      - name: "Saneamiento vertical (bajantes) — fugas, obstrucciones"
+        severity: major
+        allows_photo: true
+      - name: "Saneamiento horizontal / red de alcantarillado — atascos, malos olores"
+        severity: major
+        allows_photo: true
+      - name: "Arquetas de registro — tapas, limpieza, roturas"
+        severity: minor
+        allows_photo: true
+      - name: "Prueba de estanqueidad del saneamiento"
+        severity: info
+        allows_photo: false
+
+  - name: "Instalaciones de Gas"
+    items:
+      - name: "Cuadro de contadores de gas — ventilación, accesibilidad"
+        severity: critical
+        allows_photo: true
+      - name: "Tuberías de gas comunes — fugas, corrosión"
+        severity: critical
+        allows_photo: true
+      - name: "Certificado de la instalación de gas vigente"
+        severity: major
+        allows_photo: false
+
+  - name: "Accesibilidad"
+    items:
+      - name: "Rampas de acceso — pendiente, anchura, pasamanos"
+        severity: major
+        allows_photo: true
+      - name: "Ascensor adaptado — dimensiones, botones, señales acústicas"
+        severity: major
+        allows_photo: true
+      - name: "Puertas de acceso — anchura libre ≥ 80 cm"
+        severity: minor
+        allows_photo: true
+      - name: "Pasamanos en escaleras comunes"
+        severity: minor
+        allows_photo: true
+      - name: "Plazas de aparcamiento reservadas (si aplica)"
+        severity: minor
+        allows_photo: true
+      - name: "Itinerario accesible desde vía pública hasta viviendas"
+        severity: major
+        allows_photo: true
+
+  - name: "Eficiencia Energética"
+    items:
+      - name: "Aislamiento térmico de fachadas — tipo, espesor, estado"
+        severity: major
+        allows_photo: true
+      - name: "Aislamiento de cubierta — tipo, espesor, estado"
+        severity: major
+        allows_photo: true
+      - name: "Carpintería exterior — tipo de vidrio, rotura de puente térmico"
+        severity: major
+        allows_photo: true
+      - name: "Calificación energética del edificio"
+        severity: info
+        allows_photo: false
+      - name: "Instalaciones comunitarias de climatización (si existen)"
+        severity: major
+        allows_photo: true
+      - name: "Paneles solares / energía renovable (si existe)"
+        severity: minor
+        allows_photo: true
+
+  - name: "Conservación General"
+    items:
+      - name: "Zonas comunes — portales, escaleras, pasillos"
+        severity: minor
+        allows_photo: true
+      - name: "Pintura y acabados en zonas comunes"
+        severity: minor
+        allows_photo: true
+      - name: "Cerramientos de patios y galerías — estado"
+        severity: minor
+        allows_photo: true
+      - name: "Piscina comunitaria (si existe) — vaso, filtros, seguridad"
+        severity: major
+        allows_photo: true
