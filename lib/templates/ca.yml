@@ -1,0 +1,235 @@
+name: "CAHPI Standard"
+country_code: "CA"
+published: true
+
+categories:
+  - name: "Structural System"
+    items:
+      - name: "Foundation type & material"
+        severity: info
+        allows_photo: true
+      - name: "Foundation cracks, settlement, heaving"
+        severity: critical
+        allows_photo: true
+      - name: "Floor framing — joists, beams, columns — rot, deflection"
+        severity: major
+        allows_photo: true
+      - name: "Wall framing — studs, plates, bracing — condition"
+        severity: major
+        allows_photo: true
+      - name: "Ceiling / roof framing — trusses, rafters"
+        severity: major
+        allows_photo: true
+      - name: "Active water penetration in basement/crawlspace"
+        severity: critical
+        allows_photo: true
+      - name: "Sump pump — operation, discharge, backflow"
+        severity: major
+        allows_photo: true
+      - name: "Wood in contact with soil"
+        severity: critical
+        allows_photo: true
+      - name: "Pest damage / wood rot"
+        severity: critical
+        allows_photo: true
+
+  - name: "Exterior"
+    items:
+      - name: "Wall covering — siding, brick, stucco, stone, vinyl"
+        severity: major
+        allows_photo: true
+      - name: "Flashing & trim — seal, rust, damage"
+        severity: major
+        allows_photo: true
+      - name: "Eaves, soffits, fascia — rot, paint, damage"
+        severity: minor
+        allows_photo: true
+      - name: "Exterior doors — weatherstripping, threshold, operation"
+        severity: minor
+        allows_photo: true
+      - name: "Decks, porches, steps, railings — structure, rot, fasteners"
+        severity: critical
+        allows_photo: true
+      - name: "Grading & drainage — slope away from foundation"
+        severity: major
+        allows_photo: true
+      - name: "Retaining walls — leaning, drainage, cracks"
+        severity: major
+        allows_photo: true
+      - name: "Walkways, driveways, patios — cracks, settlement"
+        severity: minor
+        allows_photo: true
+      - name: "Vegetation — trees touching house, roots"
+        severity: minor
+        allows_photo: true
+      - name: "Attached garage / carport"
+        severity: major
+        allows_photo: true
+
+  - name: "Roof System"
+    items:
+      - name: "Roof covering — asphalt, metal, wood shake, tile, membrane"
+        severity: critical
+        allows_photo: true
+      - name: "Flashing — valleys, chimney, walls, vents"
+        severity: critical
+        allows_photo: true
+      - name: "Gutters & downspouts — clogs, damage, extensions"
+        severity: minor
+        allows_photo: true
+      - name: "Skylights — seal, cracks, operation"
+        severity: minor
+        allows_photo: true
+      - name: "Chimney exterior — cracks, mortar, cap, liner"
+        severity: major
+        allows_photo: true
+      - name: "Roof drainage — ponding, ice dam evidence"
+        severity: critical
+        allows_photo: true
+      - name: "Active roof leaks"
+        severity: critical
+        allows_photo: true
+
+  - name: "Plumbing System"
+    items:
+      - name: "Water supply pipes — material (copper, PEX, galvanized)"
+        severity: major
+        allows_photo: true
+      - name: "Fixtures — sinks, tubs, showers, toilets — leaks, operation"
+        severity: major
+        allows_photo: true
+      - name: "Drain/waste/vent — flow, clogs, gurgling"
+        severity: major
+        allows_photo: true
+      - name: "Water heater — age, tank corrosion, T&P valve, discharge pipe"
+        severity: critical
+        allows_photo: true
+      - name: "Main water shutoff location"
+        severity: info
+        allows_photo: true
+      - name: "Main fuel shutoff location"
+        severity: info
+        allows_photo: true
+      - name: "Sump pump — operation, discharge line"
+        severity: major
+        allows_photo: true
+      - name: "Fuel storage — oil tank (above-ground visible)"
+        severity: critical
+        allows_photo: true
+
+  - name: "Electrical System"
+    items:
+      - name: "Service drop / entrance conductors — clearance, condition"
+        severity: major
+        allows_photo: true
+      - name: "Service panel — brand, ampacity, condition"
+        severity: major
+        allows_photo: true
+      - name: "Main disconnect location"
+        severity: info
+        allows_photo: true
+      - name: "Breakers — sizing, double-tapping, labeling"
+        severity: major
+        allows_photo: true
+      - name: "Wiring method (report solid conductor aluminum wiring)"
+        severity: critical
+        allows_photo: true
+      - name: "Grounding — bond, ground rod"
+        severity: major
+        allows_photo: true
+      - name: "Outlets (representative) — GFCI, polarity, operation"
+        severity: major
+        allows_photo: true
+      - name: "Switches (representative) — operation"
+        severity: minor
+        allows_photo: true
+      - name: "Smoke detectors — presence and absence reported"
+        severity: critical
+        allows_photo: true
+      - name: "Knob-and-tube wiring (older homes)"
+        severity: critical
+        allows_photo: true
+
+  - name: "Heating System"
+    items:
+      - name: "Heating equipment — furnace, boiler — operation"
+        severity: critical
+        allows_photo: true
+      - name: "Energy source — gas, oil, electric, propane"
+        severity: info
+        allows_photo: false
+      - name: "Flue & vent system — connection, draft, corrosion"
+        severity: critical
+        allows_photo: true
+      - name: "Thermostat — type, location, operation"
+        severity: minor
+        allows_photo: true
+      - name: "Distribution — ducts, pipes, radiators"
+        severity: minor
+        allows_photo: true
+
+  - name: "Air Conditioning"
+    items:
+      - name: "Central AC — condenser, coil, operation"
+        severity: major
+        allows_photo: true
+      - name: "Through-wall unit — condition, operation"
+        severity: minor
+        allows_photo: true
+
+  - name: "Interior"
+    items:
+      - name: "Walls & ceilings — cracks, stains, water damage"
+        severity: major
+        allows_photo: true
+      - name: "Floors — damage, level, covering"
+        severity: minor
+        allows_photo: true
+      - name: "Stairs & handrails — risers/run, graspability"
+        severity: major
+        allows_photo: true
+      - name: "Doors (representative) — operation, fit"
+        severity: minor
+        allows_photo: true
+      - name: "Windows (representative) — operation, condensation, seal failure"
+        severity: minor
+        allows_photo: true
+      - name: "Counters & cabinets — condition"
+        severity: minor
+        allows_photo: true
+
+  - name: "Insulation & Ventilation"
+    items:
+      - name: "Attic insulation — type, depth, gaps"
+        severity: minor
+        allows_photo: true
+      - name: "Vapor retarder — type, condition, placement"
+        severity: minor
+        allows_photo: true
+      - name: "Attic ventilation — soffit, ridge, gable, powered"
+        severity: minor
+        allows_photo: true
+      - name: "Foundation insulation — exposed areas"
+        severity: minor
+        allows_photo: true
+      - name: "Foundation ventilation — crawlspace vents"
+        severity: minor
+        allows_photo: true
+      - name: "Bathroom exhaust — terminates to exterior"
+        severity: critical
+        allows_photo: true
+      - name: "Kitchen exhaust — terminates to exterior, recirculating"
+        severity: minor
+        allows_photo: true
+
+  - name: "Fireplaces & Solid Fuel Burning Appliances"
+    items:
+      - name: "Fireplace — firebox, damper, hearth, mantel"
+        severity: major
+        allows_photo: true
+      - name: "Chimney — flue liner, cap, chase, flashing"
+        severity: major
+        allows_photo: true
+      - name: "Wood stove / pellet stove — clearances, connection"
+        severity: critical
+        allows_photo: true
