@@ -12,6 +12,14 @@ data:
     - config/locales/**/*.%{locale}.yml
 
 # Ignore Devise translations (provided by gem, used automatically)
+# But track our custom devise.views.* translations
 ignore:
-  - devise.*
+  - devise.confirmations.*
+  - devise.failure.*
+  - devise.mailer.*
+  - devise.omniauth_callbacks.*
+  - devise.passwords.*
+  - devise.registrations.*
+  - devise.sessions.*
+  - devise.unlocks.*
   - errors.messages.*

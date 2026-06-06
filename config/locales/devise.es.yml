@@ -56,11 +56,10 @@ es:
     views:
       links:
         back: "Volver"
-        cancel_account: "Cancelar mi cuenta"
-        cancel_account_confirm: "¿Estás seguro?"
         forgot_password: "¿Olvidaste tu contraseña?"
         log_in: "Iniciar sesión"
         sign_up: "Registrarse"
+        sign_out: "Cerrar sesión"
       mailers:
         confirmation:
           confirm_link: "Confirmar mi cuenta"
