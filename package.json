@@ -1,0 +1,36 @@
+{
+  "packageManager": "yarn@4.9.2",
+  "name": "app",
+  "private": true,
+  "version": "0.1.0",
+  "browserslist": [
+    "defaults"
+  ],
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/turbo-rails": "^8.0.23",
+    "@swc/core": "^1.15.40",
+    "compression-webpack-plugin": "^12.0.0",
+    "css-loader": "^7.1.4",
+    "mini-css-extract-plugin": "^2.10.2",
+    "sass-loader": "^16.0.8",
+    "shakapacker": "10.1.0",
+    "style-loader": "^4.0.0",
+    "swc-loader": "^0.2.7",
+    "terser-webpack-plugin": "^5.6.1",
+    "webpack": "^5.107.2",
+    "webpack-assets-manifest": "^6.5.2",
+    "webpack-cli": "^6.0.1",
+    "webpack-merge": "^6.0.1",
+    "webpack-subresource-integrity": "^5.1.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "bin/shakapacker"
+  },
+  "devDependencies": {
+    "@types/webpack-env": "^1.18.8",
+    "typescript": "^6.0.3",
+    "webpack-dev-server": "^5.2.4"
+  }
+}
