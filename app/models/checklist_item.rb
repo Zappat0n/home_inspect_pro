@@ -26,7 +26,7 @@ class ChecklistItem < ApplicationRecord
   belongs_to :inspection_template
 
   validates :name, presence: true
-  validates :position, uniqueness: { scope: :inspection_template_id }
+  validates :position, presence: true, uniqueness: { scope: :inspection_template_id }
 
   enum :severity,
        {

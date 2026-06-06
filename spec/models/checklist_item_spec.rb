@@ -18,6 +18,13 @@ RSpec.describe ChecklistItem, type: :model do
       expect(checklist_item.errors[:name]).to include("can't be blank")
     end
 
+    it "is invalid without a position" do
+      checklist_item = build_stubbed(:checklist_item, position: nil)
+
+      expect(checklist_item).not_to be_valid
+      expect(checklist_item.errors[:position]).to include("can't be blank")
+    end
+
     it "is invalid with a duplicate position scoped to the same template" do
       inspection_template = create(:inspection_template)
       create(:checklist_item, inspection_template: inspection_template, position: 1)
