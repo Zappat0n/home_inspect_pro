@@ -3,7 +3,9 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :detect_country, only: :create
 
-  def create; end
+  def create
+    super
+  end
 
   private
 
