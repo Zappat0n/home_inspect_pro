@@ -21,7 +21,9 @@
 #
 class InspectionTemplate < ApplicationRecord
   belongs_to :country
-  has_many :checklist_items, dependent: :destroy
+  has_many :checklist_items, -> { ordered }, dependent: :destroy
 
   validates :name, presence: true
+
+  scope :published, -> { where(published: true) }
 end
