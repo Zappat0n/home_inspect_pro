@@ -1,7 +1,7 @@
 ---
 en:
   app:
-    name: "Home Inspect Pro"
+    name: Home Inspect Pro
   inspections:
     create:
       success: Inspection was successfully created.
