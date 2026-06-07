@@ -1,29 +1,29 @@
 ---
 es:
   inspections:
-    index:
-      title: "Mis Inspecciones"
-      new_button: "Nueva Inspección"
-      empty: "Aún no has creado ninguna inspección."
-      empty_cta: "Crea tu primera inspección"
-    new:
-      title: "Nueva Inspección"
-      submit: "Crear Inspección"
-      cancel: "Cancelar"
-    show:
-      title: "Detalles de la Inspección"
-      property_address: "Dirección de la Propiedad"
-      client_name: "Nombre del Cliente"
-      client_email: "Correo Electrónico del Cliente"
-      status: "Estado"
-      template: "Plantilla"
-      created_at: "Creada"
-      statuses:
-        draft: "Borrador"
-        completed: "Completada"
     create:
-      success: "La inspección se creó correctamente."
+      success: La inspección se creó correctamente.
     form:
-      property_address_label: "Dirección de la Propiedad"
-      client_name_label: "Nombre del Cliente"
-      client_email_label: "Correo Electrónico del Cliente"
+      client_email_label: Correo Electrónico del Cliente
+      client_name_label: Nombre del Cliente
+      property_address_label: Dirección de la Propiedad
+    index:
+      empty: Aún no has creado ninguna inspección.
+      empty_cta: Crea tu primera inspección
+      new_button: Nueva Inspección
+      title: Mis Inspecciones
+    new:
+      cancel: Cancelar
+      submit: Crear Inspección
+      title: Nueva Inspección
+    show:
+      client_email: Correo Electrónico del Cliente
+      client_name: Nombre del Cliente
+      created_at: Creada
+      property_address: Dirección de la Propiedad
+      status: Estado
+      statuses:
+        completed: Completada
+        draft: Borrador
+      template: Plantilla
+      title: Detalles de la Inspección
