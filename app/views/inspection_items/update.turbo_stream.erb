@@ -1,0 +1,9 @@
+<%= turbo_stream.replace dom_id(inspection_item) do %>
+  <%= render(
+        partial: "inspection_items/inspection_item",
+        locals: {
+          inspection_item: inspection_item,
+          inspection: inspection,
+        },
+      ) %>
+<% end %>

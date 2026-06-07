@@ -1,0 +1,12 @@
+---
+en:
+  inspection_items:
+    comment_label: Comment
+    save_comment: Save Comment
+    status:
+      defect: Defect
+      na: N/A
+      ok: OK
+    update:
+      completed_alert: This inspection is completed and cannot be modified.
+      success: Inspection item was successfully updated.

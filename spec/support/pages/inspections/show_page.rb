@@ -3,6 +3,15 @@
 class Inspections::ShowPage
   include Capybara::DSL
   include Rails.application.routes.url_helpers
+  include ActionView::RecordIdentifier
+
+  def initialize(inspection = nil)
+    @inspection = inspection
+  end
+
+  def visit_page
+    visit inspection_path(@inspection)
+  end
 
   def has_heading?
     has_content?(I18n.t("inspections.show.title"))
@@ -30,5 +39,57 @@ class Inspections::ShowPage
 
   def has_success_message?
     has_content?(I18n.t("inspections.create.success"))
+  end
+
+  def has_category?(category)
+    has_content?(category)
+  end
+
+  def has_inspection_item?(item)
+    has_content?(item.checklist_item.name)
+  end
+
+  def click_ok_status(item)
+    within "##{dom_id(item)}" do
+      find("[data-testid='inspection-item-ok-status']").click
+    end
+  end
+
+  def click_defect_status(item)
+    within "##{dom_id(item)}" do
+      find("[data-testid='inspection-item-defect-status']").click
+    end
+  end
+
+  def click_na_status(item)
+    within "##{dom_id(item)}" do
+      find("[data-testid='inspection-item-na-status']").click
+    end
+  end
+
+  def has_ok_status_selected?(item)
+    within "##{dom_id(item)}" do
+      expect(find("[data-testid='inspection-item-ok-status']")).to be_visible
+    end
+  end
+
+  def has_defect_status_selected?(item)
+    within "##{dom_id(item)}" do
+      expect(find("[data-testid='inspection-item-defect-status']")).to be_visible
+    end
+  end
+
+  def has_na_status_selected?(item)
+    within "##{dom_id(item)}" do
+      expect(find("[data-testid='inspection-item-na-status']")).to be_visible
+    end
+  end
+
+  def has_update_success_message?
+    has_content?(I18n.t("inspection_items.update.success"))
+  end
+
+  def has_completed_alert?
+    has_content?(I18n.t("inspection_items.update.completed_alert"))
   end
 end
