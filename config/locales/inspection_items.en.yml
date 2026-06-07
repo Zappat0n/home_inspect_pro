@@ -9,4 +9,3 @@ en:
       ok: OK
     update:
       completed_alert: This inspection is completed and cannot be modified.
-      success: Inspection item was successfully updated.
