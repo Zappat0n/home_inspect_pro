@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateInspections < ActiveRecord::Migration[8.2]
   def change
     create_table(:inspections) do |t|

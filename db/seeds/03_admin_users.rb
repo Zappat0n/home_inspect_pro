@@ -2,8 +2,8 @@
 
 # Seed admin user
 admin = AdminUser.find_or_create_by!(email: "admin@example.com") do |a|
-  a.password = "password123"
-  a.password_confirmation = "password123"
+  a.password = "password"
+  a.password_confirmation = "password"
 end
 
 puts "Seeded admin user: #{admin.email}"

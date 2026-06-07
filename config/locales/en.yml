@@ -1,0 +1,30 @@
+---
+en:
+  inspections:
+    index:
+      title: "My Inspections"
+      new_button: "New Inspection"
+      empty: "You haven't created any inspections yet."
+      empty_cta: "Create your first inspection"
+    new:
+      title: "New Inspection"
+      submit: "Create Inspection"
+      cancel: "Cancel"
+    show:
+      title: "Inspection Details"
+      property_address: "Property Address"
+      client_name: "Client Name"
+      client_email: "Client Email"
+      status: "Status"
+      template: "Template"
+      created_at: "Created"
+      statuses:
+        draft: "Draft"
+        completed: "Completed"
+    create:
+      success: "Inspection was successfully created."
+    form:
+      property_address_label: "Property Address"
+      client_name_label: "Client Name"
+      client_email_label: "Client Email"
+

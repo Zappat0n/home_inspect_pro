@@ -38,4 +38,6 @@ class Inspection < ApplicationRecord
          draft: 0,
          completed: 1,
        }
+
+  scope :newest_first, -> { order(created_at: :desc) }
 end
