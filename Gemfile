@@ -1,5 +1,9 @@
 source "https://rubygems.org"
 
+# Pin to the default gem version shipped with Ruby to avoid duplicate psych
+# versions (default + installed) which trigger Bundler ambiguity warnings.
+gem "psych", "~> 5.3.0"
+
 # Use main development branch of Rails
 gem "rails", github: "rails/rails", branch: "main"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
@@ -62,6 +66,7 @@ end
 group :development do
   gem "annotaterb", require: false
   gem "kamal", require: false
+  gem "listen", "~> 3.9"
   gem "rails-ai-context"
   gem "web-console"
 end
