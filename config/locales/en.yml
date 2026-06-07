@@ -2,30 +2,3 @@
 en:
   app:
     name: Home Inspect Pro
-  inspections:
-    create:
-      success: Inspection was successfully created.
-    form:
-      client_email_label: Client Email
-      client_name_label: Client Name
-      property_address_label: Property Address
-    index:
-      empty: You haven't created any inspections yet.
-      empty_cta: Create your first inspection
-      new_button: New Inspection
-      title: My Inspections
-    new:
-      cancel: Cancel
-      submit: Create Inspection
-      title: New Inspection
-    show:
-      client_email: Client Email
-      client_name: Client Name
-      created_at: Created
-      property_address: Property Address
-      status: Status
-      statuses:
-        completed: Completed
-        draft: Draft
-      template: Template
-      title: Inspection Details
