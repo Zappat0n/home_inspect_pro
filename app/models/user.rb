@@ -36,4 +36,12 @@ class User < ApplicationRecord
 
   belongs_to :country
   has_many :inspections, dependent: :destroy
+
+  def default_inspection_template
+    template = InspectionTemplate.published.find_by(country: country)
+    return template if template
+
+    us_country = Country.find_by(code: "US")
+    InspectionTemplate.published.find_by(country: us_country)
+  end
 end

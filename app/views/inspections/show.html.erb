@@ -1,0 +1,71 @@
+<div class="max-w-3xl mx-auto">
+  <div class="mb-6">
+    <%= link_to inspections_path,
+                class: "text-sm text-blue-600 hover:text-blue-800 font-medium" do %>
+      &larr; <%= t("inspections.new.cancel") %>
+    <% end %>
+  </div>
+
+  <h1 class="text-2xl font-bold text-gray-900 mb-8">
+    <%= t("inspections.show.title") %>
+  </h1>
+
+  <div class="bg-white rounded-lg border border-gray-200 divide-y divide-gray-200">
+    <div class="px-6 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+      <dt class="text-sm font-medium text-gray-500">
+        <%= t("inspections.show.property_address") %>
+      </dt>
+      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+        <%= inspection.property_address %>
+      </dd>
+    </div>
+
+    <div class="px-6 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+      <dt class="text-sm font-medium text-gray-500">
+        <%= t("inspections.show.client_name") %>
+      </dt>
+      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+        <%= inspection.client_name %>
+      </dd>
+    </div>
+
+    <div class="px-6 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+      <dt class="text-sm font-medium text-gray-500">
+        <%= t("inspections.show.client_email") %>
+      </dt>
+      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+        <%= inspection.client_email %>
+      </dd>
+    </div>
+
+    <div class="px-6 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+      <dt class="text-sm font-medium text-gray-500">
+        <%= t("inspections.show.template") %>
+      </dt>
+      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+        <%= inspection.inspection_template.name %>
+      </dd>
+    </div>
+
+    <div class="px-6 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+      <dt class="text-sm font-medium text-gray-500">
+        <%= t("inspections.show.status") %>
+      </dt>
+      <dd class="mt-1 sm:col-span-2 sm:mt-0">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+          <%= inspection.draft? ? "bg-amber-100 text-amber-800" : "bg-green-100 text-green-800" %>">
+          <%= t("inspections.show.statuses.#{inspection.status}") %>
+        </span>
+      </dd>
+    </div>
+
+    <div class="px-6 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+      <dt class="text-sm font-medium text-gray-500">
+        <%= t("inspections.show.created_at") %>
+      </dt>
+      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+        <%= l(inspection.created_at, format: :long) %>
+      </dd>
+    </div>
+  </div>
+</div>
