@@ -20,7 +20,6 @@ gem "turbo-rails"
 gem "stimulus-rails"
 # Use Tailwind CSS [https://github.com/rails/tailwindcss-rails]
 gem "dartsass-rails", "~> 0.5.1"
-gem "tailwindcss-rails"
 # Authentication [https://github.com/heartcombo/devise]
 gem "devise"
 # IP-based geolocation [https://github.com/alexreisner/geocoder]

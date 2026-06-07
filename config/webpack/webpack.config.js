@@ -1,6 +1,29 @@
-// See the shakacode/shakapacker README and docs directory for advice on customizing your webpackConfig.
+const path = require('path')
 const { generateWebpackConfig } = require('shakapacker')
+const { merge } = require('webpack-merge')
 
-const webpackConfig = generateWebpackConfig()
+const baseConfig = generateWebpackConfig()
 
-module.exports = webpackConfig
+const customConfig = {
+  entry: {
+    styles: path.resolve(__dirname, '../../app/assets/stylesheets/application.css'),
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: "postcss-loader",
+          },
+        ],
+      },
+    ],
+  },
+  stats: 'minimal',
+  watchOptions: {
+    ignored: /node_modules|public\/packs|app\/assets\/builds/,
+  },
+}
+
+module.exports = merge(baseConfig, customConfig)
