@@ -29,6 +29,7 @@
 class Inspection < ApplicationRecord
   belongs_to :user
   belongs_to :inspection_template
+  has_many :inspection_items, dependent: :destroy
 
   validates :property_address, presence: true
   validates :client_name, presence: true

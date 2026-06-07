@@ -30,17 +30,20 @@ User.find_each do |user|
   ]
 
   sample_inspections.each do |inspection_attrs|
-    Inspection.find_or_create_by!(
+    inspection = Inspection.find_or_create_by!(
       user: user,
       inspection_template: template,
       property_address: inspection_attrs[:property_address],
-    ) do |inspection|
-      inspection.client_name = inspection_attrs[:client_name]
-      inspection.client_email = inspection_attrs[:client_email]
-      inspection.status = inspection_attrs[:status]
-      inspection.completed_at = inspection_attrs[:completed_at]
+    ) do |ins|
+      ins.client_name = inspection_attrs[:client_name]
+      ins.client_email = inspection_attrs[:client_email]
+      ins.status = inspection_attrs[:status]
+      ins.completed_at = inspection_attrs[:completed_at]
     end
+
+    Inspections::InitializeChecklistService.new(inspection).call
   end
+
 end
 
 puts "Seeded sample inspections"

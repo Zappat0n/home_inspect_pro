@@ -10,7 +10,7 @@
     <%= t("inspections.show.title") %>
   </h1>
 
-  <div class="bg-white rounded-lg border border-gray-200 divide-y divide-gray-200">
+  <div class="bg-white rounded-lg border border-gray-200 divide-y divide-gray-200 mb-8">
     <div class="px-6 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
       <dt class="text-sm font-medium text-gray-500">
         <%= t("inspections.show.property_address") %>
@@ -42,7 +42,7 @@
       <dt class="text-sm font-medium text-gray-500">
         <%= t("inspections.show.template") %>
       </dt>
-      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+      <dd class="mt-1 text-sm text-s-gray-900 sm:col-span-2 sm:mt-0">
         <%= inspection.inspection_template.name %>
       </dd>
     </div>
@@ -67,5 +67,49 @@
         <%= l(inspection.created_at, format: :long) %>
       </dd>
     </div>
+  </div>
+
+  <div class="space-y-8">
+    <% inspection_items.group_by { |item| item.checklist_item.category }.each do |category, items| %>
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-4 px-2">
+          <%= category %>
+        </h2>
+
+        <div class="bg-white rounded-lg border border-gray-200 divide-y divide-gray-200 overflow-hidden">
+          <% items.each do |item| %>
+            <div class="p-4 sm:px-6 sm:py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4" id="<%= dom_id(item) %>">
+              <div class="flex-1">
+                <p class="text-sm font-medium text-gray-900">
+                  <%= item.checklist_item.name %>
+                </p>
+                <p class="text-xs text-gray-500 mt-1">
+                  <%= item.checklist_item.description %>
+                </p>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <%= form_with(model: [inspection, item], as: :string, class: "flex gap-2") do |f| %>
+                  <%= f.label :status, "OK", class: "px-3 py-1 text-xs font-medium rounded-full border cursor-pointer transition-colors
+                    #{item.ok? ? "bg-green-600 text-white border-green-600" : "bg-white text-gray-600 border-gray-300 hover:bg-gray-50"}", data: { testid: "inspection-item-ok-status" } do %>
+                    <%= f.radio_button :status, "ok", class: "hidden" %>
+                  <% end %>
+
+                  <%= f.label :status, "Defect", class: "px-3 py-1 text-xs font-medium rounded-full border cursor-pointer transition-colors
+                    #{item.defect? ? "bg-red-600 text-white border-red-600" : "bg-white text-gray-600 border-gray-300 hover:bg-gray-50"}", data: { testid: "inspection-item-defect-status" } do %>
+                    <%= f.radio_button :status, "defect", class: "hidden" %>
+                  <% end %>
+
+                  <%= f.label :status, "N/A", class: "px-3 py-1 text-xs font-medium rounded-full border cursor-pointer transition-colors
+                    #{item.na? ? "bg-gray-600 text-white border-gray-600" : "bg-white text-gray-600 border-gray-300 hover:bg-gray-50"}", data: { testid: "inspection-item-na-status" } do %>
+                    <%= f.radio_button :status, "na", class: "hidden" %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

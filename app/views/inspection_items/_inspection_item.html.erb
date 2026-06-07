@@ -1,0 +1,95 @@
+<%= turbo_frame_tag dom_id(inspection_item) do %>
+  <div class="bg-white rounded-lg border border-gray-200 p-4 mb-4">
+    <div class="flex items-start justify-between">
+      <div>
+        <h3 class="text-lg font-medium text-gray-900">
+          <%= inspection_item.checklist_item.name %>
+        </h3>
+
+        <% if inspection_item.checklist_item.description.present? %>
+          <p class="mt-1 text-sm text-gray-500">
+            <%= inspection_item.checklist_item.description %>
+          </p>
+        <% end %>
+      </div>
+    </div>
+
+    <% if inspection.draft? %>
+      <div class="mt-4 flex items-center gap-2">
+        <%= button_to(
+              t("inspection_items.status.ok"),
+              inspection_inspection_item_path(inspection, inspection_item),
+              method: :patch,
+              params: {
+                inspection_item: {
+                  status: :ok,
+                },
+              },
+              class: "px-3 py-1 text-sm font-medium rounded-md #{inspection_item.ok? ? "bg-green-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}",
+            ) %>
+
+        <%= button_to(
+              t("inspection_items.status.defect"),
+              inspection_inspection_item_path(inspection, inspection_item),
+              method: :patch,
+              params: {
+                inspection_item: {
+                  status: :defect,
+                },
+              },
+              class: "px-3 py-1 text-sm font-medium rounded-md #{inspection_item.defect? ? "bg-red-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}",
+            ) %>
+
+        <%= button_to(
+              t("inspection_items.status.na"),
+              inspection_inspection_item_path(inspection, inspection_item),
+              method: :patch,
+              params: {
+                inspection_item: {
+                  status: :na,
+                },
+              },
+              class: "px-3 py-1 text-sm font-medium rounded-md #{inspection_item.na? ? "bg-yellow-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}",
+            ) %>
+      </div>
+
+      <% if inspection_item.defect? %>
+        <div class="mt-4">
+          <%= form_with(
+                model: [inspection, inspection_item],
+                class: "space-y-2",
+              ) do |form| %>
+            <%= form.label(
+                  :comment,
+                  t("inspection_items.comment_label"),
+                  class: "block text-sm font-medium text-gray-700",
+                ) %>
+
+            <%= form.text_area(
+                  :comment,
+                  rows: 2,
+                  class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm",
+                ) %>
+
+            <%= form.submit(
+                  t("inspection_items.save_comment"),
+                  class: "inline-flex items-center px-3 py-1.5 text-sm font-medium rounded-md bg-blue-600 text-white hover:bg-blue-700",
+                ) %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% if inspection_item.comment.present? && !inspection_item.defect? %>
+        <div class="mt-2 text-sm text-gray-600">
+          <strong><%= t("inspection_items.comment_label") %>:</strong>
+          <%= inspection_item.comment %>
+        </div>
+      <% end %>
+    <% elsif inspection_item.comment.present? %>
+      <div class="mt-2 text-sm text-gray-600">
+        <strong><%= t("inspection_items.comment_label") %>:</strong>
+        <%= inspection_item.comment %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

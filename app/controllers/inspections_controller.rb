@@ -12,9 +12,12 @@ class InspectionsController < ApplicationController
 
   def show
     inspection = current_user.inspections.find(params[:id])
+    inspection_items = inspection.inspection_items.joins(:checklist_item).order("checklist_items.position")
+
     render(
       locals: {
         inspection: inspection,
+        inspection_items: inspection_items,
       },
     )
   end
@@ -39,6 +42,7 @@ class InspectionsController < ApplicationController
     )
 
     if inspection.save
+      Inspections::InitializeChecklistService.new(inspection).call
       redirect_to(inspection, notice: t("inspections.create.success"))
     else
       render(

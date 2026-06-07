@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   devise_for :admin_users, controllers: { sessions: "admin/sessions" }
   devise_for :users, controllers: { registrations: "users/registrations" }
 
-  resources :inspections, only: %i[index show new create]
+  resources :inspections, only: %i[index show new create] do
+    resources :inspection_items, only: [:update]
+  end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
