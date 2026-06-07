@@ -35,4 +35,5 @@ class User < ApplicationRecord
          :validatable
 
   belongs_to :country
+  has_many :inspections, dependent: :destroy
 end

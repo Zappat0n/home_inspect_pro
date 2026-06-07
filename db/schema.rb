@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.2].define(version: 2026_06_06_063000) do
+ActiveRecord::Schema[8.2].define(version: 2026_06_07_010000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -58,6 +58,23 @@ ActiveRecord::Schema[8.2].define(version: 2026_06_06_063000) do
     t.index ["name"], name: "index_inspection_templates_on_name"
   end
 
+  create_table "inspections", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "inspection_template_id", null: false
+    t.text "property_address"
+    t.string "client_name"
+    t.string "client_email"
+    t.text "signature_data"
+    t.integer "status"
+    t.string "pdf_url"
+    t.datetime "completed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["inspection_template_id"], name: "index_inspections_on_inspection_template_id"
+    t.index ["status"], name: "index_inspections_on_status"
+    t.index ["user_id"], name: "index_inspections_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -77,5 +94,7 @@ ActiveRecord::Schema[8.2].define(version: 2026_06_06_063000) do
 
   add_foreign_key "checklist_items", "inspection_templates"
   add_foreign_key "inspection_templates", "countries"
+  add_foreign_key "inspections", "inspection_templates"
+  add_foreign_key "inspections", "users"
   add_foreign_key "users", "countries"
 end
