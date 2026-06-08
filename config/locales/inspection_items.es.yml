@@ -1,8 +1,6 @@
 ---
 es:
   inspection_items:
-    comment_label: Comentario
-    save_comment: Guardar comentario
     status:
       defect: Defecto
       na: N/A

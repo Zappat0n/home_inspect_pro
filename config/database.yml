@@ -25,7 +25,7 @@ development:
   database: home_inspect_pro_development
   host: localhost
   username: postgres
-  password: password
+  password: postgres
 
   # Schema search path. The server defaults to $user,public
   #schema_search_path: myapp,sharedapp,public
@@ -44,7 +44,7 @@ test:
   database: home_inspect_pro_test
   host: localhost
   username: postgres
-  password: password
+  password: postgres
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
