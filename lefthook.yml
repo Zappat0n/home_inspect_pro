@@ -9,6 +9,10 @@ pre-commit:
       glob: "*.slim"
       run: bin/slim-lint {staged_files}
 
+    stylelint:
+      glob: "*.{css,scss}"
+      run: yarn stylelint {staged_files}
+
 pre-push:
   commands:
     brakeman:

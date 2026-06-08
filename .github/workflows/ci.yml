@@ -33,7 +33,7 @@ jobs:
       - name: Check for missing/unused translations
         run: bin/i18n-tasks health
 
-  scan_js:
+  lint_js:
     runs-on: ubuntu-latest
 
     steps:
@@ -53,6 +53,9 @@ jobs:
 
       - name: Audit JavaScript dependencies for vulnerabilities
         run: yarn npm audit
+
+      - name: Lint stylesheets
+        run: yarn lint:css
 
   lint:
     runs-on: ubuntu-latest

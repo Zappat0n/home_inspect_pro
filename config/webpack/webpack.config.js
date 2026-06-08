@@ -2,28 +2,18 @@ const path = require('path')
 const { generateWebpackConfig } = require('shakapacker')
 const { merge } = require('webpack-merge')
 
-const baseConfig = generateWebpackConfig()
+const stylesDir = path.resolve(__dirname, '../../app/assets/stylesheets')
 
 const customConfig = {
   entry: {
-    styles: path.resolve(__dirname, '../../app/assets/stylesheets/application.css'),
-  },
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: "postcss-loader",
-          },
-        ],
-      },
+    styles: [
+      path.resolve(stylesDir, 'application.scss'),
+      path.resolve(stylesDir, 'application.css'),
     ],
   },
-  stats: 'minimal',
   watchOptions: {
     ignored: /node_modules|public\/packs|app\/assets\/builds/,
   },
 }
 
-module.exports = merge(baseConfig, customConfig)
+module.exports = merge(generateWebpackConfig(), customConfig)

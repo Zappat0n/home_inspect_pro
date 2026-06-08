@@ -4,10 +4,10 @@
     <div class="flex items-center">
       <% if user_signed_in? %>
         <%= link_to t("inspections.navbar.link"), inspections_path, class: "mr-4 text-sm text-blue-600 hover:text-blue-800" %>
-        <%= button_to t("devise.views.links.sign_out"), destroy_user_session_path, method: :delete, class: "px-4 py-2 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" %>
+        <%= button_to t("devise.views.links.sign_out"), destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
       <% else %>
         <%= link_to t("devise.views.links.log_in"), new_user_session_path, class: "text-sm text-blue-600 hover:text-blue-800" %>
-        <%= link_to t("devise.views.links.sign_up"), new_user_registration_path, class: "ml-4 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 cursor-pointer" %>
+        <%= link_to t("devise.views.links.sign_up"), new_user_registration_path, class: "btn btn-primary ml-4" %>
       <% end %>
     </div>
   </div>
