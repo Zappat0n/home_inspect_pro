@@ -1,7 +1,7 @@
 <div class="max-w-3xl mx-auto inspections">
   <div class="mb-6">
     <%= link_to inspections_path,
-                class: "text-sm text-blue-600 hover:text-blue-800 font-medium" do %>
+                class: "link font-medium" do %>
       &larr; <%= t("inspections.new.cancel") %>
     <% end %>
   </div>
@@ -10,7 +10,7 @@
     <%= t("inspections.show.title") %>
   </h1>
 
-  <div class="bg-white rounded-lg border border-gray-200 divide-y divide-gray-200 mb-8">
+  <div class="card divide-y divide-gray-200 mb-8">
     <div class="px-6 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
       <dt class="text-sm font-medium text-gray-500">
         <%= t("inspections.show.property_address") %>
@@ -89,7 +89,7 @@
           <%= category %>
         </h2>
 
-        <div class="bg-white rounded-lg border border-gray-200 divide-y divide-gray-200 overflow-hidden">
+        <div class="card divide-y divide-gray-200 overflow-hidden">
            <% items.each do |item| %>
             <%= render partial: "inspection_items/inspection_item",
                        locals: {

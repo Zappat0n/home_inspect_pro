@@ -1,0 +1,7 @@
+@use "colors" as *;
+
+.card {
+  background-color: $white;
+  border-radius: 0.5rem;
+  border: 1px solid $gray-200;
+}

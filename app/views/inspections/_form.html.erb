@@ -12,31 +12,31 @@
 <% end %>
 
 <%= form_with(model: inspection, url: inspections_path, class: "space-y-6") do |form| %>
-  <div class="bg-white rounded-lg border border-gray-200 p-6 space-y-6">
+  <div class="card p-6 space-y-6">
     <div>
       <%= form.label :property_address,
                      t("inspections.form.property_address_label"),
-                     class: "block text-sm font-medium text-gray-700 mb-1" %>
+                     class: "form-label" %>
       <%= form.text_field :property_address,
-                          class: "block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm",
+                          class: "form-input form-input-lg",
                           data: { testid: "property_address_field" } %>
     </div>
 
     <div>
       <%= form.label :client_name,
                      t("inspections.form.client_name_label"),
-                     class: "block text-sm font-medium text-gray-700 mb-1" %>
+                     class: "form-label" %>
       <%= form.text_field :client_name,
-                          class: "block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm",
+                          class: "form-input form-input-lg",
                           data: { testid: "client_name_field" } %>
     </div>
 
     <div>
       <%= form.label :client_email,
                      t("inspections.form.client_email_label"),
-                     class: "block text-sm font-medium text-gray-700 mb-1" %>
+                     class: "form-label" %>
       <%= form.email_field :client_email,
-                           class: "block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm",
+                           class: "form-input form-input-lg",
                            data: { testid: "client_email_field" } %>
     </div>
 
