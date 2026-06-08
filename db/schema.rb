@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.2].define(version: 2026_06_08_053832) do
+ActiveRecord::Schema[8.2].define(version: 2026_06_08_060000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -87,6 +87,17 @@ ActiveRecord::Schema[8.2].define(version: 2026_06_08_053832) do
     t.index ["inspection_id"], name: "index_inspection_items_on_inspection_id"
   end
 
+  create_table "inspection_photos", force: :cascade do |t|
+    t.bigint "inspection_id", null: false
+    t.bigint "checklist_item_id", null: false
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["checklist_item_id"], name: "index_inspection_photos_on_checklist_item_id"
+    t.index ["inspection_id", "position"], name: "idx_inspection_photos_on_inspection_and_position", unique: true
+    t.index ["inspection_id"], name: "index_inspection_photos_on_inspection_id"
+  end
+
   create_table "inspection_templates", force: :cascade do |t|
     t.string "name"
     t.bigint "country_id", null: false
@@ -137,6 +148,8 @@ ActiveRecord::Schema[8.2].define(version: 2026_06_08_053832) do
   add_foreign_key "checklist_items", "inspection_templates"
   add_foreign_key "inspection_items", "checklist_items"
   add_foreign_key "inspection_items", "inspections"
+  add_foreign_key "inspection_photos", "checklist_items"
+  add_foreign_key "inspection_photos", "inspections"
   add_foreign_key "inspection_templates", "countries"
   add_foreign_key "inspections", "inspection_templates"
   add_foreign_key "inspections", "users"
