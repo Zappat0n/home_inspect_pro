@@ -55,6 +55,18 @@ class InspectionsController < ApplicationController
     end
   end
 
+  def complete
+    inspection = current_user.inspections.find(params[:id])
+
+    if inspection.completed?
+      redirect_to(inspection, alert: t("inspections.complete.already_completed"))
+      return
+    end
+
+    inspection.update(status: :completed, completed_at: Time.current)
+    redirect_to(inspection, notice: t("inspections.complete.success"))
+  end
+
   private
 
   def inspection_params

@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: "users/registrations" }
 
   resources :inspections, only: %i[index show new create] do
+    member do
+      patch :complete
+    end
     resources :inspection_items, only: [:update]
   end
 
