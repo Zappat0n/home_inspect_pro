@@ -118,4 +118,54 @@ RSpec.describe "Inspections", type: :feature do
       expect(index_page).to have_empty_state
     end
   end
+
+  describe "completing an inspection" do
+    it "completes a draft inspection" do
+      country = create(:country, code: "US", locale: "en")
+      user = create(:user, country: country)
+      inspection_template = create(:inspection_template, country: country, published: true)
+      inspection = create(
+        :inspection,
+        user: user,
+        inspection_template: inspection_template,
+        property_address: "123 Main St",
+        client_name: "John Doe",
+        client_email: "john@example.com",
+      )
+
+      sign_in user
+
+      page_obj = Inspections::ShowPage.new(inspection)
+      page_obj.visit_page
+
+      expect(page_obj).to have_heading
+      expect(page_obj).to have_complete_button
+
+      page_obj.click_complete_inspection
+
+      expect(page_obj).to have_completed_status
+      expect(page_obj).to have_complete_success_message
+      expect(page_obj).to have_no_complete_button
+    end
+
+    it "does not show complete button on completed inspection" do
+      country = create(:country, code: "US", locale: "en")
+      user = create(:user, country: country)
+      inspection_template = create(:inspection_template, country: country, published: true)
+      inspection = create(
+        :inspection,
+        user: user,
+        inspection_template: inspection_template,
+        status: :completed,
+      )
+
+      sign_in user
+
+      page_obj = Inspections::ShowPage.new(inspection)
+      page_obj.visit_page
+
+      expect(page_obj).to have_heading
+      expect(page_obj).to have_no_complete_button
+    end
+  end
 end

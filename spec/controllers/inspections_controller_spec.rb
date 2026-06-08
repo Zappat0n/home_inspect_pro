@@ -146,4 +146,52 @@ RSpec.describe InspectionsController, type: :controller do
       expect(response).to have_http_status(:unprocessable_content)
     end
   end
+
+  describe "PATCH #complete" do
+    it "completes a draft inspection" do
+      country = create(:country)
+      user = create(:user, country: country)
+      template = create(:inspection_template, country: country)
+      inspection = create(:inspection, user: user, inspection_template: template)
+      sign_in(user)
+
+      patch :complete, params: { id: inspection.id }
+
+      inspection.reload
+      expect(inspection).to be_completed
+      expect(inspection.completed_at).not_to be_nil
+      expect(response).to redirect_to(inspection_path(inspection))
+    end
+
+    it "redirects already completed inspection" do
+      country = create(:country)
+      user = create(:user, country: country)
+      template = create(:inspection_template, country: country)
+      inspection = create(
+        :inspection,
+        user: user,
+        inspection_template: template,
+        status: :completed,
+      )
+      sign_in(user)
+
+      patch :complete, params: { id: inspection.id }
+
+      expect(response).to redirect_to(inspection_path(inspection))
+      expect(flash[:alert]).to be_present
+    end
+
+    it "does not allow access to another user's inspection" do
+      country = create(:country)
+      user_a = create(:user, country: country)
+      user_b = create(:user, country: country)
+      template = create(:inspection_template, country: country)
+      inspection = create(:inspection, user: user_b, inspection_template: template)
+      sign_in(user_a)
+
+      expect do
+        patch :complete, params: { id: inspection.id }
+      end.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
 end

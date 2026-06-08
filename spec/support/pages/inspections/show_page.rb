@@ -129,4 +129,24 @@ class Inspections::ShowPage
       has_no_css?("[data-testid='inspection-item-save-comment']", visible: true)
     end
   end
+
+  def click_complete_inspection
+    find("[data-testid='complete-inspection-button']").click
+  end
+
+  def has_complete_button?
+    has_css?("[data-testid='complete-inspection-button']")
+  end
+
+  def has_no_complete_button?
+    has_no_css?("[data-testid='complete-inspection-button']")
+  end
+
+  def has_completed_status?
+    has_content?(I18n.t("inspections.show.statuses.completed"))
+  end
+
+  def has_complete_success_message?
+    has_content?(I18n.t("inspections.complete.success"))
+  end
 end

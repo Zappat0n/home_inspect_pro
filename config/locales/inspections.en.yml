@@ -1,6 +1,12 @@
 ---
 en:
   inspections:
+    complete:
+      already_completed: This inspection is already completed.
+      button: Complete Inspection
+      confirm: Are you sure? You will not be able to edit the inspection after completing
+        it.
+      success: Inspection was marked as completed.
     create:
       success: Inspection was successfully created.
     form:

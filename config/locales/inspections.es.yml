@@ -1,6 +1,11 @@
 ---
 es:
   inspections:
+    complete:
+      already_completed: Esta inspección ya está completada.
+      button: Completar Inspección
+      confirm: "¿Estás seguro? No podrás editar la inspección después de completarla."
+      success: La inspección se marcó como completada.
     create:
       success: La inspección se creó correctamente.
     form:
