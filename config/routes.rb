@@ -8,7 +8,9 @@ Rails.application.routes.draw do
     member do
       patch :complete
     end
-    resources :inspection_items, only: [:update]
+    resources :inspection_items, only: [:update] do
+      resources :photos, controller: "inspection_photos", only: %i[create destroy]
+    end
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

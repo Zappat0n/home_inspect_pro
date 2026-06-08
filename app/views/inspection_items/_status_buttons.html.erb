@@ -1,0 +1,41 @@
+  <%= button_to(
+        t("inspection_items.status.ok"),
+        inspection_inspection_item_path(inspection, inspection_item),
+        method: :patch,
+        disabled: !inspection.draft?,
+        params: {
+          inspection_item: {
+            status: :ok,
+          },
+        },
+        "data-testid": "inspection-item-ok-status",
+        class: "btn btn-sm #{inspection_item.ok? ? "btn-success" : "btn-inactive"}",
+      ) %>
+
+  <%= button_to(
+        t("inspection_items.status.defect"),
+        inspection_inspection_item_path(inspection, inspection_item),
+        method: :patch,
+        disabled: !inspection.draft?,
+        params: {
+          inspection_item: {
+            status: :defect,
+          },
+        },
+        "data-testid": "inspection-item-defect-status",
+        class: "btn btn-sm #{inspection_item.defect? ? "btn-danger" : "btn-inactive"}",
+      ) %>
+
+  <%= button_to(
+        t("inspection_items.status.na"),
+        inspection_inspection_item_path(inspection, inspection_item),
+        method: :patch,
+        disabled: !inspection.draft?,
+        params: {
+          inspection_item: {
+            status: :na,
+          },
+        },
+        "data-testid": "inspection-item-na-status",
+        class: "btn btn-sm #{inspection_item.na? ? "btn-na" : "btn-inactive"}",
+      ) %>
