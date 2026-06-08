@@ -149,4 +149,42 @@ class Inspections::ShowPage
   def has_complete_success_message?
     has_content?(I18n.t("inspections.complete.success"))
   end
+
+  def has_photo_upload_input?(item)
+    within "##{dom_id(item)}" do
+      has_css?("[data-testid='photo-upload-input']")
+    end
+  end
+
+  def has_no_photo_upload_input?(item)
+    within "##{dom_id(item)}" do
+      has_no_css?("[data-testid='photo-upload-input']")
+    end
+  end
+
+  def has_photo_thumbnail?
+    has_css?("[data-testid='photo-thumbnail']")
+  end
+
+  def has_no_photo_thumbnail?
+    has_no_css?("[data-testid='photo-thumbnail']")
+  end
+
+  def has_photo_delete_button?
+    has_css?("[data-testid='photo-delete-button']")
+  end
+
+  def has_no_photo_delete_button?
+    has_no_css?("[data-testid='photo-delete-button']")
+  end
+
+  def click_photo_delete_button
+    find("[data-testid='photo-delete-button']").click
+  end
+
+  def attach_photo(item, file_path)
+    within "##{dom_id(item)}" do
+      attach_file("photo", file_path, make_visible: true)
+    end
+  end
 end

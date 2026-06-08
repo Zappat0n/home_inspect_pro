@@ -1,0 +1,20 @@
+<% if photo.persisted? %>
+  <%= turbo_stream.replace dom_id(inspection_item) do %>
+    <%= render(
+          partial: "inspection_items/inspection_item",
+          locals: {
+            inspection: inspection,
+            inspection_item: inspection_item,
+          },
+        ) %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.replace "photo-upload-error" do %>
+    <%= render(
+          partial: "inspection_photos/upload_error",
+          locals: {
+            errors: photo.errors.full_messages,
+          },
+        ) %>
+  <% end %>
+<% end %>

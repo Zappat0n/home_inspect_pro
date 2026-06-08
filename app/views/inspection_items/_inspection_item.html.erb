@@ -1,7 +1,7 @@
 <%= turbo_frame_tag dom_id(inspection_item) do %>
-  <div class="p-4 border-b border-gray-200">
-    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-      <div>
+  <div class="flex flex-col p-4 border-b border-gray-200">
+    <div class="flex flex-col items-start justify-between gap-4">
+      <div class="flex flex-row justify-between w-full">
         <h3 class="text-lg font-medium text-gray-900">
           <%= inspection_item.checklist_item.name %>
         </h3>
@@ -11,52 +11,68 @@
             <%= inspection_item.checklist_item.description %>
           </p>
         <% end %>
+
+        <div class="flex items-start gap-2 ml-2">
+          <%= render(
+              partial: "inspection_items/status_buttons",
+              locals: {
+                inspection: inspection,
+                inspection_item: inspection_item,
+              },
+            ) %>
+        </div>
       </div>
 
-      <div class="flex items-center gap-2 shrink-0">
-        <%= button_to(
-              t("inspection_items.status.ok"),
-              inspection_inspection_item_path(inspection, inspection_item),
-              method: :patch,
-              disabled: !inspection.draft?,
-              params: {
-                inspection_item: {
-                  status: :ok,
-                },
-              },
-              "data-testid": "inspection-item-ok-status",
-              class: "btn btn-sm #{inspection_item.ok? ? "btn-success" : "btn-inactive"}",
-            ) %>
+      <div class="flex flex-row justify-between items-start gap-2 shrink-0 w-full">
+        <div class="flex items-start gap-2 flex-wrap">
+          <% photos = inspection.inspection_photos.where(checklist_item: inspection_item.checklist_item).ordered %>
+          <% photos.each do |photo| %>
+            <div data-testid="photo-thumbnail" class="relative">
+              <%= link_to url_for(photo.photo),
+                          target: "_blank",
+                          class: "block" do %>
+                <%= image_tag photo.photo.variant(resize_to_limit: [200, 200]),
+                              class: "w-24 h-24 object-cover rounded border border-gray-200" %>
+              <% end %>
 
-        <%= button_to(
-              t("inspection_items.status.defect"),
-              inspection_inspection_item_path(inspection, inspection_item),
-              method: :patch,
-              disabled: !inspection.draft?,
-              params: {
-                inspection_item: {
-                  status: :defect,
-                },
-              },
-              "data-testid": "inspection-item-defect-status",
-              class: "btn btn-sm #{inspection_item.defect? ? "btn-danger" : "btn-inactive"}",
-            ) %>
+              <% if inspection.draft? %>
+                <%= button_to(
+                      inspection_inspection_item_photo_path(inspection, inspection_item, photo),
+                      method: :delete,
+                      "data-testid": "photo-delete-button",
+                      class: "absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600 transition-colors shadow-sm",
+                    ) do %>
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
 
-        <%= button_to(
-              t("inspection_items.status.na"),
-              inspection_inspection_item_path(inspection, inspection_item),
-              method: :patch,
-              disabled: !inspection.draft?,
-              params: {
-                inspection_item: {
-                  status: :na,
-                },
-              },
-              "data-testid": "inspection-item-na-status",
-              class: "btn btn-sm #{inspection_item.na? ? "btn-na" : "btn-inactive"}",
-            ) %>
+        </div>
+        <% if inspection_item.checklist_item.allows_photo? && inspection.draft? %>
+          <%= form_with(
+            url: inspection_inspection_item_photos_path(inspection, inspection_item),
+            data: { controller: "photo-upload" },
+          ) do |form| %>
+          <%= form.label :photo,
+            class: "btn btn-sm btn-primary cursor-pointer min-h-[44px]" do %>
+            <%= lucide_icon("camera", class: "w-5 h-5") %>
+          <% end %>
+          <%= form.file_field :photo,
+            accept: "image/*",
+            class: "hidden",
+            data: {
+              action: "change->photo-upload#upload",
+              testid: "photo-upload-input",
+            } %>
+        <% end %>
+      <% end %>
       </div>
     </div>
+
+    <div id="photo-upload-error"></div>
 
      <% if inspection_item.defect? %>
       <div class="mt-4">

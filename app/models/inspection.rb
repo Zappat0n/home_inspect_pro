@@ -42,4 +42,8 @@ class Inspection < ApplicationRecord
        }
 
   scope :newest_first, -> { order(created_at: :desc) }
+
+  def next_photo_position
+    (inspection_photos.maximum(:position) || 0) + 1
+  end
 end

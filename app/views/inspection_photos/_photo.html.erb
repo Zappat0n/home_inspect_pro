@@ -1,0 +1,23 @@
+<%= turbo_frame_tag dom_id(photo) do %>
+  <div class="relative" data-testid="photo-thumbnail">
+    <%= link_to url_for(photo.photo),
+                target: "_blank",
+                class: "block" do %>
+      <%= image_tag photo.photo.variant(resize_to_limit: [200, 200]),
+                    class: "w-full h-32 object-cover rounded" %>
+    <% end %>
+
+    <% if inspection.draft? %>
+      <%= button_to(
+            inspection_inspection_item_photo_path(inspection, inspection_item, photo),
+            method: :delete,
+            "data-testid": "photo-delete-button",
+            class: "absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors",
+          ) do %>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

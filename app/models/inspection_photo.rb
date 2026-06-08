@@ -38,6 +38,6 @@ class InspectionPhoto < ApplicationRecord
   private
 
   def photo_attached
-    errors.add(:photo, "must be attached") unless photo.attached?
+    errors.add(:photo, :must_be_attached) unless photo.attached?
   end
 end
