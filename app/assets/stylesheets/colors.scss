@@ -1,0 +1,103 @@
+// Gray
+$gray-50: #f9fafb;
+$gray-100: #f3f4f6;
+$gray-200: #e5e7eb;
+$gray-300: #d1d5db;
+$gray-400: #9ca3af;
+$gray-500: #6b7280;
+$gray-600: #4b5563;
+$gray-700: #374151;
+$gray-800: #1f2937;
+$gray-900: #111827;
+
+// Blue
+$blue-500: #3b82f6;
+$blue-600: #2563eb;
+$blue-700: #1d4ed8;
+$blue-800: #1e40af;
+
+// Green
+$green-100: #dcfce7;
+$green-400: #4ade80;
+$green-600: #16a34a;
+$green-700: #15803d;
+$green-800: #166534;
+
+// Red
+$red-50: #fef2f2;
+$red-100: #fee2e2;
+$red-200: #fecaca;
+$red-400: #f87171;
+$red-500: #ef4444;
+$red-600: #dc2626;
+$red-700: #b91c1c;
+$red-800: #991b1b;
+
+// Amber
+$amber-100: #fef3c7;
+$amber-800: #92400e;
+
+// Yellow
+$yellow-50: #fefce8;
+$yellow-200: #fef08a;
+$yellow-600: #ca8a04;
+$yellow-800: #854d0e;
+
+// White
+$white: #ffffff;
+$transparent: transparent;
+
+// Brand
+$primary: $blue-600;
+$primary-hover: $blue-700;
+$primary-focus-ring: $blue-500;
+
+$danger: $red-600;
+$danger-hover: $red-700;
+$danger-focus-ring: $red-500;
+
+$success: $green-600;
+$success-hover: $green-700;
+
+$warning-bg: $yellow-50;
+$warning-border: $yellow-200;
+$warning-text: $yellow-800;
+
+// Status badges
+$status-draft-bg: $amber-100;
+$status-draft-text: $amber-800;
+$status-completed-bg: $green-100;
+$status-completed-text: $green-800;
+
+// Forms
+$input-border: $gray-300;
+$input-focus-border: $blue-500;
+$input-focus-ring: $blue-500;
+$label: $gray-700;
+$text-muted: $gray-500;
+
+// Flash messages
+$notice-bg: $green-100;
+$notice-border: $green-400;
+$notice-text: $green-700;
+$alert-bg: $red-100;
+$alert-border: $red-400;
+$alert-text: $red-700;
+
+// Errors
+$error-bg: $red-50;
+$error-border: $red-200;
+$error-text: $red-700;
+
+// Navigation
+$nav-bg: $white;
+$nav-border: $gray-200;
+$nav-link: $blue-600;
+$nav-link-hover: $blue-800;
+
+// Text
+$text-primary: $gray-900;
+$text-secondary: $gray-700;
+$text-muted: $gray-500;
+$link: $blue-600;
+$link-hover: $blue-800;
