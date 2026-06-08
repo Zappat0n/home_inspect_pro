@@ -1,0 +1,9 @@
+@use "colors" as *;
+
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $gray-700;
+  margin-bottom: 0.25rem;
+}
