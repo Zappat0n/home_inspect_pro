@@ -1,0 +1,14 @@
+{
+  "extends": "stylelint-config-standard-scss",
+  "ignoreFiles": [
+    "app/assets/builds/**",
+    "node_modules/**",
+    "vendor/**"
+  ],
+  "rules": {
+    "at-rule-no-deprecated": null,
+    "color-function-notation": "legacy",
+    "no-descending-specificity": null,
+    "scss/no-global-function-names": null
+  }
+}

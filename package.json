@@ -31,11 +31,15 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build": "bin/shakapacker"
+    "build": "bin/shakapacker",
+    "lint:css": "stylelint 'app/assets/stylesheets/**/*.{css,scss}'"
   },
   "devDependencies": {
     "@types/webpack-env": "^1.18.8",
     "sass": "^1.100.0",
+    "stylelint": "^17.13.0",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-config-standard-scss": "^17.0.0",
     "typescript": "^6.0.3",
     "webpack-dev-server": "^5.2.4"
   },
