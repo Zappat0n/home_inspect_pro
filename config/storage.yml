@@ -21,6 +21,16 @@ local:
 #   credentials: <%= Rails.root.join("path/to/gcs.keyfile") %>
 #   bucket: your_own_bucket-<%= Rails.env %>
 
+# S3-compatible service for Cloudflare R2 in production
+cloudflare_r2:
+  service: S3
+  access_key_id: <%= ENV["R2_ACCESS_KEY_ID"] %>
+  secret_access_key: <%= ENV["R2_SECRET_ACCESS_KEY"] %>
+  region: auto
+  bucket: <%= ENV["R2_BUCKET"] %>
+  endpoint: <%= ENV["R2_ENDPOINT"] %>
+  force_path_style: true
+
 # mirror:
 #   service: Mirror
 #   primary: local
