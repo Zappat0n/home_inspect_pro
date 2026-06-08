@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Inspection items", type: :feature do
-  it "marks an item as defect and adds a comment" do
+  it "shows comment and save button for defect item on draft inspection" do
     country = create(:country, code: "US", locale: "en")
     user = create(:user, country: country)
     inspection_template = create(:inspection_template, country: country, published: true)
@@ -27,27 +27,62 @@ RSpec.describe "Inspection items", type: :feature do
       :inspection_item,
       inspection: inspection,
       checklist_item: checklist_item,
-      status: :ok,
+      status: :defect,
       comment: nil,
     )
 
     sign_in user
 
-    page = Inspections::ShowPage.new(inspection)
-    page.visit_page
+    page_obj = Inspections::ShowPage.new(inspection)
+    page_obj.visit_page
 
-    page.has_category?("Roof")
+    expect(page_obj).to have_heading
 
-    page.has_inspection_item?(inspection_item)
+    expect(page_obj).to have_category("Roof")
+    expect(page_obj).to have_inspection_item(inspection_item)
 
-    page.has_comment_hidden?(inspection_item)
+    expect(page_obj).to have_comment_visible(inspection_item)
+    expect(page_obj).to have_save_button(inspection_item)
 
-    page.click_defect_status(inspection_item)
+    page_obj.fill_in_comment(inspection_item, "Missing shingles on north slope")
 
-    page.has_comment_visible?(inspection_item)
+    expect(page_obj).to have_comment_visible(inspection_item)
+    expect(page_obj).to have_save_button(inspection_item)
+  end
 
-    page.fill_in_comment(inspection_item, "Missing shingles on north slope")
+  it "does not show save button when inspection is completed" do
+    country = create(:country, code: "US", locale: "en")
+    user = create(:user, country: country)
+    inspection_template = create(:inspection_template, country: country, published: true)
+    checklist_item = create(
+      :checklist_item,
+      inspection_template: inspection_template,
+      category: "Roof",
+      name: "Shingles",
+      description: "Check shingles condition",
+      position: 1,
+    )
+    inspection = create(
+      :inspection,
+      user: user,
+      inspection_template: inspection_template,
+      status: :completed,
+    )
+    inspection_item = create(
+      :inspection_item,
+      inspection: inspection,
+      checklist_item: checklist_item,
+      status: :defect,
+      comment: "Existing defect",
+    )
 
-    page.has_no_comment_visible?
+    sign_in user
+
+    page_obj = Inspections::ShowPage.new(inspection)
+    page_obj.visit_page
+
+    expect(page_obj).to have_heading
+
+    expect(page_obj).to have_no_save_button(inspection_item)
   end
 end

@@ -69,19 +69,22 @@ class Inspections::ShowPage
 
   def has_ok_status_selected?(item)
     within "##{dom_id(item)}" do
-      expect(find("[data-testid='inspection-item-ok-status']")).to be_visible
+      button = find("[data-testid='inspection-item-ok-status']")
+      button[:class].include?("bg-green-600")
     end
   end
 
   def has_defect_status_selected?(item)
     within "##{dom_id(item)}" do
-      expect(find("[data-testid='inspection-item-defect-status']")).to be_visible
+      button = find("[data-testid='inspection-item-defect-status']")
+      button[:class].include?("bg-red-600")
     end
   end
 
   def has_na_status_selected?(item)
     within "##{dom_id(item)}" do
-      expect(find("[data-testid='inspection-item-na-status']")).to be_visible
+      button = find("[data-testid='inspection-item-na-status']")
+      button[:class].include?("bg-yellow-600")
     end
   end
 
@@ -113,5 +116,17 @@ class Inspections::ShowPage
 
   def has_no_comment_visible?
     has_no_css?("[data-testid='inspection-item-comment-textarea']", visible: true)
+  end
+
+  def has_save_button?(item)
+    within "##{dom_id(item)}" do
+      has_css?("[data-testid='inspection-item-save-comment']", visible: true)
+    end
+  end
+
+  def has_no_save_button?(item)
+    within "##{dom_id(item)}" do
+      has_no_css?("[data-testid='inspection-item-save-comment']", visible: true)
+    end
   end
 end
