@@ -1,7 +1,9 @@
 ---
 es:
   inspection_items:
-    comment_label: Comentario
+    comment:
+      label: Comentario
+      placeholder: Describa el defecto...
     save_comment: Guardar comentario
     status:
       defect: Defecto

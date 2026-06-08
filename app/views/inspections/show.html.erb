@@ -88,22 +88,42 @@
                 </p>
               </div>
 
-              <div class="flex items-center gap-2">
-                <%= form_with(model: [inspection, item], as: :string, class: "flex gap-2") do |f| %>
-                  <%= f.label :status, "OK", class: "px-3 py-1 text-xs font-medium rounded-full border cursor-pointer transition-colors
-                    #{item.ok? ? "bg-green-600 text-white border-green-600" : "bg-white text-gray-600 border-gray-300 hover:bg-gray-50"}", data: { testid: "inspection-item-ok-status" } do %>
-                    <%= f.radio_button :status, "ok", class: "hidden" %>
-                  <% end %>
+               <div class="flex items-center gap-2">
+                <%= form_with(
+                      model: [inspection, item],
+                      class: "flex gap-2",
+                      data: {
+                        controller: "inspection-item",
+                        action: "change->inspection-item#statusChanged",
+                      },
+                    ) do |f| %>
+                   <%= f.label :status, "ok", class: "px-3 py-1 text-xs font-medium rounded-full border cursor-pointer transition-colors
+                    #{item.ok? ? "bg-green-600 text-white border-green-600" : "bg-white text-gray-600 border-gray-300 hover:bg-gray-50"}", data: { testid: "inspection-item-ok-status", inspection_item_target: "statusRadio", action: "click->inspection-item#statusChanged" } do %>
+                     <%= f.radio_button :status, "ok", class: "hidden", checked: item.ok?, data: { inspection_item_target: "statusRadio" , action: "inspection-item#statusChanged"} %>
+                     <%= I18n.t("inspection_items.status.ok") %>
+                   <% end %>
 
-                  <%= f.label :status, "Defect", class: "px-3 py-1 text-xs font-medium rounded-full border cursor-pointer transition-colors
-                    #{item.defect? ? "bg-red-600 text-white border-red-600" : "bg-white text-gray-600 border-gray-300 hover:bg-gray-50"}", data: { testid: "inspection-item-defect-status" } do %>
-                    <%= f.radio_button :status, "defect", class: "hidden" %>
-                  <% end %>
+                   <%= f.label :status, "defect", class: "px-3 py-1 text-xs font-medium rounded-full border cursor-pointer transition-colors
+                    #{item.defect? ? "bg-red-600 text-white border-red-600" : "bg-white text-gray-600 border-gray-300 hover:bg-gray-50"}", data: { testid: "inspection-item-defect-status", inspection_item_target: "statusRadio", action: "click->inspection-item#statusChanged" } do %>
+                     <%= f.radio_button :status, "defect", class: "hidden", checked: item.defect?, data: { inspection_item_target: "statusRadio" } %>
+                     <%= I18n.t("inspection_items.status.defect") %>
+                   <% end %>
 
-                  <%= f.label :status, "N/A", class: "px-3 py-1 text-xs font-medium rounded-full border cursor-pointer transition-colors
-                    #{item.na? ? "bg-gray-600 text-white border-gray-600" : "bg-white text-gray-600 border-gray-300 hover:bg-gray-50"}", data: { testid: "inspection-item-na-status" } do %>
-                    <%= f.radio_button :status, "na", class: "hidden" %>
-                  <% end %>
+                   <%= f.label :status, "na", class: "px-3 py-1 text-xs font-medium rounded-full border cursor-pointer transition-colors
+                    #{item.na? ? "bg-gray-600 text-white border-gray-600" : "bg-white text-gray-600 border-gray-300 hover:bg-gray-50"}", data: { testid: "inspection-item-na-status", inspection_item_target: "statusRadio", action: "click->inspection-item#statusChanged" } do %>
+                     <%= f.radio_button :status, "na", class: "hidden", checked: item.na?, data: { inspection_item_target: "statusRadio" } %>
+                     <%= I18n.t("inspection_items.status.na") %>
+                   <% end %>
+
+                  <div class="mt-2 sm:mt-0 sm:ml-2 w-full sm:w-auto hidden" data-inspection-item-target="commentContainer">
+                    <%= f.text_area(
+                          :comment,
+                          rows: 2,
+                          class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm",
+                          placeholder: I18n.t("inspection_items.comment.placeholder"),
+                          data: { testid: "inspection-item-comment-textarea" },
+                        ) %>
+                  </div>
                 <% end %>
               </div>
             </div>

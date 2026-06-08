@@ -92,4 +92,26 @@ class Inspections::ShowPage
   def has_completed_alert?
     has_content?(I18n.t("inspection_items.update.completed_alert"))
   end
+
+  def fill_in_comment(item, comment_text)
+    within "##{dom_id(item)}" do
+      find("[data-testid='inspection-item-comment-textarea']").fill_in(with: comment_text)
+    end
+  end
+
+  def has_comment_visible?(item)
+    within "##{dom_id(item)}" do
+      has_css?("[data-testid='inspection-item-comment-textarea']", visible: true)
+    end
+  end
+
+  def has_comment_hidden?(item)
+    within "##{dom_id(item)}" do
+      has_no_css?("[data-testid='inspection-item-comment-textarea']", visible: true)
+    end
+  end
+
+  def has_no_comment_visible?
+    has_no_css?("[data-testid='inspection-item-comment-textarea']", visible: true)
+  end
 end

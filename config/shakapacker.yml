@@ -158,7 +158,7 @@ development:
     # Should we use gzip compression?
     compress: true
     # Note that apps that do not check the host are vulnerable to DNS rebinding attacks
-    allowed_hosts: "auto"
+    allowed_hosts: "all"
     # Shows progress and colorizes output of bin/shakapacker[-dev-server]
     pretty: true
     # Uncomment to enable CORS (e.g., when webpack-dev-server runs on a different
