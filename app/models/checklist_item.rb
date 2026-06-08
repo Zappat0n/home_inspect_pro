@@ -25,6 +25,7 @@
 class ChecklistItem < ApplicationRecord
   belongs_to :inspection_template
   has_many :inspection_items, dependent: :destroy
+  has_many :inspection_photos, dependent: :destroy
 
   validates :name, presence: true
   validates :position, presence: true, uniqueness: { scope: :inspection_template_id }
