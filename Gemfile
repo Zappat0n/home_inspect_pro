@@ -46,6 +46,7 @@ gem "thruster", require: false
 gem "image_processing", "~> 2.0"
 gem "rails_admin", "~> 3.0"
 gem "ruby-vips", "~> 2.3"
+gem "view_component"
 
 group :development, :test do
   gem "brakeman", require: false
