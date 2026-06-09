@@ -1,0 +1,27 @@
+---
+es:
+  reports:
+    show:
+      title: "Informe de Inspección"
+      property_address: "Dirección de la Propiedad"
+      client_name: "Nombre del Cliente"
+      client_email: "Correo Electrónico del Cliente"
+      inspector: "Inspector"
+      template: "Estándar de Inspección"
+      date: "Fecha de Inspección"
+      logo_text: "Home Inspect Pro"
+      signature: "Firma del Cliente"
+      signature_alt: "Firma del cliente"
+      defects_summary: "Resumen de Defectos"
+      defect_items: "Elementos que Requieren Atención"
+      category: "Categoría"
+      item: "Elemento"
+      comment: "Comentario"
+      severity: "Gravedad"
+      severities:
+        critical: "Crítico"
+        major: "Grave"
+        minor: "Leve"
+        info: "Informativo"
+      no_defects: "No se encontraron defectos durante esta inspección."
+      generated_by: "Generado por Home Inspect Pro"

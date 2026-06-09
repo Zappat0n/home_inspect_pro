@@ -1,0 +1,42 @@
+<%# locals: (defects:) %>
+<% if defects.any? %>
+  <div class="page-break">
+    <h2 style="font-size: 16px; font-weight: 700; margin: 0 0 12px 0; color: #111827;">
+      <%= t("reports.show.defects_summary") %>
+    </h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th><%= t("reports.show.category") %></th>
+          <th><%= t("reports.show.item") %></th>
+          <th><%= t("reports.show.severity") %></th>
+          <th><%= t("reports.show.comment") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% defects.each do |inspection_item| %>
+          <% checklist_item = inspection_item.checklist_item %>
+          <tr>
+            <td style="font-size: 10px;"><%= checklist_item.category %></td>
+            <td style="font-size: 10px; font-weight: 600;"><%= checklist_item.name %></td>
+            <td style="font-size: 10px;">
+              <% severity_styles = {
+                "critical" => "color: #dc2626; border: 1px solid #dc2626; background-color: #fef2f2;",
+                "major" => "color: #ea580c; border: 1px solid #ea580c; background-color: #fff7ed;",
+                "minor" => "color: #ca8a04; border: 1px solid #ca8a04; background-color: #fefce8;",
+                "info" => "color: #6b7280; border: 1px solid #9ca3af; background-color: #f9fafb;"
+              } %>
+              <span style="display: inline-block; padding: 1px 6px; font-size: 9px; font-weight: 600; border-radius: 3px; <%= severity_styles[checklist_item.severity] || severity_styles["info"] %>">
+                <%= t("reports.show.severities.#{checklist_item.severity}") %>
+              </span>
+            </td>
+            <td style="font-size: 10px; color: #4b5563;">
+              <%= inspection_item.comment.presence || "—" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

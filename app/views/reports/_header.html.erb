@@ -1,0 +1,62 @@
+<%# locals: (inspection:) %>
+<div class="avoid-break">
+  <div style="border-bottom: 2px solid #111827; padding-bottom: 8px; margin-bottom: 16px;">
+    <h1 style="font-size: 24px; font-weight: 700; margin: 0 0 4px 0; color: #111827;">
+      <%= t("reports.show.logo_text") %>
+    </h1>
+    <p style="font-size: 9px; color: #6b7280; margin: 0;">
+      <%= t("reports.show.title") %>
+    </p>
+  </div>
+
+  <table style="margin-bottom: 16px;">
+    <tr>
+      <td style="width: 160px; font-weight: 600; color: #374151; border: none; padding: 3px 8px 3px 0;">
+        <%= t("reports.show.date") %>
+      </td>
+      <td style="border: none; padding: 3px 0;">
+        <%= l(inspection.completed_at.presence || inspection.created_at, format: :long) %>
+      </td>
+    </tr>
+    <tr>
+      <td style="font-weight: 600; color: #374151; border: none; padding: 3px 8px 3px 0;">
+        <%= t("reports.show.property_address") %>
+      </td>
+      <td style="border: none; padding: 3px 0;">
+        <%= inspection.property_address %>
+      </td>
+    </tr>
+    <tr>
+      <td style="font-weight: 600; color: #374151; border: none; padding: 3px 8px 3px 0;">
+        <%= t("reports.show.client_name") %>
+      </td>
+      <td style="border: none; padding: 3px 0;">
+        <%= inspection.client_name %>
+      </td>
+    </tr>
+    <tr>
+      <td style="font-weight: 600; color: #374151; border: none; padding: 3px 8px 3px 0;">
+        <%= t("reports.show.client_email") %>
+      </td>
+      <td style="border: none; padding: 3px 0;">
+        <%= inspection.client_email %>
+      </td>
+    </tr>
+    <tr>
+      <td style="font-weight: 600; color: #374151; border: none; padding: 3px 8px 3px 0;">
+        <%= t("reports.show.inspector") %>
+      </td>
+      <td style="border: none; padding: 3px 0;">
+        <%= inspection.user.email %>
+      </td>
+    </tr>
+    <tr>
+      <td style="font-weight: 600; color: #374151; border: none; padding: 3px 8px 3px 0;">
+        <%= t("reports.show.template") %>
+      </td>
+      <td style="border: none; padding: 3px 0;">
+        <%= inspection.inspection_template.name %>
+      </td>
+    </tr>
+  </table>
+</div>
