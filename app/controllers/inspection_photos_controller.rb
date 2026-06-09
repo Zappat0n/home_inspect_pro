@@ -6,15 +6,17 @@ class InspectionPhotosController < ApplicationController
     inspection_item = inspection.inspection_items.find(params[:inspection_item_id])
 
     photo = build_photo(inspection, inspection_item)
-    photo.photo.attach(attachment_args)
+    photo.photo.attach(**attachment_args.to_h)
 
     if photo.save
       render_create_success(photo, inspection_item, inspection)
     else
       render_create_error(photo, inspection)
     end
+  rescue InspectionPhotoProcessor::NullResponse::MissingPhotoError
+    render_create_error(photo, inspection)
   ensure
-    attachment_args[:tempfile].close! if attachment_args.is_a?(Hash)
+    attachment_args.io.close! if attachment_args.needs_close?
   end
 
   def destroy

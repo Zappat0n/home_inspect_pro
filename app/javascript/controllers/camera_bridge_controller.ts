@@ -13,10 +13,12 @@ export default class CameraBridgeController extends BridgeComponent {
   connect(): void {
     super.connect()
 
+    this.nativeButtonTarget.style.display = "none"
+    this.webLabelTarget.style.display = ""
+
     if (this.enabled) {
-      this.webLabelTarget.classList.add("hidden")
-      this.webInputTarget.classList.add("hidden")
-      this.nativeButtonTarget.classList.remove("hidden")
+      this.webLabelTarget.style.display = "none"
+      this.nativeButtonTarget.style.display = ""
     }
   }
 
