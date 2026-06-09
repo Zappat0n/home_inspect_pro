@@ -49,6 +49,7 @@ RUN bundle install && \
 # Install JavaScript dependencies
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn/ ./.yarn/
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 RUN yarn install
 
 # Copy application code
@@ -64,6 +65,14 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 # Final stage for app image
 FROM base
+
+# Install Node.js and Chromium for Puppeteer PDF generation (chromium package pulls system deps)
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
+    apt-get update -qq && \
+    apt-get install --no-install-recommends -y nodejs chromium && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \
