@@ -47,4 +47,10 @@ class Inspection < ApplicationRecord
   def next_photo_position
     (inspection_photos.maximum(:position) || 0) + 1
   end
+
+  def locale
+    inspection_template
+      .country
+      .locale
+  end
 end

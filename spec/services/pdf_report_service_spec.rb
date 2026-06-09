@@ -4,73 +4,67 @@ require "rails_helper"
 
 RSpec.describe PdfReportService do
   describe "#call" do
-    it "groups items by their checklist category" do
-      country = create(:country)
-      user = create(:user, country: country)
+    it "generates a PDF and attaches it to the inspection" do
+      country = create(:country, locale: "en")
+      create(:report_template, country: country, locale: "en")
       template = create(:inspection_template, country: country, published: true)
+      inspection = create(:inspection, inspection_template: template)
       roof_item = create(
         :checklist_item,
         inspection_template: template,
         category: "Roof",
+        name: "Shingles",
         position: 1,
       )
       electrical_item = create(
         :checklist_item,
         inspection_template: template,
         category: "Electrical",
+        name: "Outlet",
         position: 2,
       )
-      inspection = create(:inspection, user: user, inspection_template: template)
-      create(:inspection_item, inspection: inspection, checklist_item: roof_item, status: :ok)
       create(
         :inspection_item,
         inspection: inspection,
-        checklist_item: electrical_item,
+        checklist_item: roof_item,
         status: :defect,
+        comment: "Missing shingles on east side",
       )
+      create(:inspection_item, inspection: inspection, checklist_item: electrical_item, status: :ok)
 
-      result = described_class.new(inspection).send(:items_grouped)
+      ActiveStorage::Current.url_options = { host: "http://localhost:3000" }
+      grover_double = instance_double(Grover, to_pdf: "fake pdf content")
+      rendered_html = nil
+      allow(Grover).to receive(:new) do |html|
+        rendered_html = html
+        grover_double
+      end
 
-      expect(result.keys).to match_array(%w[Roof Electrical])
+      described_class.new(inspection).call
+
+      expect(inspection.pdf).to be_attached
+      expect(inspection.pdf_url).to be_present
+      expect(rendered_html).to include("Roof")
+      expect(rendered_html).to include("Electrical")
+      expect(rendered_html).to include("Shingles")
+
+      defects_section = rendered_html.split("Defects Summary").last
+      expect(defects_section).to include("Missing shingles on east side")
     end
 
-    it "includes only defect items in the defects list" do
-      country = create(:country)
-      user = create(:user, country: country)
+    it "generates a PDF with Spanish locale" do
+      country = create(:country, locale: "es")
+      create(:report_template, country: country, locale: "es")
       template = create(:inspection_template, country: country, published: true)
-      ok_item = create(
-        :checklist_item,
-        inspection_template: template,
-        name: "OK Item",
-        position: 1,
-      )
-      defect_item = create(
-        :checklist_item,
-        inspection_template: template,
-        name: "Defect Item",
-        position: 2,
-      )
-      na_item = create(
-        :checklist_item,
-        inspection_template: template,
-        name: "NA Item",
-        position: 3,
-      )
-      inspection = create(:inspection, user: user, inspection_template: template)
-      create(:inspection_item, inspection: inspection, checklist_item: ok_item, status: :ok)
-      create(
-        :inspection_item,
-        inspection: inspection,
-        checklist_item: defect_item,
-        status: :defect,
-      )
-      create(:inspection_item, inspection: inspection, checklist_item: na_item, status: :na)
+      inspection = create(:inspection, inspection_template: template)
 
-      result = described_class.new(inspection).send(:defects)
+      ActiveStorage::Current.url_options = { host: "http://localhost:3000" }
+      grover_double = instance_double(Grover, to_pdf: "fake pdf content")
+      allow(Grover).to receive(:new).and_return(grover_double)
 
-      expect(result.size).to eq(1)
-      expect(result.first.status).to eq("defect")
-      expect(result.first.checklist_item.name).to eq("Defect Item")
+      described_class.new(inspection).call
+
+      expect(inspection.pdf).to be_attached
     end
   end
 end

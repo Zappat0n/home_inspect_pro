@@ -41,7 +41,22 @@ User.find_each do |user|
       ins.completed_at = inspection_attrs[:completed_at]
     end
 
+    next if inspection.inspection_items.exists?
+
     Inspections::InitializeChecklistService.new(inspection).call
+
+    if inspection.completed?
+      items = inspection.inspection_items.to_a
+      items.first(items.size / 3).each { |item| item.update!(status: :ok) }
+
+      defect_items = items[items.size / 3, items.size / 4]
+      defect_items&.each do |item|
+        item.update!(
+          status: :defect,
+          comment: "Needs further evaluation by a qualified professional.",
+        )
+      end
+    end
   end
 
 end
