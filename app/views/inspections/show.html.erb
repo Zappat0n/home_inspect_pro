@@ -69,16 +69,63 @@
     </div>
   </div>
 
+  <% if inspection.signature_data.present? %>
+    <div class="card p-6 mb-8">
+      <h3 class="text-lg font-semibold text-gray-900 mb-2">
+        <%= t("inspections.show.signature") %>
+      </h3>
+      <%= image_tag inspection.signature_data, 
+        alt: t("inspections.show.signature_alt"),
+        class: "max-h-32 border border-gray-200 rounded" %>
+    </div>
+  <% end %>
+
   <% if inspection.draft? %>
     <div class="mb-8">
-      <%= button_to(
-            t("inspections.complete.button"),
-            complete_inspection_path(inspection),
+      <%= form_with(
+            url: complete_inspection_path(inspection),
             method: :patch,
-            data: { turbo_confirm: t("inspections.complete.confirm") },
-            "data-testid": "complete-inspection-button",
-            class: "btn btn-success",
-          ) %>
+            data: {
+              controller: "signature-pad",
+              action: "submit->signature-pad#capture",
+            },
+          ) do |form| %>
+        <div class="card p-6 mb-4">
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">
+            <%= t("inspections.complete.signature_title") %>
+          </h3>
+          <p class="text-sm text-gray-500 mb-4">
+            <%= t("inspections.complete.signature_hint") %>
+          </p>
+
+          <canvas data-signature-pad-target="canvas"
+                  width="600"
+                  height="200"
+                  class="w-full border border-gray-300 rounded-lg touch-none cursor-crosshair bg-white"></canvas>
+
+          <input type="hidden"
+                 data-signature-pad-target="signatureInput"
+                 name="inspection[signature_data]">
+
+          <div class="mt-3 flex gap-3">
+            <button type="button"
+                    data-action="signature-pad#clear"
+                    class="btn btn-outline"
+                    data-testid="clear-signature-button">
+              <%= t("inspections.complete.clear_signature") %>
+            </button>
+          </div>
+        </div>
+
+        <%= form.submit(
+              t("inspections.complete.button"),
+              data: {
+                testid: "complete-inspection-button",
+                turbo_confirm: t("inspections.complete.confirm"),
+              },
+              class: "btn btn-success",
+            ) %>
+      <% end %>
     </div>
   <% end %>
 

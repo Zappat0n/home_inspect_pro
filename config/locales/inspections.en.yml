@@ -4,8 +4,11 @@ en:
     complete:
       already_completed: This inspection is already completed.
       button: Complete Inspection
+      clear_signature: Clear
       confirm: Are you sure? You will not be able to edit the inspection after completing
         it.
+      signature_hint: Sign above using your mouse or finger (if on a touch device).
+      signature_title: Signature
       success: Inspection was marked as completed.
     create:
       success: Inspection was successfully created.
@@ -29,6 +32,8 @@ en:
       client_name: Client Name
       created_at: Created
       property_address: Property Address
+      signature: Signature
+      signature_alt: Client signature
       status: Status
       statuses:
         completed: Completed
