@@ -6,7 +6,9 @@ class InspectionPhotoProcessor
   end
 
   def call
-    return uploaded_file unless uploaded_file.respond_to?(:tempfile)
+    return NullResponse.new unless uploaded_file
+
+    original_filename = File.basename(uploaded_file.original_filename, ".*")
 
     tempfile = Tempfile.new(["photo", ".webp"], binmode: true)
     ImageProcessing::Vips
@@ -16,14 +18,13 @@ class InspectionPhotoProcessor
       .call(destination: tempfile.path)
     tempfile.rewind
 
-    {
+    ProcessedResponse.new(
       io: tempfile,
-      filename: "#{File.basename(@uploaded_file.original_filename, '.*')}.webp",
+      filename: "#{original_filename}.webp",
       content_type: "image/webp",
-      tempfile: tempfile,
-    }
+    )
   rescue Vips::Error
-    uploaded_file
+    OriginalResponse.new(uploaded_file)
   end
 
   private

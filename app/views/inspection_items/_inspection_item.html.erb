@@ -61,7 +61,7 @@
             <%= form.label :photo,
               "data-camera-bridge-target": "webLabel",
               class: "btn btn-sm btn-primary cursor-pointer min-h-[44px]" do %>
-              <%= lucide_icon("camera", class: "w-5 h-5") %>
+              <%= lucide_icon("image-plus", class: "w-5 h-5") %>
             <% end %>
             <%= form.file_field :photo,
               accept: "image/*",
@@ -76,7 +76,8 @@
           <button type="button"
             data-camera-bridge-target="nativeButton"
             data-action="camera-bridge#capture"
-            class="btn btn-sm btn-primary min-h-[44px] hidden">
+            class="btn btn-sm btn-primary min-h-[44px]"
+            style="display: none">
             <%= lucide_icon("camera", class: "w-5 h-5") %>
           </button>
           <% end %>
