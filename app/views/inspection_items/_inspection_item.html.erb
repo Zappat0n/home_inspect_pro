@@ -1,5 +1,5 @@
 <%= turbo_frame_tag dom_id(inspection_item) do %>
-  <div class="flex flex-col p-4 border-b border-gray-200">
+  <div class="flex flex-col p-4 border-b border-gray-200" data-controller="inspection-item">
     <div class="flex flex-col items-start justify-between gap-4">
       <div class="flex flex-row justify-between w-full">
         <h3 class="text-lg font-medium text-gray-900">
@@ -24,30 +24,20 @@
       </div>
 
       <% if inspection_item.defect? %>
-        <div class="mt-4 w-full">
-          <%= form_with(
-            model: [inspection, inspection_item],
-            class: "flex gap-2",
-          ) do |form| %>
-
-            <%= form.text_area(
-              :comment,
-              rows: 2,
-              disabled: !inspection.draft?,
-              "data-testid": "inspection-item-comment-textarea",
-              class: "flex-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm p-2 #{!inspection.draft? ? "opacity-50 cursor-not-allowed bg-gray-50" : ""}",
-            ) %>
-
-            <% if inspection.draft? %>
-              <%= form.button(
-                "data-testid": "inspection-item-save-comment",
-                class: "btn btn-primary btn-sm",
-              ) do %>
-                <%= lucide_icon("save", class: "w-5 h-5") %>
-              <% end %>
-            <% end %>
-          <% end %>
-        </div>
+        <%= form_with(
+          model: [inspection, inspection_item],
+          data: { inspection_item_target: "commentForm" },
+          class: "mt-4 w-full",
+        ) do |form| %>
+          <%= form.text_area(
+            :comment,
+            rows: 2,
+            disabled: !inspection.draft?,
+            "data-testid": "inspection-item-comment-textarea",
+            class: "form-input text-sm #{!inspection.draft? ? "opacity-50 cursor-not-allowed bg-gray-50" : ""}",
+            data: { action: "blur->inspection-item#saveComment" },
+          ) %>
+        <% end %>
       <% end %>
 
       <div class="flex flex-row justify-between items-start gap-2 shrink-0 w-full">
