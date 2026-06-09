@@ -1,12 +1,12 @@
 <%# locals: (inspection:, items_grouped:, defects:) %>
 <div class="report-pdf">
-  <%= render "header", inspection: inspection %>
+  <%= render "reports/header", inspection: inspection %>
 
-  <%= render "checklist", inspection: inspection, items_grouped: items_grouped %>
+  <%= render "reports/checklist", inspection: inspection, items_grouped: items_grouped %>
 
-  <%= render "defects_summary", defects: defects %>
+  <%= render "reports/defects_summary", defects: defects %>
 
-  <%= render "signature", inspection: inspection %>
+  <%= render "reports/signature", inspection: inspection %>
 
-  <%= render "footer" %>
+  <%= render "reports/footer" %>
 </div>

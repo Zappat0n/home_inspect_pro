@@ -31,6 +31,7 @@ class Inspection < ApplicationRecord
   belongs_to :inspection_template
   has_many :inspection_items, dependent: :destroy
   has_many :inspection_photos, dependent: :destroy
+  has_one_attached :pdf
 
   validates :property_address, presence: true
   validates :client_name, presence: true
