@@ -1,60 +1,60 @@
 <%# locals: (inspection:) %>
 <div class="avoid-break">
-  <div style="border-bottom: 2px solid #111827; padding-bottom: 8px; margin-bottom: 16px;">
-    <h1 style="font-size: 24px; font-weight: 700; margin: 0 0 4px 0; color: #111827;">
+  <div class="header-divider">
+    <h1 class="header-title">
       <%= t("reports.show.logo_text") %>
     </h1>
-    <p style="font-size: 9px; color: #6b7280; margin: 0;">
+    <p class="header-subtitle">
       <%= t("reports.show.title") %>
     </p>
   </div>
 
-  <table style="margin-bottom: 16px;">
+  <table class="header-table">
     <tr>
-      <td style="width: 160px; font-weight: 600; color: #374151; border: none; padding: 3px 8px 3px 0;">
+      <td class="header-label">
         <%= t("reports.show.date") %>
       </td>
-      <td style="border: none; padding: 3px 0;">
+      <td class="header-value">
         <%= l(inspection.completed_at.presence || inspection.created_at, format: :long) %>
       </td>
     </tr>
     <tr>
-      <td style="font-weight: 600; color: #374151; border: none; padding: 3px 8px 3px 0;">
+      <td class="header-label">
         <%= t("reports.show.property_address") %>
       </td>
-      <td style="border: none; padding: 3px 0;">
+      <td class="header-value">
         <%= inspection.property_address %>
       </td>
     </tr>
     <tr>
-      <td style="font-weight: 600; color: #374151; border: none; padding: 3px 8px 3px 0;">
+      <td class="header-label">
         <%= t("reports.show.client_name") %>
       </td>
-      <td style="border: none; padding: 3px 0;">
+      <td class="header-value">
         <%= inspection.client_name %>
       </td>
     </tr>
     <tr>
-      <td style="font-weight: 600; color: #374151; border: none; padding: 3px 8px 3px 0;">
+      <td class="header-label">
         <%= t("reports.show.client_email") %>
       </td>
-      <td style="border: none; padding: 3px 0;">
+      <td class="header-value">
         <%= inspection.client_email %>
       </td>
     </tr>
     <tr>
-      <td style="font-weight: 600; color: #374151; border: none; padding: 3px 8px 3px 0;">
+      <td class="header-label">
         <%= t("reports.show.inspector") %>
       </td>
-      <td style="border: none; padding: 3px 0;">
+      <td class="header-value">
         <%= inspection.user.email %>
       </td>
     </tr>
     <tr>
-      <td style="font-weight: 600; color: #374151; border: none; padding: 3px 8px 3px 0;">
+      <td class="header-label">
         <%= t("reports.show.template") %>
       </td>
-      <td style="border: none; padding: 3px 0;">
+      <td class="header-value">
         <%= inspection.inspection_template.name %>
       </td>
     </tr>
