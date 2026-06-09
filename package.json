@@ -17,7 +17,7 @@
     "mini-css-extract-plugin": "^2.10.2",
     "postcss": "^8.5.15",
     "postcss-loader": "^8.2.1",
-    "puppeteer": "^22.0.0",
+    "puppeteer": "^24.15.0",
     "rails_admin": "3.3.0",
     "sass-loader": "^16.0.8",
     "shakapacker": "10.1.0",
