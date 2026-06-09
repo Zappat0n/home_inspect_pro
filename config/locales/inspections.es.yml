@@ -6,7 +6,8 @@ es:
       button: Completar Inspección
       clear_signature: Limpiar
       confirm: "¿Estás seguro? No podrás editar la inspección después de completarla."
-      signature_hint: Firme arriba usando su ratón o dedo (si está en un dispositivo táctil).
+      signature_hint: Firme arriba usando su ratón o dedo (si está en un dispositivo
+        táctil).
       signature_title: Firma
       success: La inspección se marcó como completada.
     create:
