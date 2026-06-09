@@ -118,15 +118,16 @@ class Inspections::ShowPage
     has_no_css?("[data-testid='inspection-item-comment-textarea']", visible: true)
   end
 
-  def has_save_button?(item)
+  def has_auto_save_form?(item)
     within "##{dom_id(item)}" do
-      has_css?("[data-testid='inspection-item-save-comment']", visible: true)
+      has_css?("form[data-inspection-item-target='commentForm']") &&
+        has_css?("[data-testid='inspection-item-comment-textarea'][data-action='blur->inspection-item#saveComment']")
     end
   end
 
-  def has_no_save_button?(item)
+  def has_comment_disabled?(item)
     within "##{dom_id(item)}" do
-      has_no_css?("[data-testid='inspection-item-save-comment']", visible: true)
+      has_css?("[data-testid='inspection-item-comment-textarea'][disabled]")
     end
   end
 

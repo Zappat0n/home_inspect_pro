@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Inspection items", type: :feature do
-  it "shows comment and save button for defect item on draft inspection" do
+  it "shows comment with auto-save for defect item on draft inspection" do
     country = create(:country, code: "US", locale: "en")
     user = create(:user, country: country)
     inspection_template = create(:inspection_template, country: country, published: true)
@@ -42,15 +42,15 @@ RSpec.describe "Inspection items", type: :feature do
     expect(page_obj).to have_inspection_item(inspection_item)
 
     expect(page_obj).to have_comment_visible(inspection_item)
-    expect(page_obj).to have_save_button(inspection_item)
+    expect(page_obj).to have_auto_save_form(inspection_item)
 
     page_obj.fill_in_comment(inspection_item, "Missing shingles on north slope")
 
     expect(page_obj).to have_comment_visible(inspection_item)
-    expect(page_obj).to have_save_button(inspection_item)
+    expect(page_obj).to have_auto_save_form(inspection_item)
   end
 
-  it "does not show save button when inspection is completed" do
+  it "disables comment textarea when inspection is completed" do
     country = create(:country, code: "US", locale: "en")
     user = create(:user, country: country)
     inspection_template = create(:inspection_template, country: country, published: true)
@@ -83,6 +83,7 @@ RSpec.describe "Inspection items", type: :feature do
 
     expect(page_obj).to have_heading
 
-    expect(page_obj).to have_no_save_button(inspection_item)
+    expect(page_obj).to have_comment_visible(inspection_item)
+    expect(page_obj).to have_comment_disabled(inspection_item)
   end
 end
