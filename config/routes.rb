@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :inspections, only: %i[index show new create] do
     member do
       patch :complete
+      get :report
     end
     resources :inspection_items, only: [:update] do
       resources :photos, controller: "inspection_photos", only: %i[create destroy]

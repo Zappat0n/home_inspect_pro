@@ -71,6 +71,12 @@ class InspectionsController < ApplicationController
     redirect_to(inspection, notice: t("inspections.complete.success"))
   end
 
+  def report
+    inspection = current_user.inspections.find(params[:id])
+    PdfReportService.new(inspection).call
+    redirect_to(inspection.pdf_url, allow_other_host: true)
+  end
+
   private
 
   def inspection_params
