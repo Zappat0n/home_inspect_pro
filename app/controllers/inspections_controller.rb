@@ -63,13 +63,17 @@ class InspectionsController < ApplicationController
       return
     end
 
-    inspection.update(status: :completed, completed_at: Time.current)
+    inspection.update(
+      status: :completed,
+      completed_at: Time.current,
+      signature_data: params.dig(:inspection, :signature_data).presence,
+    )
     redirect_to(inspection, notice: t("inspections.complete.success"))
   end
 
   private
 
   def inspection_params
-    params.expect(inspection: %i[property_address client_name client_email])
+    params.expect(inspection: %i[property_address client_name client_email signature_data])
   end
 end
