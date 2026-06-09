@@ -51,24 +51,36 @@
           <% end %>
 
         </div>
-        <% if inspection_item.checklist_item.allows_photo? && inspection.draft? %>
-          <%= form_with(
-            url: inspection_inspection_item_photos_path(inspection, inspection_item),
-            data: { controller: "photo-upload" },
-          ) do |form| %>
-          <%= form.label :photo,
-            class: "btn btn-sm btn-primary cursor-pointer min-h-[44px]" do %>
-            <%= lucide_icon("camera", class: "w-5 h-5") %>
+        <div data-controller="camera-bridge"
+             data-camera-bridge-action-url-value="<%= inspection_inspection_item_photos_path(inspection, inspection_item) %>">
+          <% if inspection_item.checklist_item.allows_photo? && inspection.draft? %>
+            <%= form_with(
+              url: inspection_inspection_item_photos_path(inspection, inspection_item),
+              data: { controller: "photo-upload" },
+            ) do |form| %>
+            <%= form.label :photo,
+              "data-camera-bridge-target": "webLabel",
+              class: "btn btn-sm btn-primary cursor-pointer min-h-[44px]" do %>
+              <%= lucide_icon("camera", class: "w-5 h-5") %>
+            <% end %>
+            <%= form.file_field :photo,
+              accept: "image/*",
+              class: "hidden",
+              "data-camera-bridge-target": "webInput",
+              data: {
+                action: "change->photo-upload#upload",
+                testid: "photo-upload-input",
+              } %>
           <% end %>
-          <%= form.file_field :photo,
-            accept: "image/*",
-            class: "hidden",
-            data: {
-              action: "change->photo-upload#upload",
-              testid: "photo-upload-input",
-            } %>
-        <% end %>
-      <% end %>
+
+          <button type="button"
+            data-camera-bridge-target="nativeButton"
+            data-action="camera-bridge#capture"
+            class="btn btn-sm btn-primary min-h-[44px] hidden">
+            <%= lucide_icon("camera", class: "w-5 h-5") %>
+          </button>
+          <% end %>
+        </div>
       </div>
     </div>
 
