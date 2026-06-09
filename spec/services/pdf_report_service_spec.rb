@@ -72,5 +72,37 @@ RSpec.describe PdfReportService do
       expect(result.first.status).to eq("defect")
       expect(result.first.checklist_item.name).to eq("Defect Item")
     end
+
+    it "returns the country locale" do
+      country = create(:country, locale: "es")
+      template = create(:inspection_template, country: country, published: true)
+      inspection = create(:inspection, inspection_template: template)
+
+      result = described_class.new(inspection).send(:locale)
+
+      expect(result).to eq("es")
+    end
+
+    it "finds report template matching country locale" do
+      country = create(:country, locale: "es")
+      template = create(:inspection_template, country: country, published: true)
+      inspection = create(:inspection, inspection_template: template)
+      report_template = create(:report_template, country: country, locale: "es")
+
+      result = described_class.new(inspection).send(:report_template)
+
+      expect(result).to eq(report_template)
+    end
+
+    it "falls back to first report template when locale-specific not found" do
+      country = create(:country, locale: "fr")
+      template = create(:inspection_template, country: country, published: true)
+      inspection = create(:inspection, inspection_template: template)
+      report_template = create(:report_template, country: country, locale: "en")
+
+      result = described_class.new(inspection).send(:report_template)
+
+      expect(result).to eq(report_template)
+    end
   end
 end

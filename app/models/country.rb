@@ -17,6 +17,7 @@
 class Country < ApplicationRecord
   has_many :users
   has_many :inspection_templates
+  has_many :report_templates, dependent: :destroy
 
   validates :name, presence: true
   validates :code, presence: true, uniqueness: true
