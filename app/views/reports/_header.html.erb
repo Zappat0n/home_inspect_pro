@@ -1,0 +1,62 @@
+<%# locals: (inspection:) %>
+<div class="avoid-break">
+  <div class="header-divider">
+    <h1 class="header-title">
+      <%= t("reports.show.logo_text") %>
+    </h1>
+    <p class="header-subtitle">
+      <%= t("reports.show.title") %>
+    </p>
+  </div>
+
+  <table class="header-table">
+    <tr>
+      <td class="header-label">
+        <%= t("reports.show.date") %>
+      </td>
+      <td class="header-value">
+        <%= l(inspection.completed_at.presence || inspection.created_at, format: :long) %>
+      </td>
+    </tr>
+    <tr>
+      <td class="header-label">
+        <%= t("reports.show.property_address") %>
+      </td>
+      <td class="header-value">
+        <%= inspection.property_address %>
+      </td>
+    </tr>
+    <tr>
+      <td class="header-label">
+        <%= t("reports.show.client_name") %>
+      </td>
+      <td class="header-value">
+        <%= inspection.client_name %>
+      </td>
+    </tr>
+    <tr>
+      <td class="header-label">
+        <%= t("reports.show.client_email") %>
+      </td>
+      <td class="header-value">
+        <%= inspection.client_email %>
+      </td>
+    </tr>
+    <tr>
+      <td class="header-label">
+        <%= t("reports.show.inspector") %>
+      </td>
+      <td class="header-value">
+        <%= inspection.user.email %>
+      </td>
+    </tr>
+    <tr>
+      <td class="header-label">
+        <%= t("reports.show.template") %>
+      </td>
+      <td class="header-value">
+        <%= inspection.inspection_template.name %>
+      </td>
+    </tr>
+  </table>
+</div>

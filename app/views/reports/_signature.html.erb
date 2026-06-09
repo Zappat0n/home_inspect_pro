@@ -1,0 +1,18 @@
+<%# locals: (inspection:) %>
+<% if inspection.signature_data.present? %>
+  <div class="page-break">
+    <h2 class="signature-heading">
+      <%= t("reports.show.signature") %>
+    </h2>
+
+    <div class="signature-box">
+      <%= image_tag inspection.signature_data,
+                    alt: t("reports.show.signature_alt"),
+                    class: "signature-image" %>
+    </div>
+
+    <p class="signature-date">
+      <%= t("reports.show.date") %>: <%= l(inspection.completed_at.presence || inspection.created_at, format: :long) %>
+    </p>
+  </div>
+<% end %>

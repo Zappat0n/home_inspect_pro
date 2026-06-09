@@ -1,0 +1,62 @@
+<%# locals: (inspection:, items_grouped:) %>
+<div>
+  <% items_grouped.each do |category_name, items| %>
+    <div class="avoid-break category-group">
+      <h3 class="category-heading">
+        <%= category_name %>
+      </h3>
+
+      <% items.each do |inspection_item| %>
+        <% checklist_item = inspection_item.checklist_item %>
+        <div class="item-row">
+          <div class="item-wrapper">
+            <div class="item-content">
+              <span class="item-name">
+                <%= checklist_item.name %>
+              </span>
+
+              <% if checklist_item.description.present? %>
+                <p class="item-description">
+                  <%= checklist_item.description %>
+                </p>
+              <% end %>
+
+              <% if inspection_item.defect? && inspection_item.comment.present? %>
+                <p class="item-comment">
+                  <%= inspection_item.comment %>
+                </p>
+              <% end %>
+
+              <% photos = inspection.inspection_photos.where(checklist_item: checklist_item).ordered %>
+              <% if photos.any? %>
+                <div class="item-photos">
+                  <% photos.each do |photo| %>
+                    <%= image_tag photo.photo.variant(resize_to_limit: [200, 200]),
+                                  alt: checklist_item.name,
+                                  class: "item-photo" %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+
+            <div class="item-status">
+              <% if inspection_item.ok? %>
+                <span class="status-badge status-badge--ok">
+                  &#10003; <%= t("inspection_items.status.ok") %>
+                </span>
+              <% elsif inspection_item.defect? %>
+                <span class="status-badge status-badge--defect">
+                  &#10007; <%= t("inspection_items.status.defect") %>
+                </span>
+              <% elsif inspection_item.na? %>
+                <span class="status-badge status-badge--na">
+                  &mdash; <%= t("inspection_items.status.na") %>
+                </span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

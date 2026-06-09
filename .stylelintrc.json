@@ -9,6 +9,7 @@
     "at-rule-no-deprecated": null,
     "color-function-notation": "modern",
     "no-descending-specificity": null,
-    "scss/no-global-function-names": null
+    "scss/no-global-function-names": null,
+    "selector-class-pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*(--[a-z][a-z0-9]*(-[a-z0-9]+)*)?$"
   }
 }

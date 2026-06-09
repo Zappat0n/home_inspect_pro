@@ -1,0 +1,25 @@
+---
+es:
+  reports:
+    show:
+      category: Categoría
+      client_email: Correo Electrónico del Cliente
+      client_name: Nombre del Cliente
+      comment: Comentario
+      date: Fecha de Inspección
+      defects_summary: Resumen de Defectos
+      generated_by: Generado por Home Inspect Pro
+      inspector: Inspector
+      item: Elemento
+      logo_text: Home Inspect Pro
+      property_address: Dirección de la Propiedad
+      severities:
+        critical: Crítico
+        info: Informativo
+        major: Grave
+        minor: Leve
+      severity: Gravedad
+      signature: Firma del Cliente
+      signature_alt: Firma del cliente
+      template: Estándar de Inspección
+      title: Informe de Inspección
