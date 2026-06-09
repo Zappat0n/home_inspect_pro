@@ -31,7 +31,6 @@ class PdfReportService
         inspection: inspection,
         items_grouped: items_grouped,
         defects: defects,
-        report_template: report_template,
       },
     )
   end
