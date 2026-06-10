@@ -4,6 +4,7 @@
       <%= lucide_icon("wifi-off", class: "h-5 w-5") %>
       <span class="text-sm font-medium"><%= t("offline.banner.message") %></span>
       <span data-offline-queue-target="count" class="hidden ml-2 bg-white text-amber-600 text-xs font-bold px-2 py-0.5 rounded-full"></span>
+      <span data-offline-queue-target="pending" class="hidden ml-2 bg-white text-amber-600 text-xs font-bold px-2 py-0.5 rounded-full"></span>
     </div>
     <button type="button" data-action="click->offline-indicator#dismiss" class="text-amber-100 hover:text-white">
       <%= lucide_icon("x", class: "h-4 w-4") %>

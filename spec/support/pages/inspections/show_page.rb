@@ -189,6 +189,10 @@ class Inspections::ShowPage
     end
   end
 
+  def upload_photo(item, file_path)
+    attach_photo(item, file_path)
+  end
+
   def has_offline_banner?
     has_css?("[data-offline-indicator-target='banner']", visible: true)
   end
@@ -199,5 +203,116 @@ class Inspections::ShowPage
 
   def dismiss_offline_banner
     find("[data-action='click->offline-indicator#dismiss']").trigger("click")
+  end
+
+  def wait_for_queued_photo
+    Timeout.timeout(Capybara.default_max_wait_time) do
+      loop do
+        json = evaluate_script("localStorage.getItem('offline-form-queue')")
+        parsed = json ? JSON.parse(json) : []
+        break if parsed.any? { |item| item["fileId"] }
+
+        sleep 0.1
+      end
+    end
+  end
+
+  def has_queued_photo?
+    json = evaluate_script("localStorage.getItem('offline-form-queue')")
+    queue = json ? JSON.parse(json) : []
+    queue.any? { |item| item["fileId"] }
+  end
+
+  def queued_photo_count
+    json = evaluate_script("localStorage.getItem('offline-form-queue')")
+    queue = json ? JSON.parse(json) : []
+    queue.length
+  end
+
+  def queued_photo_file_name
+    json = evaluate_script("localStorage.getItem('offline-form-queue')")
+    queue = json ? JSON.parse(json) : []
+    queue.first&.dig("fileName")
+  end
+
+  def has_indexeddb_photo?
+    evaluate_async_script(<<~JS)
+      const done = arguments[0];
+      (async () => {
+        const db = await new Promise((resolve) => {
+          const req = indexedDB.open("offline-photos", 1);
+          req.onsuccess = () => resolve(req.result);
+        });
+        const keys = await new Promise((resolve) => {
+          const tx = db.transaction("photos", "readonly");
+          const req = tx.objectStore("photos").getAllKeys();
+          req.onsuccess = () => resolve(req.result);
+        });
+        db.close();
+        done(keys.length > 0);
+      })();
+    JS
+  end
+
+  def has_no_indexeddb_photos?
+    evaluate_async_script(<<~JS)
+      const done = arguments[0];
+      (async () => {
+        const db = await new Promise((resolve) => {
+          const req = indexedDB.open("offline-photos", 1);
+          req.onsuccess = () => resolve(req.result);
+        });
+        const keys = await new Promise((resolve) => {
+          const tx = db.transaction("photos", "readonly");
+          const req = tx.objectStore("photos").getAllKeys();
+          req.onsuccess = () => resolve(req.result);
+        });
+        db.close();
+        done(keys.length === 0);
+      })();
+    JS
+  end
+
+  def wait_for_photo_in_db(inspection)
+    Timeout.timeout(Capybara.default_max_wait_time) do
+      loop do
+        break if inspection.reload.inspection_photos.count >= 1
+
+        sleep 0.1
+      end
+    end
+  end
+
+  def wait_for_no_indexeddb_photos
+    result = evaluate_async_script(<<~JS)
+      const done = arguments[0];
+      (async () => {
+        for (let i = 0; i < 50; i++) {
+          const db = await new Promise((resolve) => {
+            const req = indexedDB.open("offline-photos", 1);
+            req.onsuccess = () => resolve(req.result);
+          });
+          const keys = await new Promise((resolve) => {
+            const tx = db.transaction("photos", "readonly");
+            const req = tx.objectStore("photos").getAllKeys();
+            req.onsuccess = () => resolve(req.result);
+          });
+          db.close();
+          if (keys.length === 0) {
+            done(true);
+            return;
+          }
+          await new Promise((r) => setTimeout(r, 100));
+        }
+        done(false);
+      })();
+    JS
+    raise Timeout::Error, "IndexedDB photos not cleared within timeout" unless result
+  end
+
+  def has_empty_offline_queue?
+    json = evaluate_script("localStorage.getItem('offline-form-queue')")
+    queue = json ? JSON.parse(json) : []
+    queue.empty?
   end
 end
