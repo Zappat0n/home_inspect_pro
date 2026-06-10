@@ -8,6 +8,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 # that will avoid rails generators crashing because migrations haven't been run yet
 # return unless Rails.env.test?
 require "capybara/rails"
+require "capybara/cuprite"
 require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -35,6 +36,18 @@ begin
 rescue ActiveRecord::PendingMigrationError => exception
   abort exception.to_s.strip
 end
+# JavaScript driver configuration
+Capybara.javascript_driver = :cuprite
+Capybara.register_driver(:cuprite) do |app|
+  Capybara::Cuprite::Driver.new(
+    app,
+    window_size: [1200, 800],
+    headless: true,
+    process_timeout: 15,
+    timeout: 10,
+  )
+end
+
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include Devise::Test::ControllerHelpers, type: :controller
