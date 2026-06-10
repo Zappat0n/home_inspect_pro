@@ -21,11 +21,19 @@ default: &default
 
 
 development:
-  <<: *default
-  database: home_inspect_pro_development
-  host: localhost
-  username: postgres
-  password: postgres
+  primary:
+    <<: *default
+    database: home_inspect_pro_development
+    host: localhost
+    username: postgres
+    password: postgres
+  queue:
+    <<: *default
+    database: home_inspect_pro_development_queue
+    host: localhost
+    username: postgres
+    password: postgres
+    migrations_paths: db/queue_migrate
 
   # Schema search path. The server defaults to $user,public
   #schema_search_path: myapp,sharedapp,public

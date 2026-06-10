@@ -1,1 +1,2 @@
 js: bin/shakapacker-dev-server
+jobs: bin/jobs start --mode=async
