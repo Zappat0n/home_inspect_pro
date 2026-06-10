@@ -1,0 +1,5 @@
+---
+en:
+  offline:
+    banner:
+      message: You are offline. Changes will sync when connection is restored.

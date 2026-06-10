@@ -188,4 +188,16 @@ class Inspections::ShowPage
       attach_file("photo", file_path, make_visible: true)
     end
   end
+
+  def has_offline_banner?
+    has_css?("[data-offline-indicator-target='banner']", visible: true)
+  end
+
+  def has_no_offline_banner?
+    has_no_css?("[data-offline-indicator-target='banner']", visible: true)
+  end
+
+  def dismiss_offline_banner
+    find("[data-action='click->offline-indicator#dismiss']").trigger("click")
+  end
 end

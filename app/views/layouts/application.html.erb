@@ -22,7 +22,8 @@
     <%= javascript_pack_tag "application", "data-turbo-track": "reload" %>
   </head>
 
-  <body>
+  <body data-controller="offline-indicator offline-queue">
+    <%= render "shared/offline_banner" %>
     <%= render "shared/pwa_install_banner" %>
     <div class="fixed top-0 inset-x-0 z-10 shadow-md bg-white">
       <%= render "shared/navbar" %>

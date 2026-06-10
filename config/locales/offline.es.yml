@@ -1,0 +1,6 @@
+---
+es:
+  offline:
+    banner:
+      message: Estás sin conexión. Los cambios se sincronizarán cuando se restablezca
+        la conexión.
