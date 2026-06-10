@@ -27,4 +27,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "home#index"
+
+  resource :billing, only: [:show], controller: "billing"
 end

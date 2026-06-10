@@ -43,7 +43,6 @@ RailsAdmin.config do |config|
     end
     field :password_confirmation
     field :country
-    field :subscribed
     field :trial_ends_at
     field :remember_created_at
     field :reset_password_sent_at

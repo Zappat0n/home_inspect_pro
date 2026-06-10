@@ -8,7 +8,6 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
-#  subscribed             :boolean          default(FALSE)
 #  trial_ends_at          :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -40,7 +39,7 @@ class User < ApplicationRecord
   has_many :inspections, dependent: :destroy
 
   def subscribed?
-    subscribed
+    payment_processor.present? && payment_processor.subscribed?
   end
 
   def on_trial?

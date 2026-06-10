@@ -25,17 +25,9 @@ class AdminNewUserPage
       fill_in "Password confirmation", with: attrs[:password_confirmation]
     end
 
-    if attrs.key?(:country)
-      select attrs[:country].name, from: "Country"
-    end
+    return unless attrs.key?(:country)
 
-    return unless attrs.key?(:subscribed)
-
-    if attrs[:subscribed]
-      choose "user_subscribed_1"
-    else
-      choose "user_subscribed_0"
-    end
+    select attrs[:country].name, from: "Country"
   end
 
   def submit

@@ -1,0 +1,106 @@
+<% content_for :head do %>
+  <%= render "layouts/headers/paddle" %>
+<% end %>
+
+<div class="max-w-7xl mx-auto">
+  <h1 class="text-4xl font-bold text-gray-900 mb-8"><%= t(".title") %></h1>
+
+  <% if subscribed %>
+    <div class="card p-8">
+      <div class="flex items-center gap-3 mb-4">
+        <%= lucide_icon("badge-check", class: "w-6 h-6 text-green-500") %>
+        <h2 class="text-2xl font-semibold text-gray-900"><%= t(".active_subscription") %></h2>
+      </div>
+      <p class="text-gray-600 mb-6"><%= t(".manage_description") %></p>
+      <div class="flex gap-4">
+        <a href="<%= portal_url %>?customer_id=<%= customer_id %>" target="_blank" class="btn btn-primary btn-lg">
+          <%= t(".manage_billing") %>
+        </a>
+        <%= link_to t(".back_to_inspections"), inspections_path, class: "btn btn-inactive btn-lg" %>
+      </div>
+    </div>
+  <% else %>
+    <% if customer_id.present? %>
+      <p class="text-lg text-gray-700 mb-8"><%= t(".choose_plan_html") %></p>
+
+      <div
+        data-controller="paddle-checkout"
+        data-paddle-checkout-client-token-value="<%= paddle_client_token %>"
+        data-paddle-checkout-environment-value="<%= paddle_environment %>"
+        data-paddle-checkout-customer-id-value="<%= customer_id %>"
+      >
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="card p-8 flex flex-col">
+          <h2 class="text-2xl font-bold text-gray-900 mb-2"><%= t(".monthly") %></h2>
+          <p class="text-5xl font-bold text-gray-900 mb-1">$7</p>
+          <p class="text-gray-500 mb-6"><%= t(".per_month") %></p>
+          <ul class="space-y-3 mb-8 text-gray-600">
+            <li class="flex items-center gap-2">
+              <%= lucide_icon("check", class: "w-5 h-5 text-green-500 shrink-0") %>
+              <%= t(".features.unlimited_inspections") %>
+            </li>
+            <li class="flex items-center gap-2">
+              <%= lucide_icon("check", class: "w-5 h-5 text-green-500 shrink-0") %>
+              <%= t(".features.pdf_reports") %>
+            </li>
+            <li class="flex items-center gap-2">
+              <%= lucide_icon("check", class: "w-5 h-5 text-green-500 shrink-0") %>
+              <%= t(".features.photo_uploads") %>
+            </li>
+            <li class="flex items-center gap-2">
+              <%= lucide_icon("check", class: "w-5 h-5 text-green-500 shrink-0") %>
+              <%= t(".features.client_signatures") %>
+            </li>
+          </ul>
+          <button
+            data-action="click->paddle-checkout#openCheckout"
+            data-paddle-checkout-price-id-param="<%= monthly_price_id %>"
+            class="btn btn-primary btn-lg mt-auto w-full"
+          >
+            <%= t(".subscribe_monthly") %>
+          </button>
+        </div>
+
+        <div class="card p-8 flex flex-col border-blue-300 relative">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+            <span class="bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full"><%= t(".save_20") %></span>
+          </div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-2"><%= t(".yearly") %></h2>
+          <p class="text-5xl font-bold text-gray-900 mb-1">$67</p>
+          <p class="text-gray-500 mb-6"><%= t(".per_year") %></p>
+          <ul class="space-y-3 mb-8 text-gray-600">
+            <li class="flex items-center gap-2">
+              <%= lucide_icon("check", class: "w-5 h-5 text-green-500 shrink-0") %>
+              <%= t(".features.unlimited_inspections") %>
+            </li>
+            <li class="flex items-center gap-2">
+              <%= lucide_icon("check", class: "w-5 h-5 text-green-500 shrink-0") %>
+              <%= t(".features.pdf_reports") %>
+            </li>
+            <li class="flex items-center gap-2">
+              <%= lucide_icon("check", class: "w-5 h-5 text-green-500 shrink-0") %>
+              <%= t(".features.photo_uploads") %>
+            </li>
+            <li class="flex items-center gap-2">
+              <%= lucide_icon("check", class: "w-5 h-5 text-green-500 shrink-0") %>
+              <%= t(".features.client_signatures") %>
+            </li>
+          </ul>
+          <button
+            data-action="click->paddle-checkout#openCheckout"
+            data-paddle-checkout-price-id-param="<%= yearly_price_id %>"
+            class="btn btn-primary btn-lg mt-auto w-full"
+          >
+            <%= t(".subscribe_yearly") %>
+          </button>
+        </div>
+      </div>
+      </div>
+    <% else %>
+      <div class="card p-8 text-center">
+        <%= lucide_icon("alert-circle", class: "w-8 h-8 text-amber-500 mx-auto mb-4") %>
+        <p class="text-gray-600"><%= t(".provider_unavailable") %></p>
+      </div>
+    <% end %>
+  <% end %>
+</div>
