@@ -75,11 +75,13 @@
               data: { controller: "photo-upload" },
             ) do |form| %>
             <%= form.label :photo,
+              for: dom_id(inspection_item, :photo_upload),
               "data-camera-bridge-target": "webLabel",
               class: "btn btn-sm btn-primary cursor-pointer min-h-[44px]" do %>
               <%= lucide_icon("image-plus", class: "w-5 h-5") %>
             <% end %>
             <%= form.file_field :photo,
+              id: dom_id(inspection_item, :photo_upload),
               accept: "image/*",
               class: "hidden",
               "data-camera-bridge-target": "webInput",
@@ -101,7 +103,7 @@
       </div>
     </div>
 
-    <div id="photo-upload-error"></div>
+    <div id="<%= dom_id(inspection_item, :photo_upload_error) %>"></div>
 
   </div>
 <% end %>

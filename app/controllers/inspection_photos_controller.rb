@@ -11,10 +11,10 @@ class InspectionPhotosController < ApplicationController
     if photo.save
       render_create_success(photo, inspection_item, inspection)
     else
-      render_create_error(photo, inspection)
+      render_create_error(photo, inspection_item, inspection)
     end
   rescue InspectionPhotoProcessor::NullResponse::MissingPhotoError
-    render_create_error(photo, inspection)
+    render_create_error(photo, inspection_item, inspection)
   ensure
     attachment_args.io.close! if attachment_args.needs_close?
   end
@@ -53,12 +53,13 @@ class InspectionPhotosController < ApplicationController
     )
   end
 
-  def render_create_error(photo, inspection)
+  def render_create_error(photo, inspection_item, inspection)
     render(
       formats: :turbo_stream,
       status: :unprocessable_content,
       locals: {
         photo: photo,
+        inspection_item: inspection_item,
         inspection: inspection,
       },
     )
