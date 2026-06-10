@@ -40,7 +40,6 @@ RSpec.describe "Admin Users", type: :feature do
         password: "password123",
         password_confirmation: "password123",
         country: country,
-        subscribed: false,
       )
       pg.submit
 
@@ -64,7 +63,6 @@ RSpec.describe "Admin Users", type: :feature do
         password: "password123",
         password_confirmation: "password123",
         country: country,
-        subscribed: false,
       )
       pg.submit
 

@@ -1,0 +1,27 @@
+---
+en:
+  billing:
+    navbar:
+      link: Billing
+    show:
+      active_subscription: You have an active subscription
+      back_to_inspections: Back to Inspections
+      choose_plan_html: Choose a plan to start inspecting properties. All plans include
+        a <strong>7-day free trial</strong>.
+      features:
+        client_signatures: Client signatures
+        pdf_reports: PDF reports
+        photo_uploads: Photo uploads
+        unlimited_inspections: Unlimited inspections
+      manage_billing: Manage Billing
+      manage_description: Manage your billing details and view your subscription history.
+      monthly: Monthly
+      per_month: per month
+      per_year: per year
+      provider_unavailable: Billing provider is currently unavailable. Please try
+        again later.
+      save_20: Save 20%
+      subscribe_monthly: Subscribe Monthly
+      subscribe_yearly: Subscribe Yearly
+      title: Billing
+      yearly: Yearly

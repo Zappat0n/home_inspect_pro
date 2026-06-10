@@ -1,0 +1,28 @@
+---
+es:
+  billing:
+    navbar:
+      link: Facturación
+    show:
+      active_subscription: Tienes una suscripción activa
+      back_to_inspections: Volver a Inspecciones
+      choose_plan_html: Elige un plan para empezar a inspeccionar. Todos los planes
+        incluyen una <strong>prueba gratuita de 7 días</strong>.
+      features:
+        client_signatures: Firmas de clientes
+        pdf_reports: Informes PDF
+        photo_uploads: Subida de fotos
+        unlimited_inspections: Inspecciones ilimitadas
+      manage_billing: Gestionar Facturación
+      manage_description: Gestiona tus datos de facturación y consulta tu historial
+        de suscripciones.
+      monthly: Mensual
+      per_month: por mes
+      per_year: por año
+      provider_unavailable: El proveedor de facturación no está disponible. Inténtalo
+        de nuevo más tarde.
+      save_20: Ahorra 20%
+      subscribe_monthly: Suscribirse Mensual
+      subscribe_yearly: Suscribirse Anual
+      title: Facturación
+      yearly: Anual

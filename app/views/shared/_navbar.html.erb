@@ -4,6 +4,7 @@
     <div class="flex items-center">
       <% if user_signed_in? %>
         <%= link_to t("inspections.navbar.link"), inspections_path, class: "link mr-4" %>
+        <%= link_to t("billing.navbar.link"), billing_path, class: "link mr-4" %>
         <%= button_to t("devise.views.links.sign_out"), destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
       <% else %>
         <%= link_to t("devise.views.links.log_in"), new_user_session_path, class: "link" %>

@@ -43,12 +43,6 @@ RSpec.describe User, type: :model do
   end
 
   describe "custom fields" do
-    it "defaults subscribed to false" do
-      user = build_stubbed(:user)
-
-      expect(user.subscribed).to be false
-    end
-
     it "allows setting trial_ends_at" do
       trial_date = 14.days.from_now
       user = build_stubbed(:user, trial_ends_at: trial_date)
@@ -67,14 +61,25 @@ RSpec.describe User, type: :model do
     include ActiveSupport::Testing::TimeHelpers
 
     describe "#subscribed?" do
-      it "returns true when subscribed column is true" do
-        user = build_stubbed(:user, subscribed: true)
+      it "returns true when user has an active subscription" do
+        user = create(:user)
+        user.set_payment_processor(:paddle_billing)
+        user.payment_processor.update_column(:processor_id, "ctm_test123")
+        Pay::PaddleBilling::Subscription.create!(
+          customer: user.payment_processor,
+          name: "default",
+          processor_id: "sub_test123",
+          processor_plan: "pri_monthly",
+          status: "active",
+          current_period_start: Time.current,
+          current_period_end: 1.month.from_now,
+        )
 
         expect(user.subscribed?).to be true
       end
 
-      it "returns false when subscribed is false and no Pay subscription exists" do
-        user = build_stubbed(:user, subscribed: false)
+      it "returns false when no Pay subscription exists" do
+        user = build_stubbed(:user)
 
         expect(user.subscribed?).to be_falsy
       end
