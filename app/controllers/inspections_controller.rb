@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class InspectionsController < ApplicationController
+  before_action :require_subscription, except: [:index, :show]
+
   def index
     inspections = current_user.inspections.newest_first
     render(

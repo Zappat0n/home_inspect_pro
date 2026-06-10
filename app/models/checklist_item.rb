@@ -1,6 +1,7 @@
 # == Schema Information
 #
 # Table name: checklist_items
+# Database name: primary
 #
 #  id                     :bigint           not null, primary key
 #  allows_photo           :boolean          default(FALSE), not null

@@ -1,6 +1,7 @@
 # == Schema Information
 #
 # Table name: inspection_templates
+# Database name: primary
 #
 #  id         :bigint           not null, primary key
 #  category   :string

@@ -3,6 +3,7 @@
 # == Schema Information
 #
 # Table name: admin_users
+# Database name: primary
 #
 #  id                  :bigint           not null, primary key
 #  email               :string           default(""), not null

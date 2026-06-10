@@ -1,0 +1,11 @@
+<% if user_signed_in? && current_user.on_trial? && !current_user.subscribed? %>
+  <div class="bg-blue-50 border-b border-blue-200">
+    <div class="container mx-auto px-5 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2 text-blue-800">
+        <%= lucide_icon("clock", class: "w-5 h-5") %>
+        <span><%= t("subscription.trial_banner.days_left", count: current_user.trial_days_remaining) %></span>
+      </div>
+      <%= link_to t("subscription.trial_banner.subscribe"), billing_path, class: "btn btn-primary btn-sm" %>
+    </div>
+  </div>
+<% end %>

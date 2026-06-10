@@ -3,6 +3,7 @@
 # == Schema Information
 #
 # Table name: inspection_photos
+# Database name: primary
 #
 #  id                :bigint           not null, primary key
 #  position          :integer          default(0), not null
