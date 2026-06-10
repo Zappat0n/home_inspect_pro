@@ -9,7 +9,7 @@
         ) %>
   <% end %>
 <% else %>
-  <%= turbo_stream.replace "photo-upload-error" do %>
+  <%= turbo_stream.replace dom_id(inspection_item, :photo_upload_error) do %>
     <%= render(
           partial: "inspection_photos/upload_error",
           locals: {

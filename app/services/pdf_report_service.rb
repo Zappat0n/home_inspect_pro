@@ -4,13 +4,14 @@ class PdfReportService
   def initialize(inspection, base_url: nil)
     @inspection = inspection
     @_base_url = base_url
+    @locale = inspection.locale
   end
 
   def call
     previous_url_options = ActiveStorage::Current.url_options
     ActiveStorage::Current.url_options = { host: base_url }
 
-    I18n.with_locale(report_template.locale) do
+    I18n.with_locale(locale) do
       pdf = Grover.new(html, format: "A4").to_pdf
 
       inspection.pdf.attach(
@@ -27,7 +28,7 @@ class PdfReportService
 
   private
 
-  attr_reader :inspection
+  attr_reader :inspection, :locale
 
   def html
     ApplicationController.render(
@@ -53,7 +54,7 @@ class PdfReportService
   end
 
   def report_template
-    @_report_template ||= inspection.inspection_template.country.report_templates.find_by(locale: inspection.locale)
+    @_report_template ||= inspection.inspection_template.country.report_templates.find_by(locale: locale)
   end
 
   def items_grouped

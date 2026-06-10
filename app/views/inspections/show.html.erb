@@ -69,7 +69,7 @@
     </div>
   </div>
 
-  <% if inspection.completed? && inspection.pdf_url.present? %>
+  <% if inspection.completed? %>
     <div class="mb-8">
       <%= link_to t("inspections.show.view_pdf"),
                   report_inspection_path(inspection),
