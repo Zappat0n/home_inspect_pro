@@ -1,0 +1,2 @@
+CREATE DATABASE home_inspect_pro_development;
+CREATE DATABASE home_inspect_pro_development_queue;

@@ -40,6 +40,15 @@ Rails.application.configure do
   # Set localhost to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
 
+  # MailCrab — local email catcher for development.
+  # Start with: docker compose up -d
+  # Web UI at http://localhost:1080
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: "localhost",
+    port: 1025,
+  }
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
