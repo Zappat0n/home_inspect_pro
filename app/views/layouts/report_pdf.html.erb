@@ -3,8 +3,70 @@
   <head>
     <meta charset="utf-8">
     <title><%= t("reports.show.title") %></title>
-    <%= stylesheet_link_tag "report_pdf" %>
+    <style>
+      @page {
+        size: a4;
+        margin: 10mm;
+        @bottom-center {
+          content: counter(page);
+          font-size: 9px;
+          font-family: Helvetica, Arial, sans-serif;
+        }
+      }
 
+      .page-break { break-before: page; }
+      .avoid-break { break-inside: avoid; }
+
+      .report-pdf { font-family: Helvetica, Arial, sans-serif; font-size: 11px; line-height: 1.5; color: #111827; margin: 0; padding: 0; }
+      .report-pdf * { box-sizing: border-box; }
+      .report-pdf table { width: 100%; border-collapse: collapse; }
+      .report-pdf th, .report-pdf td { padding: 6px 8px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+      .report-pdf th { font-weight: 600; background-color: #f9fafb; }
+
+      .report-pdf .header-divider { border-bottom: 2px solid #111827; padding-bottom: 8px; margin-bottom: 16px; }
+      .report-pdf .header-title { font-size: 24px; font-weight: 700; margin: 0 0 4px; color: #111827; }
+      .report-pdf .header-subtitle { font-size: 9px; color: #6b7280; margin: 0; }
+      .report-pdf .header-table { margin-bottom: 16px; }
+      .report-pdf .header-label { width: 160px; font-weight: 600; color: #374151; border: none; padding: 3px 8px 3px 0; }
+      .report-pdf .header-value { border: none; padding: 3px 0; }
+
+      .report-pdf .category-group { margin-bottom: 16px; }
+      .report-pdf .category-heading { font-size: 13px; font-weight: 700; margin: 0 0 8px; color: #374151; text-transform: uppercase; letter-spacing: 0.5px; }
+      .report-pdf .item-row { padding: 6px 0; border-bottom: 1px solid #f3f4f6; }
+      .report-pdf .item-wrapper { display: flex; align-items: flex-start; gap: 8px; }
+      .report-pdf .item-content { flex: 1; }
+      .report-pdf .item-name { font-weight: 600; font-size: 11px; color: #111827; }
+      .report-pdf .item-description { margin: 2px 0 0; font-size: 10px; color: #6b7280; }
+      .report-pdf .item-comment { margin: 4px 0 0; padding-left: 16px; font-size: 10px; color: #dc2626; font-style: italic; }
+      .report-pdf .item-photos { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 6px; }
+      .report-pdf .item-photo { width: 80px; height: 80px; object-fit: cover; border: 1px solid #e5e7eb; border-radius: 4px; }
+      .report-pdf .item-status { flex-shrink: 0; }
+
+      .report-pdf .status-badge { display: inline-block; padding: 1px 8px; font-size: 9px; font-weight: 400; border-radius: 4px; }
+      .report-pdf .status-badge--ok { color: #059669; border: 1px solid #059669; }
+      .report-pdf .status-badge--defect { color: #dc2626; border: 1px solid #dc2626; }
+      .report-pdf .status-badge--na { color: #6b7280; border: 1px solid #9ca3af; }
+
+      .report-pdf .defects-heading { font-size: 16px; font-weight: 700; margin: 0 0 12px; color: #111827; }
+      .report-pdf .defects-cell { font-size: 10px; }
+      .report-pdf .defects-cell--name { font-size: 10px; font-weight: 600; }
+      .report-pdf .defects-cell--comment { font-size: 10px; color: #4b5563; }
+
+      .report-pdf .severity-badge { display: inline-block; padding: 1px 6px; font-size: 9px; font-weight: 600; border-radius: 3px; }
+      .report-pdf .severity-badge--critical { color: #dc2626; border: 1px solid #dc2626; background-color: #fef2f2; }
+      .report-pdf .severity-badge--major { color: #ea580c; border: 1px solid #ea580c; background-color: #fff7ed; }
+      .report-pdf .severity-badge--minor { color: #ca8a04; border: 1px solid #ca8a04; background-color: #fefce8; }
+      .report-pdf .severity-badge--info { color: #6b7280; border: 1px solid #9ca3af; background-color: #f9fafb; }
+
+      .report-pdf .signature-section { margin-top: 32px; }
+      .report-pdf .signature-heading { font-size: 16px; font-weight: 700; margin: 0 0 16px; color: #111827; }
+      .report-pdf .signature-box { border: 1px solid #d1d5db; border-radius: 4px; padding: 16px; display: inline-block; }
+      .report-pdf .signature-image { max-width: 300px; max-height: 60px; }
+      .report-pdf .signature-date { margin-top: 12px; font-size: 10px; color: #6b7280; }
+
+      .report-pdf .footer { border-top: 1px solid #d1d5db; margin-top: 32px; padding-top: 8px; text-align: center; }
+      .report-pdf .footer-text { font-size: 9px; color: #9ca3af; margin: 0; }
+    </style>
   </head>
 
   <body>

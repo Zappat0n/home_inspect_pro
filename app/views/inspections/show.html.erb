@@ -69,6 +69,16 @@
     </div>
   </div>
 
+  <% if inspection.completed? && inspection.pdf_url.present? %>
+    <div class="mb-8">
+      <%= link_to t("inspections.show.view_pdf"),
+                  report_inspection_path(inspection),
+                  'data-testid': "view-pdf-button",
+                  class: "btn",
+                  target: "_blank" %>
+    </div>
+  <% end %>
+
   <% if inspection.signature_data.present? %>
     <div class="card p-6 mb-8">
       <h3 class="text-lg font-semibold text-gray-900 mb-2">

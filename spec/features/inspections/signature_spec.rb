@@ -13,6 +13,11 @@ RSpec.describe "Digital signature", type: :feature do
       inspection_template: inspection_template,
     )
 
+    create(:report_template, country: country, locale: "en")
+    grover_double = instance_double(Grover, to_pdf: "fake pdf content")
+    allow(Grover).to receive(:new).and_return(grover_double)
+    allow(ActiveStorage::Current).to receive(:url_options).and_return({ host: "http://localhost:3000" })
+
     sign_in user
 
     page_obj = Inspections::SignaturePage.new(inspection)
@@ -35,6 +40,11 @@ RSpec.describe "Digital signature", type: :feature do
       user: user,
       inspection_template: inspection_template,
     )
+
+    create(:report_template, country: country, locale: "en")
+    grover_double = instance_double(Grover, to_pdf: "fake pdf content")
+    allow(Grover).to receive(:new).and_return(grover_double)
+    allow(ActiveStorage::Current).to receive(:url_options).and_return({ host: "http://localhost:3000" })
 
     sign_in user
 
