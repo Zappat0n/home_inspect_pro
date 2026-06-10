@@ -1,6 +1,7 @@
 # == Schema Information
 #
 # Table name: users
+# Database name: primary
 #
 #  id                     :bigint           not null, primary key
 #  email                  :string           default(""), not null
@@ -35,6 +36,8 @@ class User < ApplicationRecord
 
   pay_customer
 
+  before_create :set_trial
+
   belongs_to :country
   has_many :inspections, dependent: :destroy
 
@@ -46,11 +49,23 @@ class User < ApplicationRecord
     trial_ends_at.present? && Time.current < trial_ends_at
   end
 
+  def trial_days_remaining
+    return 0 if trial_ends_at.blank?
+
+    ((trial_ends_at - Time.current) / 1.day).ceil
+  end
+
   def default_inspection_template
     template = InspectionTemplate.published.find_by(country: country)
     return template if template
 
     us_country = Country.find_by(code: "US")
     InspectionTemplate.published.find_by(country: us_country)
+  end
+
+  private
+
+  def set_trial
+    self.trial_ends_at ||= 7.days.from_now
   end
 end

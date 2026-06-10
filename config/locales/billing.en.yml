@@ -25,3 +25,10 @@ en:
       subscribe_yearly: Subscribe Yearly
       title: Billing
       yearly: Yearly
+  subscription:
+    trial_banner:
+      days_left:
+        one: 1 day left on your free trial
+        other: "%{count} days left on your free trial"
+      subscribe: Subscribe now
+    trial_expired: Your free trial has ended. Please subscribe to continue.

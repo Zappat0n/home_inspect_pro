@@ -1,6 +1,7 @@
 # == Schema Information
 #
 # Table name: inspections
+# Database name: primary
 #
 #  id                     :bigint           not null, primary key
 #  client_email           :string

@@ -26,3 +26,10 @@ es:
       subscribe_yearly: Suscribirse Anual
       title: Facturación
       yearly: Anual
+  subscription:
+    trial_banner:
+      days_left:
+        one: 1 día restante de tu prueba gratuita
+        other: "%{count} días restantes de tu prueba gratuita"
+      subscribe: Suscríbete ahora
+    trial_expired: Tu prueba gratuita ha finalizado. Suscríbete para continuar.

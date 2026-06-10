@@ -29,4 +29,8 @@ class Inspections::NewPage
   def has_validation_error?
     has_content?("prohibited this inspection from being saved", wait: 2)
   end
+
+  def has_subscribe_link?
+    has_link?(I18n.t("subscription.trial_banner.subscribe"), href: billing_path)
+  end
 end

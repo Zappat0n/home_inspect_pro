@@ -10,4 +10,10 @@ class ApplicationController < ActionController::Base
   def set_active_storage_url_options
     ActiveStorage::Current.url_options = { host: request.base_url }
   end
+
+  def require_subscription
+    return if current_user.subscribed? || current_user.on_trial?
+
+    redirect_to(billing_path, alert: t("subscription.trial_expired"))
+  end
 end

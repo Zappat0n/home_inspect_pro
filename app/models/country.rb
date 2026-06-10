@@ -1,6 +1,7 @@
 # == Schema Information
 #
 # Table name: countries
+# Database name: primary
 #
 #  id         :bigint           not null, primary key
 #  available  :boolean

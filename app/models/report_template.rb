@@ -1,6 +1,7 @@
 # == Schema Information
 #
 # Table name: report_templates
+# Database name: primary
 #
 #  id               :bigint           not null, primary key
 #  footer_text      :text

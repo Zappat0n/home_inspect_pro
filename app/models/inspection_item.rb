@@ -1,6 +1,7 @@
 # == Schema Information
 #
 # Table name: inspection_items
+# Database name: primary
 #
 #  id                :bigint           not null, primary key
 #  comment           :text
