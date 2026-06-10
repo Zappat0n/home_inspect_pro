@@ -34,6 +34,8 @@ class User < ApplicationRecord
          :rememberable,
          :validatable
 
+  pay_customer
+
   belongs_to :country
   has_many :inspections, dependent: :destroy
 
