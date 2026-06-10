@@ -12,7 +12,7 @@ Pay.setup do |config|
   config.automount_routes = true
   config.routes_path = "/pay"
 
-  config.enabled_processors = [:stripe]
+  config.enabled_processors = [:paddle_billing]
 
   config.send_emails = true
   config.parent_mailer = "ApplicationMailer"

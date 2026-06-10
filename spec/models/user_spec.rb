@@ -62,4 +62,44 @@ RSpec.describe User, type: :model do
       expect(user.stripe_customer_id).to eq("cus_123")
     end
   end
+
+  describe "subscription helpers" do
+    include ActiveSupport::Testing::TimeHelpers
+
+    describe "#subscribed?" do
+      it "returns true when subscribed column is true" do
+        user = build_stubbed(:user, subscribed: true)
+
+        expect(user.subscribed?).to be true
+      end
+
+      it "returns false when subscribed is false and no Pay subscription exists" do
+        user = build_stubbed(:user, subscribed: false)
+
+        expect(user.subscribed?).to be_falsy
+      end
+    end
+
+    describe "#on_trial?" do
+      it "returns true when trial_ends_at is in the future" do
+        user = build_stubbed(:user)
+
+        expect(user.on_trial?).to be true
+      end
+
+      it "returns false when trial_ends_at is nil" do
+        user = build_stubbed(:user, trial_ends_at: nil)
+
+        expect(user.on_trial?).to be_falsy
+      end
+
+      it "returns false when trial_ends_at is in the past" do
+        user = create(:user)
+
+        travel_to(8.days.from_now) do
+          expect(user.on_trial?).to be_falsy
+        end
+      end
+    end
+  end
 end

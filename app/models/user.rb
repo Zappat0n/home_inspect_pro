@@ -39,6 +39,14 @@ class User < ApplicationRecord
   belongs_to :country
   has_many :inspections, dependent: :destroy
 
+  def subscribed?
+    subscribed
+  end
+
+  def on_trial?
+    trial_ends_at.present? && Time.current < trial_ends_at
+  end
+
   def default_inspection_template
     template = InspectionTemplate.published.find_by(country: country)
     return template if template
