@@ -196,6 +196,21 @@ RSpec.describe InspectionsController, type: :controller do
         patch :complete, params: { id: inspection.id }
       end.to raise_error(ActiveRecord::RecordNotFound)
     end
+
+    it "redirects to billing when user trial has expired" do
+      country = create(:country)
+      user = create(:user, country: country, trial_ends_at: 8.days.ago)
+      user.set_payment_processor(:paddle_billing)
+      user.payment_processor.update_column(:processor_id, "ctm_test123")
+      template = create(:inspection_template, country: country)
+      inspection = create(:inspection, user: user, inspection_template: template)
+      sign_in(user)
+
+      patch :complete, params: { id: inspection.id }
+
+      expect(response).to redirect_to(billing_path)
+      expect(flash[:alert]).to eq(I18n.t("subscription.trial_expired"))
+    end
   end
 
   describe "GET #report" do
@@ -250,6 +265,26 @@ RSpec.describe InspectionsController, type: :controller do
       expect do
         get :report, params: { id: inspection.id }
       end.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it "redirects to billing when user trial has expired" do
+      country = create(:country)
+      user = create(:user, country: country, trial_ends_at: 8.days.ago)
+      user.set_payment_processor(:paddle_billing)
+      user.payment_processor.update_column(:processor_id, "ctm_test123")
+      template = create(:inspection_template, country: country)
+      inspection = create(
+        :inspection,
+        user: user,
+        inspection_template: template,
+        status: :completed,
+      )
+      sign_in(user)
+
+      get :report, params: { id: inspection.id }
+
+      expect(response).to redirect_to(billing_path)
+      expect(flash[:alert]).to eq(I18n.t("subscription.trial_expired"))
     end
   end
 end
