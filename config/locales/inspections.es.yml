@@ -27,6 +27,8 @@ es:
       cancel: Cancelar
       submit: Crear Inspección
       title: Nueva Inspección
+    report:
+      generating: El reporte PDF se está generando. Estará disponible en breve.
     show:
       client_email: Correo Electrónico del Cliente
       client_name: Nombre del Cliente
@@ -40,3 +42,4 @@ es:
         draft: Borrador
       template: Plantilla
       title: Detalles de la Inspección
+      view_pdf: Ver PDF

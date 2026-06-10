@@ -1,5 +1,5 @@
 <%# locals: (inspection:, items_grouped:) %>
-<div>
+<div class="checklist-section">
   <% items_grouped.each do |category_name, items| %>
     <div class="avoid-break category-group">
       <h3 class="category-heading">
@@ -21,19 +21,13 @@
                 </p>
               <% end %>
 
-              <% if inspection_item.defect? && inspection_item.comment.present? %>
-                <p class="item-comment">
-                  <%= inspection_item.comment %>
-                </p>
-              <% end %>
-
               <% photos = inspection.inspection_photos.where(checklist_item: checklist_item).ordered %>
               <% if photos.any? %>
                 <div class="item-photos">
                   <% photos.each do |photo| %>
-                    <%= image_tag photo.photo.variant(resize_to_limit: [200, 200]),
-                                  alt: checklist_item.name,
-                                  class: "item-photo" %>
+                    <%= base64_image_tag(photo.photo,
+                                          alt: checklist_item.name,
+                                          class: "item-photo") %>
                   <% end %>
                 </div>
               <% end %>
@@ -42,19 +36,25 @@
             <div class="item-status">
               <% if inspection_item.ok? %>
                 <span class="status-badge status-badge--ok">
-                  &#10003; <%= t("inspection_items.status.ok") %>
+                  <%= t("inspection_items.status.ok") %>
                 </span>
               <% elsif inspection_item.defect? %>
                 <span class="status-badge status-badge--defect">
-                  &#10007; <%= t("inspection_items.status.defect") %>
+                  <%= t("inspection_items.status.defect") %>
                 </span>
               <% elsif inspection_item.na? %>
                 <span class="status-badge status-badge--na">
-                  &mdash; <%= t("inspection_items.status.na") %>
+                  <%= t("inspection_items.status.na") %>
                 </span>
               <% end %>
             </div>
           </div>
+
+          <% if inspection_item.defect? && inspection_item.comment.present? %>
+            <p class="item-comment">
+              <%= inspection_item.comment %>
+            </p>
+          <% end %>
         </div>
       <% end %>
     </div>

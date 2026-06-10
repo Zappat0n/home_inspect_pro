@@ -152,8 +152,11 @@ RSpec.describe InspectionsController, type: :controller do
       country = create(:country)
       user = create(:user, country: country)
       template = create(:inspection_template, country: country)
+      create(:report_template, country: country, locale: "en")
       inspection = create(:inspection, user: user, inspection_template: template)
       sign_in(user)
+
+      expect(GeneratePdfReportJob).to receive(:perform_later).with(inspection.id, kind_of(String))
 
       patch :complete, params: { id: inspection.id }
 
@@ -196,27 +199,44 @@ RSpec.describe InspectionsController, type: :controller do
   end
 
   describe "GET #report" do
-    it "generates a PDF and redirects to the pdf_url" do
+    it "redirects to existing PDF if attached" do
       country = create(:country)
+      create(:report_template, country: country, locale: "en")
       user = create(:user, country: country)
       template = create(:inspection_template, country: country)
       inspection = create(
         :inspection,
         user: user,
         inspection_template: template,
+        status: :completed,
         pdf_url: "http://example.com/report.pdf",
       )
       sign_in(user)
 
-      grover_double = instance_double(Grover, to_pdf: "fake pdf content")
-      allow(Grover).to receive(:new).and_return(grover_double)
-
-      service_double = instance_double(PdfReportService, call: nil)
-      allow(PdfReportService).to receive(:new).and_return(service_double)
-
       get :report, params: { id: inspection.id }
 
       expect(response).to redirect_to("http://example.com/report.pdf")
+    end
+
+    it "enqueues job to generate PDF if not attached" do
+      country = create(:country)
+      create(:report_template, country: country, locale: "en")
+      user = create(:user, country: country)
+      template = create(:inspection_template, country: country)
+      inspection = create(
+        :inspection,
+        user: user,
+        inspection_template: template,
+        status: :completed,
+      )
+      sign_in(user)
+
+      expect(GeneratePdfReportJob).to receive(:perform_later).with(inspection.id, kind_of(String))
+
+      get :report, params: { id: inspection.id }
+
+      expect(response).to redirect_to(inspection_path(inspection))
+      expect(flash[:notice]).to eq("PDF report is being generated. It will be available shortly.")
     end
 
     it "raises RecordNotFound for another user's inspection" do

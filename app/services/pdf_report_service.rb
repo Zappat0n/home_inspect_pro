@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
 class PdfReportService
-  def initialize(inspection)
+  def initialize(inspection, base_url: nil)
     @inspection = inspection
+    @_base_url = base_url
   end
 
   def call
+    previous_url_options = ActiveStorage::Current.url_options
+    ActiveStorage::Current.url_options = { host: base_url }
+
     I18n.with_locale(report_template.locale) do
       pdf = Grover.new(html, format: "A4").to_pdf
 
@@ -17,6 +21,8 @@ class PdfReportService
 
       inspection.update!(pdf_url: inspection.pdf.url)
     end
+  ensure
+    ActiveStorage::Current.url_options = previous_url_options
   end
 
   private
@@ -27,12 +33,23 @@ class PdfReportService
     ApplicationController.render(
       template: "reports/show",
       layout: "layouts/report_pdf",
+      formats: [:html],
       locals: {
         inspection: inspection,
         items_grouped: items_grouped,
         defects: defects,
       },
     )
+  end
+
+  def base_url
+    @_base_url ||= begin
+      opts = Rails.application.routes.default_url_options
+      opts = Rails.application.config.action_mailer.default_url_options if opts.blank?
+      host = opts[:host] || "localhost"
+      port = opts[:port]
+      port ? "http://#{host}:#{port}" : "http://#{host}"
+    end
   end
 
   def report_template

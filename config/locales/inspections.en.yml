@@ -27,6 +27,8 @@ en:
       cancel: Cancel
       submit: Create Inspection
       title: New Inspection
+    report:
+      generating: PDF report is being generated. It will be available shortly.
     show:
       client_email: Client Email
       client_name: Client Name
@@ -40,3 +42,4 @@ en:
         draft: Draft
       template: Template
       title: Inspection Details
+      view_pdf: View PDF

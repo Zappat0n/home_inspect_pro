@@ -133,6 +133,9 @@ RSpec.describe "Inspections", type: :feature do
         client_email: "john@example.com",
       )
 
+      create(:report_template, country: country, locale: "en")
+      allow(GeneratePdfReportJob).to receive(:perform_later)
+
       sign_in user
 
       page_obj = Inspections::ShowPage.new(inspection)
