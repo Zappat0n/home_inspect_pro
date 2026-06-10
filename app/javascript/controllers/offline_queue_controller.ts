@@ -1,18 +1,24 @@
 import { Controller } from "@hotwired/stimulus"
+import { storeFile, getFile, deleteFile } from "../lib/offline_storage"
 
 interface QueuedRequest {
   url: string
   method: string
   body: Record<string, string>
   timestamp: number
+  fileId?: string
+  fileName?: string
+  fileType?: string
 }
 
 export default class OfflineQueueController extends Controller {
-  static targets = ["count"]
+  static targets = ["count", "pending"]
   static values = { queued: Number }
 
   declare readonly hasCountTarget: boolean
   declare readonly countTarget: HTMLElement
+  declare readonly hasPendingTarget: boolean
+  declare readonly pendingTarget: HTMLElement
   declare queuedValue: number
 
   private storageKey = "offline-form-queue"
@@ -51,8 +57,19 @@ export default class OfflineQueueController extends Controller {
 
     const body: Record<string, string> = {}
     const formData = new FormData(form)
+    let fileId: string | undefined
+    let fileName: string | undefined
+    let fileType: string | undefined
+
     formData.forEach((value, key) => {
-      body[key] = value as string
+      if (value instanceof File) {
+        fileId = String(Date.now()) + "-" + Math.random().toString(36).slice(2)
+        fileName = value.name
+        fileType = value.type
+        storeFile(fileId, value)
+      } else {
+        body[key] = value as string
+      }
     })
 
     this.enqueue({
@@ -60,6 +77,9 @@ export default class OfflineQueueController extends Controller {
       method: form.method.toUpperCase() || "POST",
       body,
       timestamp: Date.now(),
+      fileId,
+      fileName,
+      fileType,
     })
   }
 
@@ -86,20 +106,49 @@ export default class OfflineQueueController extends Controller {
 
     for (const item of queue) {
       try {
-        const body = new URLSearchParams()
-        Object.entries(item.body).forEach(([key, value]) => {
-          body.append(key, value)
-        })
+        let response: Response
 
-        const response = await fetch(item.url, {
-          method: item.method,
-          headers: {
-            Accept: "text/vnd.turbo-stream.html, text/html",
-            "Content-Type": "application/x-www-form-urlencoded",
-            "X-CSRF-Token": this.getCsrfToken(),
-          },
-          body,
-        })
+        if (item.fileId) {
+          const file = await getFile(item.fileId)
+          if (!file) {
+            remaining.push(item)
+            continue
+          }
+
+          const body = new FormData()
+          Object.entries(item.body).forEach(([key, value]) => {
+            body.append(key, value)
+          })
+          body.append("photo", file, item.fileName || "photo.jpg")
+
+          response = await fetch(item.url, {
+            method: item.method,
+            headers: {
+              "Accept": "text/vnd.turbo-stream.html, text/html",
+              "X-CSRF-Token": this.getCsrfToken(),
+            },
+            body,
+          })
+
+          if (response.ok) {
+            deleteFile(item.fileId)
+          }
+        } else {
+          const body = new URLSearchParams()
+          Object.entries(item.body).forEach(([key, value]) => {
+            body.append(key, value)
+          })
+
+          response = await fetch(item.url, {
+            method: item.method,
+            headers: {
+              "Accept": "text/vnd.turbo-stream.html, text/html",
+              "Content-Type": "application/x-www-form-urlencoded",
+              "X-CSRF-Token": this.getCsrfToken(),
+            },
+            body,
+          })
+        }
 
         if (response.ok) {
           const html = await response.text()
@@ -137,13 +186,21 @@ export default class OfflineQueueController extends Controller {
   }
 
   private updateCount(): void {
-    if (!this.hasCountTarget) return
+    if (this.hasCountTarget) {
+      this.countTarget.textContent = String(this.queuedValue)
+      if (this.queuedValue > 0) {
+        this.countTarget.classList.remove("hidden")
+      } else {
+        this.countTarget.classList.add("hidden")
+      }
+    }
 
-    this.countTarget.textContent = String(this.queuedValue)
-    if (this.queuedValue > 0) {
-      this.countTarget.classList.remove("hidden")
-    } else {
-      this.countTarget.classList.add("hidden")
+    const photoCount = this.getQueue().filter(item => item.fileId).length
+    if (this.hasPendingTarget && photoCount > 0) {
+      this.pendingTarget.textContent = String(photoCount)
+      this.pendingTarget.classList.remove("hidden")
+    } else if (this.hasPendingTarget) {
+      this.pendingTarget.classList.add("hidden")
     }
   }
 }
