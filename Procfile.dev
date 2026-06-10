@@ -1,2 +1,3 @@
+services: docker compose up -d
 js: bin/shakapacker-dev-server
 jobs: bin/jobs start --mode=async
