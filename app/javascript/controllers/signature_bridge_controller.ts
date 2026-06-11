@@ -1,4 +1,5 @@
 import { BridgeComponent } from "@hotwired/hotwire-native-bridge"
+import CompleteModalController from "./complete_modal_controller"
 
 export default class SignatureBridgeController extends BridgeComponent {
   static component = "signature"
@@ -58,6 +59,8 @@ export default class SignatureBridgeController extends BridgeComponent {
     const dataUrl = imageData.startsWith("data:") ? imageData : `data:image/png;base64,${imageData}`
     this.signatureInputTarget.value = dataUrl
 
+    this.notifyModal()
+
     const img = new Image()
     img.onload = () => {
       const ctx = this.canvasTarget.getContext("2d")
@@ -66,5 +69,18 @@ export default class SignatureBridgeController extends BridgeComponent {
       }
     }
     img.src = dataUrl
+  }
+
+  private notifyModal(): void {
+    const modal = this.application.getControllerForElementAndIdentifier(
+      this.element.closest("[data-controller~='complete-modal']") || this.element,
+      "complete-modal"
+    ) as CompleteModalController | null
+
+    if (this.signatureInputTarget.value.length > 0) {
+      modal?.enableSubmit()
+    } else {
+      modal?.disableSubmit()
+    }
   }
 }
