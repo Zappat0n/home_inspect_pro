@@ -2,9 +2,9 @@
 
 .link {
   font-size: 0.875rem;
-  color: $blue-600;
+  color: $link;
 
   &:hover {
-    color: $blue-800;
+    color: $link-hover;
   }
 }

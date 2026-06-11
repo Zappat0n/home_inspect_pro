@@ -4,4 +4,11 @@ module.exports = {
     "./app/helpers/**/*.rb",
     "./app/javascript/**/*.{ts,js}",
   ],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['"Plus Jakarta Sans"', "system-ui", "sans-serif"],
+      },
+    },
+  },
 }

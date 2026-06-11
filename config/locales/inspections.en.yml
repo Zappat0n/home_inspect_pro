@@ -37,6 +37,7 @@ en:
       not_completed: Cannot send report. The inspection has not been completed yet.
       success: Report sent successfully to the client.
     show:
+      back: All Inspections
       client_email: Client Email
       client_name: Client Name
       created_at: Created

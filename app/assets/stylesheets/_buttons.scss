@@ -22,18 +22,36 @@
 }
 
 .btn-primary {
-  background-color: $blue-600;
+  background-color: $primary;
   color: $white;
   font-size: 0.875rem;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
 
   &:hover {
-    background-color: $blue-700;
+    background-color: $primary-hover;
   }
 
   &:focus {
-    box-shadow: 0 0 0 2px $white, 0 0 0 4px $blue-500;
+    box-shadow: 0 0 0 2px $white, 0 0 0 4px $primary-focus-ring;
+  }
+}
+
+.btn-outline {
+  background-color: $transparent;
+  color: $primary;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid $primary;
+
+  &:hover {
+    background-color: $primary;
+    color: $white;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 2px $white, 0 0 0 4px $primary-focus-ring;
   }
 }
 

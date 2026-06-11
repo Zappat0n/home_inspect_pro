@@ -2,3 +2,83 @@
 en:
   app:
     name: Home Inspect Pro
+  landing:
+    faq:
+      q1:
+        answer: Yes! Start with a 7-day free trial. No credit card required.
+        question: Is there a free trial?
+      q2:
+        answer: We provide country-specific templates for USA, Canada, and Spain.
+          Custom templates are coming soon.
+        question: Can I use my own templates?
+      q3:
+        answer: Yes. You can complete entire inspections without internet. Everything
+          syncs automatically when you reconnect.
+        question: Does it work offline?
+      q4:
+        answer: Absolutely. Cancel anytime and keep access until the end of your billing
+          period.
+        question: Can I cancel anytime?
+      title: Frequently Asked Questions
+    features:
+      checklist:
+        description: Country-specific templates with 60+ items. Mark OK, Defect, or
+          N/A with one tap.
+        title: Smart Checklists
+      offline:
+        description: Full inspection workflow without internet. Syncs when you're
+          back online.
+        title: Work Offline
+      photos:
+        description: Attach unlimited photos to any checklist item. Works offline.
+        title: Photo Evidence
+      reports:
+        description: Auto-generate branded reports with photos, comments, and digital
+          signature.
+        title: Professional PDF Reports
+      title: Everything You Need to Inspect Smarter
+    hero:
+      cta: Start Free Trial
+      headline: Home Inspections Made Simple
+      secondary: View Pricing
+      subtext: Complete digital inspections from your phone. Professional PDF reports
+        in minutes. Trusted by inspectors worldwide.
+    how_it_works:
+      step1:
+        description: Choose your country's inspection template, auto-detected from
+          your location.
+        title: Select a Template
+      step2:
+        description: Walk through each item, add photos and notes. Works offline on
+          any device.
+        title: Inspect & Document
+      step3:
+        description: Complete with digital signature, generate a PDF report, and email
+          it to your client.
+        title: Generate & Send
+      title: How It Works
+    pricing:
+      monthly:
+        cta: Start Free Trial
+        features:
+        - Unlimited inspections
+        - All country templates
+        - PDF reports with photos
+        - Digital signatures
+        - Offline mode
+        - Email delivery
+        name: Monthly
+        period: "/month"
+        price: '7'
+      subtitle: No per-report fees. Unlimited everything.
+      title: Simple, Flat-Rate Pricing
+      yearly:
+        cta: Start Free Trial
+        features:
+        - Everything in Monthly
+        - 2 months free
+        - Priority support
+        name: Yearly
+        period: "/year"
+        price: '67'
+        savings: Save 20%
