@@ -1,0 +1,81 @@
+<%# app/views/inspections/_complete_modal.html.erb %>
+<div data-complete-modal-target="container"
+     data-testid="complete-inspection-modal"
+     data-action="click->complete-modal#backdropClose keyup.escape@window->complete-modal#close"
+     class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+
+  <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full mx-4 p-6 max-h-[90vh] overflow-y-auto">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-lg font-semibold text-gray-900">
+        <%= t("inspections.complete.modal_title") %>
+      </h3>
+      <button type="button"
+              data-action="complete-modal#close"
+              data-testid="cancel-complete-button"
+              class="text-gray-400 hover:text-gray-600">
+        <%= lucide_icon "x", class: "w-5 h-5" %>
+      </button>
+    </div>
+
+    <%= form_with(
+          url: complete_inspection_path(inspection),
+          method: :patch,
+          data: {
+            controller: "signature-pad signature-bridge",
+            action: "submit->signature-bridge#captureForSubmit",
+          },
+        ) do |form| %>
+
+      <div data-signature-bridge-target="webCanvas">
+        <p class="text-sm text-gray-500 mb-4">
+          <%= t("inspections.complete.signature_hint") %>
+        </p>
+
+        <canvas data-signature-pad-target="canvas"
+                data-signature-bridge-target="canvas"
+                width="600"
+                height="200"
+                class="w-full border border-gray-300 rounded-lg touch-none cursor-crosshair bg-white"></canvas>
+
+        <div class="mt-3 flex gap-3">
+          <button type="button"
+                  data-action="signature-pad#clear signature-bridge#clear"
+                  class="btn btn-outline"
+                  data-testid="clear-signature-button">
+            <%= t("inspections.complete.clear_signature") %>
+          </button>
+        </div>
+      </div>
+
+      <button type="button"
+              data-signature-bridge-target="nativeButton"
+              data-action="signature-bridge#capture"
+              style="display: none"
+              class="btn mt-3">
+        <%= t("inspections.complete.native_sign_button") %>
+      </button>
+
+      <input type="hidden"
+             data-signature-pad-target="signatureInput"
+             data-signature-bridge-target="signatureInput"
+             name="inspection[signature_data]">
+
+      <div class="mt-6 flex gap-3 justify-end">
+        <button type="button"
+                data-action="complete-modal#close"
+                data-testid="cancel-complete-button"
+                class="btn btn-outline">
+          <%= t("inspections.complete.cancel") %>
+        </button>
+        <%= form.submit(
+              t("inspections.complete.button"),
+              class: "btn btn-success",
+              data: {
+                testid: "complete-inspection-button",
+                complete_modal_target: "submitButton",
+              },
+            ) %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -4,11 +4,12 @@ es:
     complete:
       already_completed: Esta inspección ya está completada.
       button: Completar Inspección
+      cancel: Cancelar
       clear_signature: Limpiar
-      confirm: "¿Estás seguro? No podrás editar la inspección después de completarla."
+      modal_title: Firme para Completar
+      native_sign_button: Firmar con iPad
       signature_hint: Firme arriba usando su ratón o dedo (si está en un dispositivo
         táctil).
-      signature_title: Firma
       success: La inspección se marcó como completada.
     create:
       success: La inspección se creó correctamente.
