@@ -105,7 +105,7 @@
             url: complete_inspection_path(inspection),
             method: :patch,
             data: {
-              controller: "signature-pad",
+              controller: "signature-pad signature-bridge",
               action: "submit->signature-pad#capture",
             },
           ) do |form| %>
@@ -113,27 +113,40 @@
           <h3 class="text-lg font-semibold text-gray-900 mb-2">
             <%= t("inspections.complete.signature_title") %>
           </h3>
-          <p class="text-sm text-gray-500 mb-4">
-            <%= t("inspections.complete.signature_hint") %>
-          </p>
 
-          <canvas data-signature-pad-target="canvas"
-                  width="600"
-                  height="200"
-                  class="w-full border border-gray-300 rounded-lg touch-none cursor-crosshair bg-white"></canvas>
+          <div data-signature-bridge-target="webCanvas">
+            <p class="text-sm text-gray-500 mb-4">
+              <%= t("inspections.complete.signature_hint") %>
+            </p>
+
+            <canvas data-signature-pad-target="canvas"
+                    data-signature-bridge-target="canvas"
+                    width="600"
+                    height="200"
+                    class="w-full border border-gray-300 rounded-lg touch-none cursor-crosshair bg-white"></canvas>
+
+            <div class="mt-3 flex gap-3">
+              <button type="button"
+                      data-action="signature-pad#clear signature-bridge#clear"
+                      class="btn btn-outline"
+                      data-testid="clear-signature-button">
+                <%= t("inspections.complete.clear_signature") %>
+              </button>
+            </div>
+          </div>
+
+          <button type="button"
+                  data-signature-bridge-target="nativeButton"
+                  data-action="signature-bridge#capture"
+                  style="display: none"
+                  class="btn">
+            Sign with iPad
+          </button>
 
           <input type="hidden"
                  data-signature-pad-target="signatureInput"
+                 data-signature-bridge-target="signatureInput"
                  name="inspection[signature_data]">
-
-          <div class="mt-3 flex gap-3">
-            <button type="button"
-                    data-action="signature-pad#clear"
-                    class="btn btn-outline"
-                    data-testid="clear-signature-button">
-              <%= t("inspections.complete.clear_signature") %>
-            </button>
-          </div>
         </div>
 
         <%= form.submit(
