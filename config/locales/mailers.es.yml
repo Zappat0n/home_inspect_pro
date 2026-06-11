@@ -1,0 +1,13 @@
+---
+es:
+  report_mailer:
+    send_report:
+      body: |
+        Su informe de inspección de vivienda para %{property_address} está completo y se adjunta a este correo.
+
+        Por favor, revise el informe y contacte a su inspector si tiene alguna pregunta.
+
+        También se ha enviado una copia a su inspector (%{inspector_email}).
+      closing: Gracias por elegir HomeInspectPro.
+      greeting: Estimado/a %{client_name},
+      subject: Su Informe de Inspección de Vivienda — %{property_address}

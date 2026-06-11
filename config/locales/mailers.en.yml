@@ -1,0 +1,13 @@
+---
+en:
+  report_mailer:
+    send_report:
+      body: |
+        Your home inspection report for %{property_address} is complete and attached to this email.
+
+        Please review the report and contact your inspector if you have any questions.
+
+        A copy has also been sent to your inspector (%{inspector_email}).
+      closing: Thank you for choosing HomeInspectPro.
+      greeting: Dear %{client_name},
+      subject: Your Home Inspection Report — %{property_address}
