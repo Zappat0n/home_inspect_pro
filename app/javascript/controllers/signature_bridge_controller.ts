@@ -25,23 +25,46 @@ export default class SignatureBridgeController extends BridgeComponent {
     this.send("capture", {}, this.handleCapture.bind(this))
   }
 
+  captureForSubmit(): void {
+    if (!this.enabled) {
+      const dataUrl = this.canvasTarget.toDataURL("image/png")
+      this.signatureInputTarget.value = dataUrl
+    }
+  }
+
   clear(): void {
     this.send("clear", {})
+    if (this.enabled) {
+      this.signatureInputTarget.value = ""
+      const ctx = this.canvasTarget.getContext("2d")
+      if (ctx) {
+        ctx.clearRect(0, 0, this.canvasTarget.width, this.canvasTarget.height)
+      }
+      this.webCanvasTarget.style.display = "none"
+      this.nativeButtonTarget.style.display = ""
+    }
   }
 
   handleCapture(message: { data: { image?: string } }): void {
     const imageData = message.data?.image
     if (!imageData) return
 
-    this.signatureInputTarget.value = imageData
+    this.webCanvasTarget.style.display = ""
+    this.nativeButtonTarget.style.display = "none"
+
+    this.canvasTarget.width = this.canvasTarget.offsetWidth
+    this.canvasTarget.height = this.canvasTarget.offsetHeight
+
+    const dataUrl = imageData.startsWith("data:") ? imageData : `data:image/png;base64,${imageData}`
+    this.signatureInputTarget.value = dataUrl
 
     const img = new Image()
     img.onload = () => {
       const ctx = this.canvasTarget.getContext("2d")
       if (ctx) {
-        ctx.drawImage(img, 0, 0)
+        ctx.drawImage(img, 0, 0, this.canvasTarget.width, this.canvasTarget.height)
       }
     }
-    img.src = imageData
+    img.src = dataUrl
   }
 }
