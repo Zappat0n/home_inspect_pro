@@ -97,6 +97,22 @@ class InspectionsController < ApplicationController
     redirect_to(inspection, notice: t("inspections.send_report.success"))
   end
 
+  def preview_report
+    inspection = current_user.inspections.find(params[:id])
+
+    unless inspection.completed?
+      redirect_to(inspection, alert: t("inspections.preview_report.not_completed"))
+      return
+    end
+
+    if inspection.pdf_url.blank?
+      redirect_to(inspection, notice: t("inspections.report.generating"))
+      return
+    end
+
+    render(locals: { inspection: inspection })
+  end
+
   private
 
   def pdf_base_url

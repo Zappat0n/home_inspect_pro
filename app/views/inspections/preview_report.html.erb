@@ -1,0 +1,26 @@
+<div class="max-w-5xl mx-auto">
+  <h1 class="text-2xl font-bold text-gray-900 mb-6">
+    <%= t("inspections.preview_report.title") %>
+  </h1>
+
+  <div class="mb-6">
+    <iframe src="<%= inspection.pdf_url %>"
+            class="w-full border border-gray-300 rounded-lg"
+            style="height: 80vh;"
+            data-testid="pdf-preview-frame">
+    </iframe>
+  </div>
+
+  <div class="flex gap-3">
+    <%= link_to t("inspections.preview_report.back"),
+                inspection_path(inspection),
+                'data-testid': "back-to-inspection-button",
+                class: "btn btn-outline" %>
+
+    <%= button_to t("inspections.show.send_report"),
+                  send_report_inspection_path(inspection),
+                  method: :post,
+                  'data-testid': "send-report-button",
+                  class: "btn" %>
+  </div>
+</div>

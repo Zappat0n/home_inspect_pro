@@ -27,6 +27,10 @@ es:
       cancel: Cancelar
       submit: Crear Inspección
       title: Nueva Inspección
+    preview_report:
+      back: Volver a la Inspección
+      not_completed: La inspección debe estar completada primero.
+      title: Vista Previa del Informe
     report:
       generating: El reporte PDF se está generando. Estará disponible en breve.
     send_report:
@@ -36,6 +40,7 @@ es:
       client_email: Correo Electrónico del Cliente
       client_name: Nombre del Cliente
       created_at: Creada
+      preview_report: Vista Previa del Informe
       property_address: Dirección de la Propiedad
       send_report: Enviar Informe al Cliente
       signature: Firma

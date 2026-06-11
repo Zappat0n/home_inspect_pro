@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       patch :complete
       get :report
       post :send_report
+      get :preview_report
     end
     resources :inspection_items, only: [:update] do
       resources :photos, controller: "inspection_photos", only: %i[create destroy]
