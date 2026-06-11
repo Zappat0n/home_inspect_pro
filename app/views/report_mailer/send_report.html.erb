@@ -1,0 +1,21 @@
+<table role="presentation" cellpadding="0" cellspacing="0" class="email-table">
+  <tr>
+    <td class="email-content">
+      <h1>
+        <%= t(".subject", property_address: inspection.property_address) %>
+      </h1>
+
+      <p>
+        <%= t(".greeting", client_name: inspection.client_name) %>
+      </p>
+
+      <p class="body-text">
+        <%= t(".body", property_address: inspection.property_address, inspector_email: user.email) %>
+      </p>
+
+      <p class="closing">
+        <%= t(".closing") %>
+      </p>
+    </td>
+  </tr>
+</table>
