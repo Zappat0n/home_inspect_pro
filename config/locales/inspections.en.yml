@@ -27,6 +27,10 @@ en:
       cancel: Cancel
       submit: Create Inspection
       title: New Inspection
+    preview_report:
+      back: Back to Inspection
+      not_completed: Inspection must be completed first.
+      title: Report Preview
     report:
       generating: PDF report is being generated. It will be available shortly.
     send_report:
@@ -36,6 +40,7 @@ en:
       client_email: Client Email
       client_name: Client Name
       created_at: Created
+      preview_report: Preview Report
       property_address: Property Address
       send_report: Email Report to Client
       signature: Signature

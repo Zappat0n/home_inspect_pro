@@ -71,6 +71,10 @@
 
   <% if inspection.completed? %>
     <div class="mb-8 flex gap-2">
+      <%= link_to t("inspections.show.preview_report"),
+                  preview_report_inspection_path(inspection),
+                  'data-testid': "preview-report-button",
+                  class: "btn btn-outline" %>
       <%= link_to t("inspections.show.view_pdf"),
                   report_inspection_path(inspection),
                   'data-testid': "view-pdf-button",
