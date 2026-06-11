@@ -287,4 +287,78 @@ RSpec.describe InspectionsController, type: :controller do
       expect(flash[:alert]).to eq(I18n.t("subscription.trial_expired"))
     end
   end
+
+  describe "POST #send_report" do
+    it "sends report for a completed inspection" do
+      country = create(:country)
+      user = create(:user, country: country)
+      template = create(:inspection_template, country: country)
+      inspection = create(
+        :inspection,
+        user: user,
+        inspection_template: template,
+        status: :completed,
+      )
+      sign_in(user)
+
+      expect do
+        post :send_report, params: { id: inspection.id }
+      end.to have_enqueued_mail(ReportMailer, :send_report).with(inspection)
+      expect(response).to redirect_to(inspection_path(inspection))
+      expect(flash[:notice]).to eq(I18n.t("inspections.send_report.success"))
+    end
+
+    it "returns alert when inspection is not completed" do
+      country = create(:country)
+      user = create(:user, country: country)
+      template = create(:inspection_template, country: country)
+      inspection = create(:inspection, user: user, inspection_template: template)
+      sign_in(user)
+
+      expect(ReportMailer).not_to receive(:send_report)
+
+      post :send_report, params: { id: inspection.id }
+
+      expect(response).to redirect_to(inspection_path(inspection))
+      expect(flash[:alert]).to eq(I18n.t("inspections.send_report.not_completed"))
+    end
+
+    it "raises RecordNotFound for another user's inspection" do
+      country = create(:country)
+      user_a = create(:user, country: country)
+      user_b = create(:user, country: country)
+      template = create(:inspection_template, country: country)
+      inspection = create(
+        :inspection,
+        user: user_b,
+        inspection_template: template,
+        status: :completed,
+      )
+      sign_in(user_a)
+
+      expect do
+        post :send_report, params: { id: inspection.id }
+      end.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it "redirects to billing when user trial has expired" do
+      country = create(:country)
+      user = create(:user, country: country, trial_ends_at: 8.days.ago)
+      user.set_payment_processor(:paddle_billing)
+      user.payment_processor.update_column(:processor_id, "ctm_test123")
+      template = create(:inspection_template, country: country)
+      inspection = create(
+        :inspection,
+        user: user,
+        inspection_template: template,
+        status: :completed,
+      )
+      sign_in(user)
+
+      post :send_report, params: { id: inspection.id }
+
+      expect(response).to redirect_to(billing_path)
+      expect(flash[:alert]).to eq(I18n.t("subscription.trial_expired"))
+    end
+  end
 end

@@ -70,12 +70,17 @@
   </div>
 
   <% if inspection.completed? %>
-    <div class="mb-8">
+    <div class="mb-8 flex gap-2">
       <%= link_to t("inspections.show.view_pdf"),
                   report_inspection_path(inspection),
                   'data-testid': "view-pdf-button",
                   class: "btn",
                   target: "_blank" %>
+      <%= button_to t("inspections.show.send_report"),
+                    send_report_inspection_path(inspection),
+                    method: :post,
+                    'data-testid': "send-report-button",
+                    class: "btn btn-outline" %>
     </div>
   <% end %>
 

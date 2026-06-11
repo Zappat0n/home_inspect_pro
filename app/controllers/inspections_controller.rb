@@ -85,6 +85,18 @@ class InspectionsController < ApplicationController
     end
   end
 
+  def send_report
+    inspection = current_user.inspections.find(params[:id])
+
+    unless inspection.completed?
+      redirect_to(inspection, alert: t("inspections.send_report.not_completed"))
+      return
+    end
+
+    ReportMailer.send_report(inspection).deliver_later
+    redirect_to(inspection, notice: t("inspections.send_report.success"))
+  end
+
   private
 
   def pdf_base_url
