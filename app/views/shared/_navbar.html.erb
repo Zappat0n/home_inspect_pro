@@ -6,7 +6,7 @@
   <div class="container mx-auto px-5 py-3 flex items-center justify-between">
     <%= link_to root_path, class: "flex items-center gap-2 font-semibold text-lg", data: { navbar_scroll_target: "brandLink" } do %>
       <%= render "shared/logo", class: "w-7 h-7" %>
-      <%= t("app.name") %>
+      <span class="hidden md:inline"><%= t("app.name") %></span>
     <% end %>
     <div class="flex items-center gap-4">
       <% if user_signed_in? %>

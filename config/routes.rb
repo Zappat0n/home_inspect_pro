@@ -27,6 +27,9 @@ Rails.application.routes.draw do
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "offline" => "rails/pwa#offline", as: :pwa_offline
 
+  get "privacy" => "pages#privacy", as: :privacy
+  get "support" => "pages#support", as: :support
+
   # Defines the root path route ("/")
   root "home#index"
 
