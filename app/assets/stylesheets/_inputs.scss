@@ -9,8 +9,8 @@
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 2px $white, 0 0 0 4px $blue-500;
-    border-color: $blue-500;
+    box-shadow: 0 0 0 2px $white, 0 0 0 4px $input-focus-ring;
+    border-color: $input-focus-border;
   }
 }
 
@@ -19,6 +19,6 @@
 
   &:focus {
     box-shadow: none;
-    border-color: $blue-500;
+    border-color: $input-focus-border;
   }
 }

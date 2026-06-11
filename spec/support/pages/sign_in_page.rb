@@ -18,7 +18,7 @@ class SignInPage
   end
 
   def sign_out
-    click_button I18n.t("devise.views.links.sign_out")
+    click_on I18n.t("devise.views.links.sign_out")
   end
 
   def has_signed_in_message?

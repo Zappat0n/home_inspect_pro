@@ -1,4 +1,183 @@
-<div class="max-w-7xl mx-auto">
-  <h1 class="text-4xl font-bold text-gray-900 mb-6">Welcome to HomeInspectPro</h1>
-  <p class="text-lg text-gray-700">Your professional home inspection solution.</p>
-</div>
+<section class="-mx-5 -mt-36 pt-36 pb-20 md:pb-28 bg-teal-700">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+      <%= t("landing.hero.headline") %>
+    </h1>
+    <p class="text-lg md:text-xl text-teal-100 max-w-3xl mx-auto mb-10">
+      <%= t("landing.hero.subtext") %>
+    </p>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <%= link_to t("landing.hero.cta"), new_user_registration_path, class: "inline-flex items-center justify-center min-h-[44px] px-8 py-3 rounded-lg bg-orange-500 text-white font-semibold text-lg hover:bg-orange-600 transition-colors duration-200" %>
+      <%= link_to t("landing.hero.secondary"), "#pricing", class: "inline-flex items-center justify-center min-h-[44px] px-8 py-3 rounded-lg border-2 border-white text-white font-semibold text-lg hover:bg-white hover:text-teal-700 transition-colors duration-200" %>
+    </div>
+  </div>
+</section>
+
+<section class="py-16 md:py-20" id="features">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-12">
+      <%= t("landing.features.title") %>
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="text-center">
+        <div class="inline-flex items-center justify-center w-14 h-14 rounded-lg bg-teal-50 mb-4">
+          <%= lucide_icon("clipboard-check", class: "w-7 h-7 text-teal-700") %>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2"><%= t("landing.features.checklist.title") %></h3>
+        <p class="text-gray-600"><%= t("landing.features.checklist.description") %></p>
+      </div>
+      <div class="text-center">
+        <div class="inline-flex items-center justify-center w-14 h-14 rounded-lg bg-teal-50 mb-4">
+          <%= lucide_icon("camera", class: "w-7 h-7 text-teal-700") %>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2"><%= t("landing.features.photos.title") %></h3>
+        <p class="text-gray-600"><%= t("landing.features.photos.description") %></p>
+      </div>
+      <div class="text-center">
+        <div class="inline-flex items-center justify-center w-14 h-14 rounded-lg bg-teal-50 mb-4">
+          <%= lucide_icon("file-text", class: "w-7 h-7 text-teal-700") %>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2"><%= t("landing.features.reports.title") %></h3>
+        <p class="text-gray-600"><%= t("landing.features.reports.description") %></p>
+      </div>
+      <div class="text-center">
+        <div class="inline-flex items-center justify-center w-14 h-14 rounded-lg bg-teal-50 mb-4">
+          <%= lucide_icon("wifi-off", class: "w-7 h-7 text-teal-700") %>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2"><%= t("landing.features.offline.title") %></h3>
+        <p class="text-gray-600"><%= t("landing.features.offline.description") %></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="-mx-5 px-5 py-16 md:py-20 bg-teal-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-16">
+      <%= t("landing.how_it_works.title") %>
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <div class="relative">
+        <span class="absolute text-8xl md:text-9xl font-bold text-teal-700/10 -top-8 -left-4 select-none">1</span>
+        <div class="relative z-10">
+          <h3 class="text-xl font-semibold text-gray-900 mb-2"><%= t("landing.how_it_works.step1.title") %></h3>
+          <p class="text-gray-600"><%= t("landing.how_it_works.step1.description") %></p>
+        </div>
+      </div>
+      <div class="relative">
+        <span class="absolute text-8xl md:text-9xl font-bold text-teal-700/10 -top-8 -left-4 select-none">2</span>
+        <div class="relative z-10">
+          <h3 class="text-xl font-semibold text-gray-900 mb-2"><%= t("landing.how_it_works.step2.title") %></h3>
+          <p class="text-gray-600"><%= t("landing.how_it_works.step2.description") %></p>
+        </div>
+      </div>
+      <div class="relative">
+        <span class="absolute text-8xl md:text-9xl font-bold text-teal-700/10 -top-8 -left-4 select-none">3</span>
+        <div class="relative z-10">
+          <h3 class="text-xl font-semibold text-gray-900 mb-2"><%= t("landing.how_it_works.step3.title") %></h3>
+          <p class="text-gray-600"><%= t("landing.how_it_works.step3.description") %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-16 md:py-20" id="pricing">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4">
+      <%= t("landing.pricing.title") %>
+    </h2>
+    <p class="text-lg text-gray-600 text-center mb-12">
+      <%= t("landing.pricing.subtitle") %>
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+      <div class="rounded-xl border border-gray-200 p-8 bg-white flex flex-col">
+        <h3 class="text-2xl font-bold text-gray-900 mb-1"><%= t("landing.pricing.monthly.name") %></h3>
+        <div class="flex items-baseline gap-1 mb-6">
+          <span class="text-5xl font-bold text-gray-900">$<%= t("landing.pricing.monthly.price") %></span>
+          <span class="text-gray-500"><%= t("landing.pricing.monthly.period") %></span>
+        </div>
+        <ul class="space-y-3 mb-8 flex-1">
+          <% t("landing.pricing.monthly.features").each do |feature| %>
+            <li class="flex items-start gap-2">
+              <%= lucide_icon("check-circle", class: "w-5 h-5 text-teal-700 mt-0.5 shrink-0") %>
+              <span class="text-gray-600"><%= feature %></span>
+            </li>
+          <% end %>
+        </ul>
+        <%= link_to t("landing.pricing.monthly.cta"), new_user_registration_path, class: "inline-flex items-center justify-center min-h-[44px] w-full px-6 py-3 rounded-lg bg-teal-700 text-white font-semibold hover:bg-teal-800 transition-colors duration-200" %>
+      </div>
+      <div class="rounded-xl border-2 border-orange-500 p-8 bg-white flex flex-col relative">
+        <span class="absolute -top-3 right-6 inline-flex items-center px-3 py-1 rounded-full bg-orange-500 text-white text-sm font-semibold">
+          <%= t("landing.pricing.yearly.savings") %>
+        </span>
+        <h3 class="text-2xl font-bold text-gray-900 mb-1"><%= t("landing.pricing.yearly.name") %></h3>
+        <div class="flex items-baseline gap-1 mb-6">
+          <span class="text-5xl font-bold text-gray-900">$<%= t("landing.pricing.yearly.price") %></span>
+          <span class="text-gray-500"><%= t("landing.pricing.yearly.period") %></span>
+        </div>
+        <ul class="space-y-3 mb-8 flex-1">
+          <% t("landing.pricing.yearly.features").each do |feature| %>
+            <li class="flex items-start gap-2">
+              <%= lucide_icon("check-circle", class: "w-5 h-5 text-teal-700 mt-0.5 shrink-0") %>
+              <span class="text-gray-600"><%= feature %></span>
+            </li>
+          <% end %>
+        </ul>
+        <%= link_to t("landing.pricing.yearly.cta"), new_user_registration_path, class: "inline-flex items-center justify-center min-h-[44px] w-full px-6 py-3 rounded-lg bg-orange-500 text-white font-semibold hover:bg-orange-600 transition-colors duration-200" %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="-mx-5 px-5 py-16 md:py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-12">
+      <%= t("landing.faq.title") %>
+    </h2>
+    <div class="max-w-2xl mx-auto space-y-4">
+      <details class="rounded-xl border border-gray-200 p-5 open:bg-teal-50 open:border-teal-200 transition-colors duration-200 group">
+        <summary class="flex items-center justify-between cursor-pointer font-semibold text-gray-900 list-none">
+          <%= t("landing.faq.q1.question") %>
+          <%= lucide_icon("chevron-down", class: "w-5 h-5 text-gray-500 transition-transform duration-200 group-open:rotate-180") %>
+        </summary>
+        <p class="text-gray-600 pt-3"><%= t("landing.faq.q1.answer") %></p>
+      </details>
+      <details class="rounded-xl border border-gray-200 p-5 open:bg-teal-50 open:border-teal-200 transition-colors duration-200 group">
+        <summary class="flex items-center justify-between cursor-pointer font-semibold text-gray-900 list-none">
+          <%= t("landing.faq.q2.question") %>
+          <%= lucide_icon("chevron-down", class: "w-5 h-5 text-gray-500 transition-transform duration-200 group-open:rotate-180") %>
+        </summary>
+        <p class="text-gray-600 pt-3"><%= t("landing.faq.q2.answer") %></p>
+      </details>
+      <details class="rounded-xl border border-gray-200 p-5 open:bg-teal-50 open:border-teal-200 transition-colors duration-200 group">
+        <summary class="flex items-center justify-between cursor-pointer font-semibold text-gray-900 list-none">
+          <%= t("landing.faq.q3.question") %>
+          <%= lucide_icon("chevron-down", class: "w-5 h-5 text-gray-500 transition-transform duration-200 group-open:rotate-180") %>
+        </summary>
+        <p class="text-gray-600 pt-3"><%= t("landing.faq.q3.answer") %></p>
+      </details>
+      <details class="rounded-xl border border-gray-200 p-5 open:bg-teal-50 open:border-teal-200 transition-colors duration-200 group">
+        <summary class="flex items-center justify-between cursor-pointer font-semibold text-gray-900 list-none">
+          <%= t("landing.faq.q4.question") %>
+          <%= lucide_icon("chevron-down", class: "w-5 h-5 text-gray-500 transition-transform duration-200 group-open:rotate-180") %>
+        </summary>
+        <p class="text-gray-600 pt-3"><%= t("landing.faq.q4.answer") %></p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="-mx-5 px-5 py-12 bg-gray-900 text-gray-400">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="text-sm">
+        &copy; <%= Time.current.year %> <span class="text-gray-300"><%= t("app.name") %></span>. All rights reserved.
+      </div>
+      <div class="flex items-center gap-6 text-sm">
+        <a href="#" class="hover:text-gray-200 transition-colors duration-200">Privacy</a>
+        <a href="#" class="hover:text-gray-200 transition-colors duration-200">Terms</a>
+      </div>
+    </div>
+  </div>
+</section>

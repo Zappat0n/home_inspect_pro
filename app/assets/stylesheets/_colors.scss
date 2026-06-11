@@ -16,6 +16,14 @@ $blue-600: #2563eb;
 $blue-700: #1d4ed8;
 $blue-800: #1e40af;
 
+// Teal (brand)
+$teal-50: #f0fdfa;
+$teal-500: #14b8a6;
+$teal-600: #0d9488;
+$teal-700: #0f766e;
+$teal-800: #115e59;
+$teal-900: #134e4a;
+
 // Green
 $green-100: #dcfce7;
 $green-400: #4ade80;
@@ -48,9 +56,9 @@ $white: #fff;
 $transparent: transparent;
 
 // Brand
-$primary: $blue-600;
-$primary-hover: $blue-700;
-$primary-focus-ring: $blue-500;
+$primary: $teal-700;
+$primary-hover: $teal-800;
+$primary-focus-ring: $teal-500;
 $danger: $red-600;
 $danger-hover: $red-700;
 $danger-focus-ring: $red-500;
@@ -68,8 +76,8 @@ $status-completed-text: $green-800;
 
 // Forms
 $input-border: $gray-300;
-$input-focus-border: $blue-500;
-$input-focus-ring: $blue-500;
+$input-focus-border: $teal-500;
+$input-focus-ring: $teal-500;
 $label: $gray-700;
 $text-muted: $gray-500;
 
@@ -89,12 +97,12 @@ $error-text: $red-700;
 // Navigation
 $nav-bg: $white;
 $nav-border: $gray-200;
-$nav-link: $blue-600;
-$nav-link-hover: $blue-800;
+$nav-link: $teal-600;
+$nav-link-hover: $teal-700;
 
 // Text
 $text-primary: $gray-900;
 $text-secondary: $gray-700;
 $text-muted: $gray-500;
-$link: $blue-600;
-$link-hover: $blue-800;
+$link: $teal-600;
+$link-hover: $teal-700;

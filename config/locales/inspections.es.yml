@@ -37,6 +37,7 @@ es:
       not_completed: No se puede enviar el informe. La inspección aún no está completada.
       success: Informe enviado correctamente al cliente.
     show:
+      back: Todas las Inspecciones
       client_email: Correo Electrónico del Cliente
       client_name: Nombre del Cliente
       created_at: Creada

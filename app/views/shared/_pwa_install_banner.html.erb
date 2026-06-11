@@ -1,17 +1,17 @@
 <div data-controller="pwa-install" class="hidden" data-pwa-install-target="banner">
-  <div class="bg-blue-600 text-white px-4 py-3 flex items-center justify-between">
+  <div class="bg-teal-600 text-white px-4 py-3 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <img src="/icon.png" alt="Home Inspect Pro" class="w-8 h-8 rounded">
       <div>
         <p class="font-semibold text-sm"><%= t("pwa.install.title") %></p>
-        <p class="text-xs text-blue-200"><%= t("pwa.install.subtitle") %></p>
+        <p class="text-xs text-teal-100"><%= t("pwa.install.subtitle") %></p>
       </div>
     </div>
     <div class="flex items-center gap-2">
-      <button type="button" data-action="click->pwa-install#install" class="bg-white text-blue-600 px-3 py-1 rounded text-sm font-semibold hover:bg-blue-50">
+      <button type="button" data-action="click->pwa-install#install" class="bg-white text-teal-600 px-3 py-1 rounded text-sm font-semibold hover:bg-teal-50">
         <%= t("pwa.install.button") %>
       </button>
-      <button type="button" data-action="click->pwa-install#dismiss" class="text-blue-200 hover:text-white">
+      <button type="button" data-action="click->pwa-install#dismiss" class="text-teal-100 hover:text-white">
         <%= lucide_icon("x", class: "h-5 w-5") %>
       </button>
     </div>

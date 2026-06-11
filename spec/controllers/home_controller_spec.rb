@@ -15,7 +15,7 @@ RSpec.describe HomeController, type: :controller do
     it "renders the home page" do
       get :index
 
-      expect(response.body).to include("Welcome to HomeInspectPro")
+      expect(response.body).to include(I18n.t("landing.hero.headline"))
     end
   end
 end

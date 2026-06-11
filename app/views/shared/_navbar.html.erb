@@ -1,14 +1,28 @@
-<nav class="bg-white shadow-sm border-b border-gray-200">
+<% landing_page = controller_name == "home" && action_name == "index" %>
+
+<nav data-navbar-scroll-target="navbar"
+     class="<%= landing_page ? "bg-transparent transition-colors duration-300" : "bg-white shadow-md border-b border-gray-200" %>"
+     <%= "data-controller='navbar-scroll'".html_safe if landing_page %>>
   <div class="container mx-auto px-5 py-3 flex items-center justify-between">
-    <%= link_to t("app.name"), root_path, class: "font-semibold text-lg text-gray-900" %>
-    <div class="flex items-center">
+    <%= link_to root_path, class: "flex items-center gap-2 font-semibold text-lg", data: { navbar_scroll_target: "brandLink" } do %>
+      <%= render "shared/logo", class: "w-7 h-7" %>
+      <%= t("app.name") %>
+    <% end %>
+    <div class="flex items-center gap-4">
       <% if user_signed_in? %>
-        <%= link_to t("inspections.navbar.link"), inspections_path, class: "link mr-4" %>
-        <%= link_to t("billing.navbar.link"), billing_path, class: "link mr-4" %>
-        <%= button_to t("devise.views.links.sign_out"), destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+        <%= link_to t("inspections.navbar.link"),
+              inspections_path,
+              class: ["link", ("border-b-2 border-teal-600 font-semibold" if controller_name == "inspections")] %>
+        <%= link_to t("billing.navbar.link"),
+              billing_path,
+              class: ["link", ("border-b-2 border-teal-600 font-semibold" if controller_name == "billing")] %>
+        <%= link_to t("devise.views.links.sign_out"),
+              destroy_user_session_path,
+              data: { turbo_method: :delete },
+              class: "link" %>
       <% else %>
         <%= link_to t("devise.views.links.log_in"), new_user_session_path, class: "link" %>
-        <%= link_to t("devise.views.links.sign_up"), new_user_registration_path, class: "btn btn-primary ml-4" %>
+        <%= link_to t("devise.views.links.sign_up"), new_user_registration_path, class: "btn btn-primary" %>
       <% end %>
     </div>
   </div>

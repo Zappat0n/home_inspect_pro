@@ -2,3 +2,85 @@
 es:
   app:
     name: Home Inspect Pro
+  landing:
+    faq:
+      q1:
+        answer: "¡Sí! Comience con una prueba gratuita de 7 días. No requiere tarjeta
+          de crédito."
+        question: "¿Hay una prueba gratuita?"
+      q2:
+        answer: Ofrecemos plantillas específicas para EE. UU., Canadá y España. Las
+          plantillas personalizadas estarán disponibles próximamente.
+        question: "¿Puedo usar mis propias plantillas?"
+      q3:
+        answer: Sí. Puede realizar inspecciones completas sin internet. Todo se sincroniza
+          automáticamente cuando se reconecta.
+        question: "¿Funciona sin conexión?"
+      q4:
+        answer: Absolutamente. Cancele en cualquier momento y mantenga el acceso hasta
+          el final de su período de facturación.
+        question: "¿Puedo cancelar en cualquier momento?"
+      title: Preguntas Frecuentes
+    features:
+      checklist:
+        description: Plantillas específicas por país con más de 60 artículos. Marque
+          OK, Defecto o N/A con un toque.
+        title: Listas de Verificación Inteligentes
+      offline:
+        description: Flujo de trabajo completo de inspección sin internet. Se sincroniza
+          cuando vuelve a estar en línea.
+        title: Trabaje Sin Conexión
+      photos:
+        description: Adjunte fotos ilimitadas a cualquier artículo de la lista. Funciona
+          sin conexión.
+        title: Evidencia Fotográfica
+      reports:
+        description: Genere automáticamente informes con su marca, fotos, comentarios
+          y firma digital.
+        title: Informes PDF Profesionales
+      title: Todo lo Que Necesita para Inspeccionar de Forma Más Inteligente
+    hero:
+      cta: Prueba Gratuita
+      headline: Inspecciones de Hogar Hechas Simples
+      secondary: Ver Precios
+      subtext: Realice inspecciones digitales completas desde su teléfono. Informes
+        PDF profesionales en minutos. Confiado por inspectores en todo el mundo.
+    how_it_works:
+      step1:
+        description: Elija la plantilla de inspección de su país, detectada automáticamente
+          desde su ubicación.
+        title: Seleccione una Plantilla
+      step2:
+        description: Revise cada artículo, añada fotos y notas. Funciona sin conexión
+          en cualquier dispositivo.
+        title: Inspeccione y Documente
+      step3:
+        description: Complete con firma digital, genere un informe PDF y envíelo por
+          correo electrónico a su cliente.
+        title: Genere y Envíe
+      title: Cómo Funciona
+    pricing:
+      monthly:
+        cta: Prueba Gratuita
+        features:
+        - Inspecciones ilimitadas
+        - Todas las plantillas por país
+        - Informes PDF con fotos
+        - Firmas digitales
+        - Modo sin conexión
+        - Entrega por correo electrónico
+        name: Mensual
+        period: "/mes"
+        price: '7'
+      subtitle: Sin cargos por informe. Todo ilimitado.
+      title: Precios Simples y Fijos
+      yearly:
+        cta: Prueba Gratuita
+        features:
+        - Todo lo de Mensual
+        - 2 meses gratis
+        - Soporte prioritario
+        name: Anual
+        period: "/año"
+        price: '67'
+        savings: Ahorre 20%

@@ -2,7 +2,7 @@
   <div class="mb-6">
     <%= link_to inspections_path,
                 class: "link font-medium" do %>
-      &larr; <%= t("inspections.new.cancel") %>
+      &larr; <%= t("inspections.show.back") %>
     <% end %>
   </div>
 
@@ -151,7 +151,7 @@
   <div class="space-y-8">
     <% inspection_items.group_by { |item| item.checklist_item.category }.each do |category, items| %>
       <div>
-        <h2 class="text-lg font-semibold text-gray-900 mb-4 px-2">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4 px-2">
           <%= category %>
         </h2>
 
