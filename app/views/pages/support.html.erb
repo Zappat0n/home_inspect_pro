@@ -1,0 +1,25 @@
+<% content_for :title, "Support" %>
+
+<div class="max-w-3xl mx-auto px-4 py-12">
+  <h1 class="text-3xl font-bold text-gray-900 mb-8">Support</h1>
+
+  <div class="space-y-6">
+    <div class="card p-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-2">Email Support</h2>
+      <p class="text-gray-700 mb-2">Send us an email and we'll respond within 24 hours.</p>
+      <a href="mailto:support@homeinspectpro.app" class="text-teal-600 hover:text-teal-700 font-medium">support@homeinspectpro.app</a>
+    </div>
+
+    <div class="card p-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-2">Frequently Asked Questions</h2>
+      <p class="text-gray-700 mb-2">Visit our FAQ page for quick answers to common questions about inspections, templates, billing, and more.</p>
+      <%= link_to "View FAQ", root_path(anchor: "faq"), class: "text-teal-600 hover:text-teal-700 font-medium" %>
+    </div>
+
+    <div class="card p-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-2">Privacy Policy</h2>
+      <p class="text-gray-700 mb-2">Read about how we handle your data.</p>
+      <%= link_to "Privacy Policy", privacy_path, class: "text-teal-600 hover:text-teal-700 font-medium" %>
+    </div>
+  </div>
+</div>
