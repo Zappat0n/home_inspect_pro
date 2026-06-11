@@ -29,11 +29,15 @@ en:
       title: New Inspection
     report:
       generating: PDF report is being generated. It will be available shortly.
+    send_report:
+      not_completed: Cannot send report. The inspection has not been completed yet.
+      success: Report sent successfully to the client.
     show:
       client_email: Client Email
       client_name: Client Name
       created_at: Created
       property_address: Property Address
+      send_report: Email Report to Client
       signature: Signature
       signature_alt: Client signature
       status: Status

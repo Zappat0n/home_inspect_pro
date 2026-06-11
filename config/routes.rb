@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     member do
       patch :complete
       get :report
+      post :send_report
     end
     resources :inspection_items, only: [:update] do
       resources :photos, controller: "inspection_photos", only: %i[create destroy]

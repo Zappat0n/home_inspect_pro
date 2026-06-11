@@ -29,11 +29,15 @@ es:
       title: Nueva Inspección
     report:
       generating: El reporte PDF se está generando. Estará disponible en breve.
+    send_report:
+      not_completed: No se puede enviar el informe. La inspección aún no está completada.
+      success: Informe enviado correctamente al cliente.
     show:
       client_email: Correo Electrónico del Cliente
       client_name: Nombre del Cliente
       created_at: Creada
       property_address: Dirección de la Propiedad
+      send_report: Enviar Informe al Cliente
       signature: Firma
       signature_alt: Firma del cliente
       status: Estado
