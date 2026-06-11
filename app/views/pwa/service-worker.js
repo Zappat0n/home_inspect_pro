@@ -43,6 +43,7 @@ self.addEventListener("fetch", function(event) {
 
   if (url.pathname.startsWith("/admin")) return
   if (url.pathname.startsWith("/up")) return
+  if (url.pathname.startsWith("/packs")) return
 
   if (request.mode === "navigate") {
     event.respondWith(
