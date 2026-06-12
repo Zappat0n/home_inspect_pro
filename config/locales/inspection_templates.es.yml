@@ -1,0 +1,68 @@
+---
+es:
+  checklist_items:
+    allows_photo: Permite foto
+    delete:
+      button: Eliminar
+      confirm: "¿Estás seguro de que deseas eliminar este elemento?"
+    edit:
+      button: Editar
+    form:
+      allows_photo: Permite foto
+      cancel: Cancelar
+      category: Categoría
+      description: Descripción
+      name: Nombre
+      severity: Gravedad
+      submit: Guardar Elemento
+    no_items: Aún no hay elementos en la lista
+    severity:
+      critical: Crítico
+      info: Informativo
+      major: Grave
+      minor: Leve
+  inspection_templates:
+    create:
+      success: Plantilla creada correctamente
+    destroy:
+      in_use: No se puede eliminar — está siendo usada por %{count} inspección(es)
+      success: Plantilla eliminada
+    duplicate:
+      not_found: Plantilla no encontrada
+      success: Plantilla duplicada — ahora puedes personalizarla
+    edit:
+      add_item: Agregar Elemento
+      back: "← Volver a Plantilla"
+      cancel: Cancelar
+      items_title: Elementos de la Lista
+      submit: Guardar Cambios
+      title: Editar %{name}
+    index:
+      confirm_delete: "¿Estás seguro?"
+      delete: Eliminar
+      duplicate: Personalizar
+      edit: Editar
+      items_count:
+        one: 1 elemento
+        other: "%{count} elementos"
+      my_templates: Mis Plantillas
+      new_template: Nueva Plantilla
+      system_templates: Plantillas del Sistema
+      title: Plantillas de Inspección
+    navbar:
+      link: Mis Plantillas
+    new:
+      back: "← Volver a Plantillas"
+      cancel: Cancelar
+      submit: Crear Plantilla
+      title: Nueva Plantilla
+    not_authorized: Solo puedes editar tus propias plantillas personalizadas
+    show:
+      allows_photo: Permite foto
+      back: "← Volver a Plantillas"
+      edit: Editar Plantilla
+      items_count:
+        one: 1 elemento
+        other: "%{count} elementos"
+    update:
+      success: Plantilla actualizada correctamente
