@@ -16,6 +16,11 @@ en:
       client_email_label: Client Email
       client_name_label: Client Name
       property_address_label: Property Address
+      template_custom_badge: My Template
+      template_item_count:
+        one: "%{count} item"
+        other: "%{count} items"
+      template_label: Template
     index:
       empty: You haven't created any inspections yet.
       empty_cta: Create your first inspection

@@ -56,6 +56,12 @@ class User < ApplicationRecord
     ((trial_ends_at - Time.current) / 1.day).ceil
   end
 
+  def available_templates
+    InspectionTemplate.published.system_templates.where(country: country)
+      .or(InspectionTemplate.where(user: self))
+      .order(:name)
+  end
+
   def default_inspection_template
     template = InspectionTemplate.published.find_by(country: country)
     return template if template

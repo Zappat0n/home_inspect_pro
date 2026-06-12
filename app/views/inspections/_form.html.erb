@@ -14,6 +14,32 @@
 <%= form_with(model: inspection, url: inspections_path, class: "space-y-6") do |form| %>
   <div class="card p-6 space-y-6">
     <div>
+      <p class="form-label"><%= t("inspections.form.template_label") %></p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+        <% templates.each do |template| %>
+          <label class="relative block border rounded-lg p-4 cursor-pointer transition-colors has-[:checked]:border-teal-600 has-[:checked]:bg-teal-50 hover:border-gray-400">
+            <%= form.radio_button :inspection_template_id, template.id,
+                  checked: template == inspection.inspection_template,
+                  class: "sr-only" %>
+            <div class="flex items-start gap-3">
+              <div class="flex-1 min-w-0">
+                <p class="font-medium text-sm"><%= template.name %></p>
+                <p class="text-xs text-gray-500 mt-1">
+                  <%= t("inspections.form.template_item_count", count: template.checklist_items.count) %>
+                </p>
+              </div>
+              <% if template.custom? %>
+                <span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-700 shrink-0"
+                      data-testid="custom-template-badge">
+                  <%= t("inspections.form.template_custom_badge") %>
+                </span>
+              <% end %>
+            </div>
+          </label>
+        <% end %>
+      </div>
+    </div>
+    <div>
       <%= form.label :property_address,
                      t("inspections.form.property_address_label"),
                      class: "form-label" %>
