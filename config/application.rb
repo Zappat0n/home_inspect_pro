@@ -21,7 +21,7 @@ Bundler.require(*Rails.groups)
 module HomeInspectPro
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults(8.2)
+    config.load_defaults(8.1)
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
@@ -38,6 +38,14 @@ module HomeInspectPro
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.to_prepare do
+      Rails::PwaController.class_eval do
+        def offline
+          render(template: "pwa/offline", layout: false)
+        end
+      end
+    end
 
     # I18n configuration
     config.i18n.available_locales = %i[en es]
