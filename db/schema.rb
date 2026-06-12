@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.2].define(version: 2026_06_10_030916) do
+ActiveRecord::Schema[8.2].define(version: 2026_06_12_005336) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -105,8 +105,11 @@ ActiveRecord::Schema[8.2].define(version: 2026_06_10_030916) do
     t.boolean "published", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.integer "template_type", default: 0, null: false
     t.index ["country_id"], name: "index_inspection_templates_on_country_id"
     t.index ["name"], name: "index_inspection_templates_on_name"
+    t.index ["user_id"], name: "index_inspection_templates_on_user_id"
   end
 
   create_table "inspections", force: :cascade do |t|
@@ -261,6 +264,7 @@ ActiveRecord::Schema[8.2].define(version: 2026_06_10_030916) do
   add_foreign_key "inspection_photos", "checklist_items"
   add_foreign_key "inspection_photos", "inspections"
   add_foreign_key "inspection_templates", "countries"
+  add_foreign_key "inspection_templates", "users"
   add_foreign_key "inspections", "inspection_templates"
   add_foreign_key "inspections", "users"
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
