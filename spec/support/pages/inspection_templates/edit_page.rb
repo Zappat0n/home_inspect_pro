@@ -68,17 +68,21 @@ class InspectionTemplates::EditPage
 
   def open_details
     details = find("details", visible: :all)
-    details.native.set_attribute("open", "") unless details[:open]
+    return if details[:open]
+
+    page.execute_script("arguments[0].setAttribute('open', '')", details)
   end
 
   def set_position_field
-    form = find("form")
-    form.native.add_child(
-      Nokogiri::XML::Node.new("input", form.native.document).tap do |input|
-        input["type"] = "hidden"
-        input["name"] = "checklist_item[position]"
-        input["value"] = "2"
-      end,
+    page.execute_script(
+      "var form = arguments[0];" \
+      "var input = document.createElement('input');" \
+      "input.type = 'hidden';" \
+      "input.name = 'checklist_item[position]';" \
+      "input.value = arguments[1];" \
+      "form.appendChild(input);",
+      find("form"),
+      "2",
     )
   end
 end

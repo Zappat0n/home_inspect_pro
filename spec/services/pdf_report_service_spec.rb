@@ -66,5 +66,35 @@ RSpec.describe PdfReportService do
 
       expect(inspection.pdf).to be_attached
     end
+
+    it "generates a PDF with a custom template" do
+      country = create(:country, locale: "en")
+      create(:report_template, country: country, locale: "en")
+      user = create(:user, country: country)
+      template = create(:inspection_template, :custom, user: user, country: country, published: true)
+      inspection = create(:inspection, inspection_template: template)
+      item = create(
+        :checklist_item,
+        inspection_template: template,
+        category: "Roof",
+        name: "Shingles",
+        position: 1,
+      )
+      create(:inspection_item, inspection: inspection, checklist_item: item, status: :ok)
+
+      ActiveStorage::Current.url_options = { host: "http://localhost:3000" }
+      grover_double = instance_double(Grover, to_pdf: "fake pdf content")
+      rendered_html = nil
+      allow(Grover).to receive(:new) do |html|
+        rendered_html = html
+        grover_double
+      end
+
+      described_class.new(inspection).call
+
+      expect(inspection.pdf).to be_attached
+      expect(inspection.pdf_url).to be_present
+      expect(rendered_html).to include("Shingles")
+    end
   end
 end
