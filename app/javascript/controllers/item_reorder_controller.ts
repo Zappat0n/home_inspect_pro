@@ -14,7 +14,7 @@ export default class ItemReorderController extends Controller {
   private initialPositions: number[] = []
 
   dragstart(event: DragEvent): void {
-    const item = (event.target as HTMLElement).closest("[data-item-reorder-id]") as HTMLElement
+    const item = this.findItem(event.target)
     if (!item) return
 
     this.draggedItem = item
@@ -32,7 +32,7 @@ export default class ItemReorderController extends Controller {
   dragover(event: DragEvent): void {
     event.preventDefault()
 
-    const target = (event.target as HTMLElement).closest("[data-item-reorder-id]") as HTMLElement
+    const target = this.findItem(event.target)
     if (!target || !this.draggedItem || target === this.draggedItem) return
     if (target.parentElement !== this.draggedItem.parentElement) return
 
@@ -102,5 +102,9 @@ export default class ItemReorderController extends Controller {
   private getCsrfToken(): string {
     const meta = document.querySelector('meta[name="csrf-token"]')
     return (meta as HTMLMetaElement)?.content || ""
+  }
+
+  private findItem(element: EventTarget | null): HTMLElement | undefined {
+    return this.itemTargets.find(t => t.contains(element as Node))
   }
 }
