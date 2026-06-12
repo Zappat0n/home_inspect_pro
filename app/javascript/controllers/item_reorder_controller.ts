@@ -1,10 +1,12 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class ItemReorderController extends Controller {
+  static targets = ["item"]
   static values = {
     reorderUrl: String
   }
 
+  declare readonly itemTargets: HTMLElement[]
   declare readonly reorderUrlValue: string
 
   private draggedItem: HTMLElement | null = null
@@ -22,13 +24,9 @@ export default class ItemReorderController extends Controller {
     const container = item.parentElement
     if (!container) return
 
-    const allItems = container.querySelectorAll<HTMLElement>("[data-item-reorder-id]")
-    this.orderedIds = Array.from(allItems).map(el =>
-      Number(el.dataset.itemReorderId)
-    )
-    this.initialPositions = Array.from(allItems).map(el =>
-      Number(el.dataset.itemReorderPosition)
-    )
+    const groupItems = this.itemTargets.filter(el => el.parentElement === container)
+    this.orderedIds = groupItems.map(el => Number(el.dataset.itemReorderId))
+    this.initialPositions = groupItems.map(el => Number(el.dataset.itemReorderPosition))
   }
 
   dragover(event: DragEvent): void {

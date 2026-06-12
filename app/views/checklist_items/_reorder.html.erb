@@ -10,6 +10,7 @@
           <ul class="space-y-2">
             <% items.each do |item| %>
               <li draggable="true"
+                  data-item-reorder-target="item"
                   data-item-reorder-id="<%= item.id %>"
                   data-item-reorder-position="<%= item.position %>"
                   data-action="dragstart->item-reorder#dragstart dragover->item-reorder#dragover drop->item-reorder#drop dragend->item-reorder#dragend">
