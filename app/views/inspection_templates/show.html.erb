@@ -1,0 +1,45 @@
+<div class="max-w-4xl mx-auto px-4 py-8">
+  <div class="mb-6">
+    <%= link_to t(".back"), inspection_templates_path, class: "text-blue-600 hover:underline" %>
+  </div>
+
+  <div class="flex justify-between items-start mb-8">
+    <div>
+      <h1 class="text-2xl font-bold"><%= template.name %></h1>
+      <p class="text-gray-500"><%= t(".items_count", count: template.checklist_items.count) %></p>
+    </div>
+    <% if template.custom? && template.user == current_user %>
+      <%= link_to t(".edit"), edit_inspection_template_path(template),
+        class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+    <% end %>
+  </div>
+
+  <% template.checklist_items.ordered.group_by(&:category).each do |category, items| %>
+    <div class="mb-8">
+      <h2 class="text-lg font-semibold border-b pb-2 mb-4"><%= category %></h2>
+      <ul class="space-y-3">
+        <% items.each do |item| %>
+          <li class="flex items-start gap-3 p-3 bg-gray-50 rounded">
+            <span class="text-sm text-gray-500 font-mono w-6"><%= item.position %></span>
+            <div class="flex-1">
+              <p class="font-medium"><%= item.name %></p>
+              <% if item.description.present? %>
+                <p class="text-sm text-gray-500"><%= item.description %></p>
+              <% end %>
+              <div class="flex gap-2 mt-1">
+                <span class="text-xs px-2 py-0.5 rounded bg-gray-200">
+                  <%= t("checklist_items.severity.#{item.severity}") %>
+                </span>
+                <% if item.allows_photo %>
+                  <span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700">
+                    <%= t(".allows_photo") %>
+                  </span>
+                <% end %>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>
