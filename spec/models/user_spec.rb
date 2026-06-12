@@ -14,6 +14,14 @@ RSpec.describe User, type: :model do
 
       expect(user).not_to be_valid
     end
+
+    it "has many inspection templates" do
+      user = create(:user)
+      template1 = create(:inspection_template, :custom, user: user)
+      template2 = create(:inspection_template, :custom, user: user)
+
+      expect(user.inspection_templates).to contain_exactly(template1, template2)
+    end
   end
 
   describe "devise modules" do
@@ -105,6 +113,31 @@ RSpec.describe User, type: :model do
           expect(user.on_trial?).to be_falsy
         end
       end
+    end
+  end
+
+  describe "#default_inspection_template" do
+    it "returns a published template for the user's country" do
+      country = create(:country)
+      user = create(:user, country: country)
+      template = create(:inspection_template, country: country, published: true)
+
+      expect(user.default_inspection_template).to eq(template)
+    end
+
+    it "falls back to a US published template when user's country has none" do
+      us_country = create(:country, code: "US")
+      create(:inspection_template, country: us_country, published: true)
+      user = create(:user)
+
+      expect(user.default_inspection_template)
+        .to eq(InspectionTemplate.published.find_by(country: us_country))
+    end
+
+    it "returns nil when no published template exists" do
+      user = create(:user)
+
+      expect(user.default_inspection_template).to be_nil
     end
   end
 end

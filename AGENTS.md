@@ -158,3 +158,5 @@ Use individual tools only when you need deeper detail on a specific layer.
 - Run tests after changes
 
 <!-- END rails-ai-context -->
+
+Before starting any work, read .opencode/AGENTS.md for full context.

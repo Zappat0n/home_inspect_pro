@@ -40,6 +40,7 @@ class User < ApplicationRecord
 
   belongs_to :country
   has_many :inspections, dependent: :destroy
+  has_many :inspection_templates, dependent: :nullify
 
   def subscribed?
     payment_processor.present? && payment_processor.subscribed?

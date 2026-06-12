@@ -10,6 +10,7 @@ Rails.root.join("lib/templates").glob("*.yml").each do |template_file|
   template = InspectionTemplate.find_or_create_by!(name: template_data["name"]) do |t|
     t.country = country
     t.published = template_data["published"]
+    t.template_type = :system
   end
 
   position = 0

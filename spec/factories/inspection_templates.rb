@@ -4,5 +4,11 @@ FactoryBot.define do
     sequence(:name) { |n| "Inspection Template #{n}" }
     category { "Electrical" }
     published { false }
+    template_type { :system }
+
+    trait :custom do
+      template_type { :custom }
+      association :user
+    end
   end
 end
