@@ -13,6 +13,9 @@
         <%= link_to t("inspections.navbar.link"),
               inspections_path,
               class: ["link", ("border-b-2 border-teal-600 font-semibold" if controller_name == "inspections")] %>
+        <%= link_to t("inspection_templates.navbar.link"),
+              inspection_templates_path,
+              class: ["link", ("border-b-2 border-teal-600 font-semibold" if controller_name == "inspection_templates")] %>
         <%= link_to t("billing.navbar.link"),
               billing_path,
               class: ["link", ("border-b-2 border-teal-600 font-semibold" if controller_name == "billing")] %>

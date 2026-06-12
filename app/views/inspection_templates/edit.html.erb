@@ -1,0 +1,32 @@
+<div class="max-w-2xl mx-auto px-4 py-8">
+  <div class="mb-6">
+    <%= link_to t(".back"), inspection_template_path(template), class: "text-blue-600 hover:underline" %>
+  </div>
+
+  <h1 class="text-2xl font-bold mb-8"><%= t(".title", name: template.name) %></h1>
+
+  <%= form_with(model: template, url: inspection_template_path(template), method: :patch, local: true, class: "space-y-6") do |form| %>
+    <% if template.errors.any? %>
+      <div class="bg-red-50 border border-red-200 rounded p-4 mb-6">
+        <h2 class="text-red-800 font-medium mb-2"><%= t("errors.messages.not_saved", count: template.errors.count, resource: template.model_name.human.downcase) %></h2>
+        <ul class="list-disc list-inside text-sm text-red-700">
+          <% template.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div>
+      <%= form.label :name, class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= form.text_field :name,
+        class: "w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        data: { testid: "template-name-input" } %>
+    </div>
+
+    <div class="flex gap-4">
+      <%= form.submit t(".submit"), class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+      <%= link_to t(".cancel"), inspection_template_path(template), class: "px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200" %>
+    </div>
+  <% end %>
+</div>

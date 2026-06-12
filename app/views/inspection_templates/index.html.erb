@@ -1,0 +1,53 @@
+<div class="max-w-4xl mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-2xl font-bold"><%= t(".title") %></h1>
+  </div>
+
+  <div class="mb-10">
+    <h2 class="text-lg font-semibold text-gray-500 mb-4"><%= t(".system_templates") %></h2>
+    <div class="grid gap-4 md:grid-cols-2">
+      <% system_templates.each do |template| %>
+        <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+          <div class="flex justify-between items-start gap-4">
+            <div class="min-w-0">
+              <h3 class="font-medium"><%= template.name %></h3>
+              <p class="text-sm text-gray-500"><%= t(".items_count", count: template.checklist_items.count) %></p>
+            </div>
+            <%= button_to t(".duplicate"),
+              duplicate_inspection_template_path(template),
+              method: :post,
+              class: "px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 shrink-0" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div>
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-semibold text-gray-500"><%= t(".my_templates") %></h2>
+      <%= link_to t(".new_template"), new_inspection_template_path,
+        class: "px-3 py-1 text-sm bg-green-600 text-white rounded hover:bg-green-700" %>
+    </div>
+    <div class="grid gap-4 md:grid-cols-2">
+      <% custom_templates.each do |template| %>
+        <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+          <div class="flex justify-between items-start gap-4">
+            <div class="min-w-0">
+              <h3 class="font-medium"><%= link_to template.name, inspection_template_path(template) %></h3>
+              <p class="text-sm text-gray-500"><%= t(".items_count", count: template.checklist_items.count) %></p>
+            </div>
+            <div class="flex gap-2 shrink-0">
+              <%= link_to t(".edit"), edit_inspection_template_path(template),
+                class: "px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200" %>
+              <%= button_to t(".delete"), inspection_template_path(template),
+                method: :delete,
+                class: "px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200",
+                data: { turbo_confirm: t(".confirm_delete") } %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
