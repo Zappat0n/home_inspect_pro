@@ -40,7 +40,7 @@ class InspectionTemplates::EditPage
 
   def edit_item(item, new_name:)
     within("##{dom_id(item)}") do
-      click_on I18n.t("checklist_items.edit.button")
+      show_inline_form
       fill_in "Name", with: new_name
       click_on I18n.t("checklist_items.form.submit")
     end
@@ -70,19 +70,21 @@ class InspectionTemplates::EditPage
     details = find("details", visible: :all)
     return if details[:open]
 
-    page.execute_script("arguments[0].setAttribute('open', '')", details)
+    details.native.set_attribute("open", "")
   end
 
   def set_position_field
-    page.execute_script(
-      "var form = arguments[0];" \
-      "var input = document.createElement('input');" \
-      "input.type = 'hidden';" \
-      "input.name = 'checklist_item[position]';" \
-      "input.value = arguments[1];" \
-      "form.appendChild(input);",
-      find("form"),
-      "2",
-    )
+    form = find("form")
+    input = Nokogiri::XML::Node.new("input", form.native.document)
+    input["type"] = "hidden"
+    input["name"] = "checklist_item[position]"
+    input["value"] = "2"
+    form.native.add_child(input)
+  end
+
+  def show_inline_form
+    container = find("[data-inline-edit-target='form']", visible: :all)
+    classes = (container[:class] || "").split.delete_if { |c| c == "hidden" }.join(" ")
+    container.native["class"] = classes
   end
 end
