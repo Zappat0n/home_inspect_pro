@@ -7,7 +7,7 @@
 #  category      :string
 #  name          :string
 #  published     :boolean          default(FALSE), not null
-#  template_type :integer          default(0), not null
+#  template_type :integer          default("system"), not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  country_id    :bigint           not null
