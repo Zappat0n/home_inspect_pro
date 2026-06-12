@@ -46,7 +46,7 @@
       <%= form.submit t("checklist_items.form.submit"),
             class: "px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700" %>
 
-      <% if local_assigns[:inline] %>
+      <% if inline %>
         <button type="button"
                 class="px-3 py-1.5 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
                 data-action="inline-edit#toggle">
