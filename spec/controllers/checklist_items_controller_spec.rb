@@ -22,13 +22,14 @@ RSpec.describe ChecklistItemsController, type: :controller do
                  position: 1,
                  allows_photo: true,
                },
-             }
+             },
+             format: :turbo_stream
       end.to change { ChecklistItem.count }.by(1)
 
-      expect(response).to have_http_status(:created)
-      body = response.parsed_body
-      expect(body["success"]).to be(true)
-      expect(body["item"]["name"]).to eq("Check foundation")
+      expect(response).to have_http_status(:ok)
+      expect(response.media_type).to eq("text/vnd.turbo-stream.html")
+      expect(response.body).to include('action="append"')
+      expect(response.body).to include('target="checklist_items"')
     end
 
     it "returns unprocessable entity with blank name" do
@@ -41,11 +42,13 @@ RSpec.describe ChecklistItemsController, type: :controller do
            params: {
              inspection_template_id: template.id,
              checklist_item: { name: "" },
-           }
+           },
+           format: :turbo_stream
 
       expect(response).to have_http_status(:unprocessable_content)
-      body = response.parsed_body
-      expect(body["errors"]).to be_present
+      expect(response.media_type).to eq("text/vnd.turbo-stream.html")
+      expect(response.body).to include('action="replace"')
+      expect(response.body).to include('target="checklist_item_form"')
     end
 
     it "raises RecordNotFound for system template" do
@@ -93,13 +96,14 @@ RSpec.describe ChecklistItemsController, type: :controller do
               inspection_template_id: template.id,
               id: item.id,
               checklist_item: { name: "Updated Item" },
-            }
+            },
+            format: :turbo_stream
 
       item.reload
       expect(item.name).to eq("Updated Item")
       expect(response).to have_http_status(:ok)
-      body = response.parsed_body
-      expect(body["success"]).to be(true)
+      expect(response.media_type).to eq("text/vnd.turbo-stream.html")
+      expect(response.body).to include("checklist_item_#{item.id}")
     end
 
     it "raises RecordNotFound for item on another user's custom template" do
@@ -134,12 +138,14 @@ RSpec.describe ChecklistItemsController, type: :controller do
                params: {
                  inspection_template_id: template.id,
                  id: item.id,
-               }
+               },
+               format: :turbo_stream
       end.to change { ChecklistItem.count }.by(-1)
 
       expect(response).to have_http_status(:ok)
-      body = response.parsed_body
-      expect(body["success"]).to be(true)
+      expect(response.media_type).to eq("text/vnd.turbo-stream.html")
+      expect(response.body).to include('action="remove"')
+      expect(response.body).to include("checklist_item_#{item.id}")
     end
 
     it "raises RecordNotFound for item on another user's custom template" do
@@ -178,11 +184,13 @@ RSpec.describe ChecklistItemsController, type: :controller do
                 { id: item2.id, position: 1 },
                 { id: item3.id, position: 2 },
               ],
-            }
+            },
+            format: :turbo_stream
 
       expect(response).to have_http_status(:ok)
-      body = response.parsed_body
-      expect(body["success"]).to be(true)
+      expect(response.media_type).to eq("text/vnd.turbo-stream.html")
+      expect(response.body).to include('action="replace"')
+      expect(response.body).to include('target="checklist_items"')
       expect(item1.reload.position).to eq(3)
       expect(item2.reload.position).to eq(1)
       expect(item3.reload.position).to eq(2)

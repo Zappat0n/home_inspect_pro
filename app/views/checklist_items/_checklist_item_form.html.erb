@@ -1,0 +1,61 @@
+<% form_frame_id = item.persisted? ? "#{dom_id(item)}_form" : "new_checklist_item_#{item.category.to_s.parameterize.presence || "new"}" %>
+<%= turbo_frame_tag form_frame_id do %>
+  <%= form_with(
+        model: item,
+        url: item.persisted? ? inspection_template_checklist_item_path(template, item) : inspection_template_checklist_items_path(template),
+        class: "space-y-3",
+        data: { testid: "checklist-item-form" },
+      ) do |form| %>
+
+    <div>
+      <%= form.label :name, t("checklist_items.form.name"), class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= form.text_field :name,
+            class: "w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+            data: { testid: "checklist-item-name-input" } %>
+    </div>
+
+    <div>
+      <%= form.label :description, t("checklist_items.form.description"), class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= form.text_area :description,
+            rows: 2,
+            class: "w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
+    </div>
+
+    <div>
+      <%= form.label :category, t("checklist_items.form.category"), class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= form.text_field :category,
+            class: "w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
+    </div>
+
+    <div>
+      <%= form.label :severity, t("checklist_items.form.severity"), class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= form.select :severity,
+            ChecklistItem.severities.keys.map { |s| [t("checklist_items.severity.#{s}"), s] },
+            {},
+            class: "w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <%= form.check_box :allows_photo,
+            class: "rounded border-gray-300" %>
+      <%= form.label :allows_photo, t("checklist_items.form.allows_photo"), class: "text-sm text-gray-700" %>
+    </div>
+
+    <div class="flex gap-2">
+      <%= form.submit t("checklist_items.form.submit"),
+            class: "px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700" %>
+
+      <% if inline %>
+        <button type="button"
+                class="px-3 py-1.5 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
+                data-action="inline-edit#toggle">
+          <%= t("checklist_items.form.cancel") %>
+        </button>
+      <% else %>
+        <%= link_to t("checklist_items.form.cancel"),
+              edit_inspection_template_path(template),
+              class: "px-3 py-1.5 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200" %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

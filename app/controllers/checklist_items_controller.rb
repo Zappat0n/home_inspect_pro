@@ -7,9 +7,31 @@ class ChecklistItemsController < ApplicationController
     item = template.checklist_items.new(item_params)
 
     if item.save
-      render(json: { success: true, item: item }, status: :created)
+      respond_to do |format|
+        format.turbo_stream do
+          render(
+            turbo_stream: turbo_stream.append(
+              "checklist_items",
+              partial: "checklist_items/checklist_item",
+              locals: { item: item },
+            ),
+          )
+        end
+      end
     else
-      render(json: { errors: item.errors.full_messages }, status: :unprocessable_content)
+      respond_to do |format|
+        format.turbo_stream do
+          render(
+            turbo_stream: turbo_stream.replace(
+              "checklist_item_form",
+              partial: "checklist_items/checklist_item_form",
+              locals: { item: item, template: template },
+            ),
+
+            status: :unprocessable_content,
+          )
+        end
+      end
     end
   end
 
@@ -17,16 +39,42 @@ class ChecklistItemsController < ApplicationController
     item = template.checklist_items.find(params[:id])
 
     if item.update(item_params)
-      render(json: { success: true, item: item })
+      respond_to do |format|
+        format.turbo_stream do
+          render(
+            turbo_stream: turbo_stream.replace(
+              "checklist_item_#{item.id}",
+              partial: "checklist_items/checklist_item",
+              locals: { item: item },
+            ),
+          )
+        end
+      end
     else
-      render(json: { errors: item.errors.full_messages }, status: :unprocessable_content)
+      respond_to do |format|
+        format.turbo_stream do
+          render(
+            turbo_stream: turbo_stream.replace(
+              "checklist_item_form",
+              partial: "checklist_items/checklist_item_form",
+              locals: { item: item, template: template },
+            ),
+            status: :unprocessable_content,
+          )
+        end
+      end
     end
   end
 
   def destroy
     item = template.checklist_items.find(params[:id])
     item.destroy!
-    render(json: { success: true })
+
+    respond_to do |format|
+      format.turbo_stream do
+        render(turbo_stream: turbo_stream.remove("checklist_item_#{item.id}"))
+      end
+    end
   end
 
   def reorder
@@ -38,7 +86,17 @@ class ChecklistItemsController < ApplicationController
       template.checklist_items.upsert_all(items_data)
     end
 
-    render(json: { success: true })
+    respond_to do |format|
+      format.turbo_stream do
+        render(
+          turbo_stream: turbo_stream.replace(
+            "checklist_items",
+            partial: "checklist_items/reorder",
+            locals: { template: template },
+          ),
+        )
+      end
+    end
   end
 
   private

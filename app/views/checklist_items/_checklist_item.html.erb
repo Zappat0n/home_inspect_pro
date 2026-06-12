@@ -1,0 +1,52 @@
+<%= turbo_frame_tag dom_id(item) do %>
+  <div class="p-3 bg-gray-50 rounded cursor-grab active:cursor-grabbing"
+       data-controller="inline-edit"
+       data-id="<%= item.id %>"
+       data-position="<%= item.position %>">
+    <div class="flex items-start gap-3">
+      <%= lucide_icon("grip-vertical", class: "w-4 h-4 mt-0.5 text-gray-400 cursor-grab shrink-0") %>
+      <span class="text-sm text-gray-500 font-mono w-6 shrink-0"><%= item.position %></span>
+
+      <div class="flex-1 min-w-0">
+        <p class="font-medium"><%= item.name %></p>
+
+        <% if item.description.present? %>
+          <p class="text-sm text-gray-500"><%= item.description %></p>
+        <% end %>
+
+        <div class="flex gap-2 mt-1">
+          <span class="text-xs px-2 py-0.5 rounded bg-gray-200">
+            <%= t("checklist_items.severity.#{item.severity}") %>
+          </span>
+
+          <% if item.allows_photo %>
+            <span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700">
+              <%= t("checklist_items.allows_photo") %>
+            </span>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="flex gap-2 shrink-0">
+        <button type="button"
+                class="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded hover:bg-gray-200 cursor-pointer"
+                data-action="inline-edit#toggle">
+          <%= t("checklist_items.edit.button") %>
+        </button>
+
+        <%= button_to t("checklist_items.delete.button"),
+            inspection_template_checklist_item_path(item.inspection_template, item),
+            method: :delete,
+            class: "px-2 py-1 text-xs bg-red-100 text-red-700 rounded hover:bg-red-200 cursor-pointer",
+            data: {
+              turbo_confirm: t("checklist_items.delete.confirm"),
+              turbo_stream: true,
+            } %>
+      </div>
+    </div>
+
+    <div class="hidden mt-3" data-inline-edit-target="form">
+      <%= render partial: "checklist_items/checklist_item_form", locals: { item: item, template: item.inspection_template, inline: true } %>
+    </div>
+  </div>
+<% end %>

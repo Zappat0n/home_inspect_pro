@@ -1,0 +1,68 @@
+---
+en:
+  checklist_items:
+    allows_photo: Allows photo
+    delete:
+      button: Delete
+      confirm: Are you sure you want to delete this item?
+    edit:
+      button: Edit
+    form:
+      allows_photo: Allows photo
+      cancel: Cancel
+      category: Category
+      description: Description
+      name: Name
+      severity: Severity
+      submit: Save Item
+    no_items: No checklist items yet
+    severity:
+      critical: Critical
+      info: Info
+      major: Major
+      minor: Minor
+  inspection_templates:
+    create:
+      success: Template created successfully
+    destroy:
+      in_use: Cannot delete — this template is used by %{count} inspection(s)
+      success: Template deleted
+    duplicate:
+      not_found: Template not found
+      success: Template duplicated — you can now customize it
+    edit:
+      add_item: Add Item
+      back: "← Back to Template"
+      cancel: Cancel
+      items_title: Checklist Items
+      submit: Save Changes
+      title: Edit %{name}
+    index:
+      confirm_delete: Are you sure?
+      delete: Delete
+      duplicate: Customize
+      edit: Edit
+      items_count:
+        one: 1 item
+        other: "%{count} items"
+      my_templates: My Templates
+      new_template: New Template
+      system_templates: System Templates
+      title: Inspection Templates
+    navbar:
+      link: My Templates
+    new:
+      back: "← Back to Templates"
+      cancel: Cancel
+      submit: Create Template
+      title: New Template
+    not_authorized: You can only edit your own custom templates
+    show:
+      allows_photo: Allows photo
+      back: "← Back to Templates"
+      edit: Edit Template
+      items_count:
+        one: 1 item
+        other: "%{count} items"
+    update:
+      success: Template updated successfully
