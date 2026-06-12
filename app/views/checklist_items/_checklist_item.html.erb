@@ -46,7 +46,7 @@
     </div>
 
     <div class="hidden mt-3" data-inline-edit-target="form">
-      <%= render partial: "checklist_items/checklist_item_form", locals: { item: item, inline: true } %>
+      <%= render partial: "checklist_items/checklist_item_form", locals: { item: item, template: item.inspection_template, inline: true } %>
     </div>
   </div>
 <% end %>
