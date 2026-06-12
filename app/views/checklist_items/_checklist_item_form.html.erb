@@ -46,9 +46,17 @@
       <%= form.submit t("checklist_items.form.submit"),
             class: "px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700" %>
 
-      <%= link_to t("checklist_items.form.cancel"),
-            edit_inspection_template_path(tpl),
-            class: "px-3 py-1.5 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200" %>
+      <% if local_assigns[:inline] %>
+        <button type="button"
+                class="px-3 py-1.5 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
+                data-action="inline-edit#toggle">
+          <%= t("checklist_items.form.cancel") %>
+        </button>
+      <% else %>
+        <%= link_to t("checklist_items.form.cancel"),
+              edit_inspection_template_path(tpl),
+              class: "px-3 py-1.5 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200" %>
+      <% end %>
     </div>
   <% end %>
 <% end %>
