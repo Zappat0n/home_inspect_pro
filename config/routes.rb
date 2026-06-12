@@ -18,6 +18,12 @@ Rails.application.routes.draw do
 
   resources :inspection_templates, only: %i[index show new create edit update destroy] do
     post :duplicate, on: :member
+
+    resources :checklist_items, only: %i[create update destroy] do
+      collection do
+        patch :reorder
+      end
+    end
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
