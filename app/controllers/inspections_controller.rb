@@ -25,20 +25,26 @@ class InspectionsController < ApplicationController
   end
 
   def new
+    templates = current_user.available_templates
     inspection = current_user.inspections.build(
       inspection_template: current_user.default_inspection_template,
     )
     render(
       locals: {
         inspection: inspection,
+        templates: templates,
       },
     )
   end
 
   def create
+    template_id = params.dig(:inspection, :inspection_template_id)
+    inspection_template = current_user.available_templates.find_by(id: template_id) ||
+                          current_user.default_inspection_template
+
     inspection = current_user.inspections.build(
       inspection_params.merge(
-        inspection_template: current_user.default_inspection_template,
+        inspection_template: inspection_template,
         status: :draft,
       ),
     )
@@ -52,6 +58,7 @@ class InspectionsController < ApplicationController
         status: :unprocessable_content,
         locals: {
           inspection: inspection,
+          templates: current_user.available_templates,
         },
       )
     end

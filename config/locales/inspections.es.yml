@@ -17,6 +17,11 @@ es:
       client_email_label: Correo Electrónico del Cliente
       client_name_label: Nombre del Cliente
       property_address_label: Dirección de la Propiedad
+      template_custom_badge: Mi Plantilla
+      template_item_count:
+        one: "%{count} elemento"
+        other: "%{count} elementos"
+      template_label: Plantilla
     index:
       empty: Aún no has creado ninguna inspección.
       empty_cta: Crea tu primera inspección

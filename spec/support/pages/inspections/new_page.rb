@@ -33,4 +33,25 @@ class Inspections::NewPage
   def has_subscribe_link?
     has_link?(I18n.t("subscription.trial_banner.subscribe"), href: billing_path)
   end
+
+  def has_template_selector?
+    has_content?(I18n.t("inspections.form.template_label"))
+  end
+
+  def has_template_card?(template)
+    has_content?(template.name) &&
+      has_content?(I18n.t("inspections.form.template_item_count", count: template.checklist_items.count))
+  end
+
+  def has_custom_badge?
+    has_css?("[data-testid='custom-template-badge']")
+  end
+
+  def has_no_custom_badge?
+    has_no_css?("[data-testid='custom-template-badge']")
+  end
+
+  def select_template(template)
+    find("label", text: template.name).click
+  end
 end

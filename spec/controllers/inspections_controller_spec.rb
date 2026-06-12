@@ -145,6 +145,80 @@ RSpec.describe InspectionsController, type: :controller do
 
       expect(response).to have_http_status(:unprocessable_content)
     end
+
+    it "creates inspection with selected system template" do
+      country = create(:country)
+      user = create(:user, country: country)
+      template = create(:inspection_template, country: country, published: true)
+      sign_in(user)
+
+      expect do
+        post :create,
+             params: {
+               inspection: {
+                 property_address: "456 Oak St",
+                 client_name: "Jane Doe",
+                 client_email: "jane@example.com",
+                 inspection_template_id: template.id,
+               },
+             }
+      end.to change { Inspection.count }.by(1)
+
+      expect(Inspection.last.inspection_template).to eq(template)
+      expect(response).to redirect_to(inspection_path(Inspection.last))
+      expect(flash[:notice]).to eq(I18n.t("inspections.create.success"))
+    end
+
+    it "creates inspection with selected custom template" do
+      country = create(:country)
+      user = create(:user, country: country)
+      template = create(:inspection_template, :custom, user: user)
+      sign_in(user)
+
+      expect do
+        post :create,
+             params: {
+               inspection: {
+                 property_address: "456 Oak St",
+                 client_name: "Jane Doe",
+                 client_email: "jane@example.com",
+                 inspection_template_id: template.id,
+               },
+             }
+      end.to change { Inspection.count }.by(1)
+
+      expect(Inspection.last.inspection_template).to eq(template)
+      expect(response).to redirect_to(inspection_path(Inspection.last))
+    end
+
+    it "falls back to default template when given another user's template id" do
+      country = create(:country)
+      user_a = create(:user, country: country)
+      user_b = create(:user, country: country)
+      default_template = create(
+        :inspection_template,
+        country: country,
+        published: true,
+        name: "Default Template",
+      )
+      other_template = create(:inspection_template, :custom, user: user_b, name: "Other Template")
+      sign_in(user_a)
+
+      expect do
+        post :create,
+             params: {
+               inspection: {
+                 property_address: "456 Oak St",
+                 client_name: "Jane Doe",
+                 client_email: "jane@example.com",
+                 inspection_template_id: other_template.id,
+               },
+             }
+      end.to change { Inspection.count }.by(1)
+
+      expect(Inspection.last.inspection_template).to eq(default_template)
+      expect(response).to redirect_to(inspection_path(Inspection.last))
+    end
   end
 
   describe "PATCH #complete" do
