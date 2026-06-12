@@ -23,10 +23,12 @@ class ChecklistItems::ManagePositionService
   private
 
   def shift_items_up
-    template
+    scope = template
       .checklist_items
       .where("position >= ?", position)
-      .update_all("position = position + 1")
+
+    scope.update_all("position = -position")
+    scope.update_all("position = -position + 1")
   end
 
   def position
