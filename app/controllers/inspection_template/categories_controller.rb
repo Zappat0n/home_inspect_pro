@@ -11,8 +11,8 @@ class InspectionTemplate::CategoriesController < ApplicationController
         format.turbo_stream do
           render(
             turbo_stream: [
-              turbo_stream.append(
-                "checklist_items",
+              turbo_stream.before(
+                "new_group_form",
                 partial: "inspection_template/items/category_section",
                 locals: { template: template, category: category, items: [] },
               ),
