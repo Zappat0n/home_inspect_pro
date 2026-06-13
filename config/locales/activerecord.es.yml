@@ -1,0 +1,9 @@
+---
+es:
+  activerecord:
+    errors:
+      models:
+        inspection_template:
+          attributes:
+            base:
+              max_custom_templates: Máximo de %{count} plantillas personalizadas permitidas

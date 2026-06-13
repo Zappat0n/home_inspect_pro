@@ -45,6 +45,9 @@ es:
       items_count:
         one: 1 elemento
         other: "%{count} elementos"
+      limit_indicator: Tienes %{count} de %{max} plantillas personalizadas
+      limit_reached_tooltip: Has alcanzado el máximo de %{max} plantillas personalizadas.
+        Elimina una para crear o personalizar otra.
       my_templates: Mis Plantillas
       new_template: Nueva Plantilla
       system_templates: Plantillas del Sistema

@@ -1,0 +1,9 @@
+---
+en:
+  activerecord:
+    errors:
+      models:
+        inspection_template:
+          attributes:
+            base:
+              max_custom_templates: Maximum of %{count} custom templates allowed

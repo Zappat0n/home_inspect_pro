@@ -91,26 +91,26 @@ RSpec.describe InspectionTemplate, type: :model do
       expect(inspection_template.errors[:name]).to include("can't be blank")
     end
 
-    it "prevents creating a 6th custom template for the same user" do
+    it "prevents creating an 11th custom template for the same user" do
       user = create(:user)
-      create_list(:inspection_template, 5, :custom, user: user)
-      sixth = build(:inspection_template, :custom, user: user)
+      create_list(:inspection_template, 10, :custom, user: user)
+      eleventh = build(:inspection_template, :custom, user: user)
 
-      expect(sixth).not_to be_valid
-      expect(sixth.errors[:base]).to include("Maximum of 5 custom templates allowed")
+      expect(eleventh).not_to be_valid
+      expect(eleventh.errors[:base]).to include("Maximum of 10 custom templates allowed")
     end
 
-    it "allows creating up to 5 custom templates for the same user" do
+    it "allows creating up to 10 custom templates for the same user" do
       user = create(:user)
       template = build(:inspection_template, :custom, user: user)
-      create_list(:inspection_template, 4, :custom, user: user)
+      create_list(:inspection_template, 9, :custom, user: user)
 
       expect(template).to be_valid
     end
 
     it "does not limit system templates for a user with many custom templates" do
       user = create(:user)
-      create_list(:inspection_template, 5, :custom, user: user)
+      create_list(:inspection_template, 10, :custom, user: user)
       system_template = build(:inspection_template, user: user)
 
       expect(system_template).to be_valid
