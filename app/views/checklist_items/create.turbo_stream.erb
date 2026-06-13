@@ -6,6 +6,8 @@
   </li>
 <% end %>
 
-<%= turbo_stream.replace "new_checklist_item_#{category_key}" do %>
-  <%= turbo_frame_tag "new_checklist_item_#{category_key}" %>
+<%= turbo_stream.replace "add_item_details_#{category_key}" do %>
+  <%= render partial: "checklist_items/add_item_details",
+             locals: { template: item.inspection_template,
+                       category: item.category } %>
 <% end %>

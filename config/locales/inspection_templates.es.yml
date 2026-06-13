@@ -33,9 +33,7 @@ es:
     edit:
       add_item: Agregar Elemento
       back: "← Volver a Plantilla"
-      cancel: Cancelar
       items_title: Elementos de la Lista
-      submit: Guardar Cambios
       title: Editar %{name}
     index:
       confirm_delete: "¿Estás seguro?"

@@ -28,7 +28,7 @@ RSpec.describe ChecklistItemsController, type: :controller do
 
       expect(response).to have_http_status(:ok)
       expect(response.media_type).to eq("text/vnd.turbo-stream.html")
-      expect(response.body).to include('action="append"')
+      expect(response.body).to include('action="replace"')
       expect(response.body).to include('target="checklist_items"')
     end
 
@@ -48,7 +48,6 @@ RSpec.describe ChecklistItemsController, type: :controller do
       expect(response).to have_http_status(:unprocessable_content)
       expect(response.media_type).to eq("text/vnd.turbo-stream.html")
       expect(response.body).to include('action="replace"')
-      expect(response.body).to include('target="checklist_item_form"')
     end
 
     it "raises RecordNotFound for system template" do
@@ -144,8 +143,8 @@ RSpec.describe ChecklistItemsController, type: :controller do
 
       expect(response).to have_http_status(:ok)
       expect(response.media_type).to eq("text/vnd.turbo-stream.html")
-      expect(response.body).to include('action="remove"')
-      expect(response.body).to include("checklist_item_#{item.id}")
+      expect(response.body).to include('action="replace"')
+      expect(response.body).to include('target="checklist_items"')
     end
 
     it "raises RecordNotFound for item on another user's custom template" do

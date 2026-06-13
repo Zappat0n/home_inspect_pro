@@ -6,14 +6,14 @@ class ChecklistItemsController < ApplicationController
   def create
     item = template.checklist_items.new(item_params)
 
-    if item.save
+    if ChecklistItems::Create.new(item).call
       respond_to do |format|
         format.turbo_stream do
           render(
-            turbo_stream: turbo_stream.append(
+            turbo_stream: turbo_stream.replace(
               "checklist_items",
-              partial: "checklist_items/checklist_item",
-              locals: { item: item },
+              partial: "checklist_items/reorder",
+              locals: { template: template },
             ),
           )
         end
@@ -23,11 +23,10 @@ class ChecklistItemsController < ApplicationController
         format.turbo_stream do
           render(
             turbo_stream: turbo_stream.replace(
-              "checklist_item_form",
+              "new_checklist_item_#{item.category.to_s.parameterize}",
               partial: "checklist_items/checklist_item_form",
-              locals: { item: item, template: template },
+              locals: { item: item, template: template, inline: false },
             ),
-
             status: :unprocessable_content,
           )
         end
@@ -57,7 +56,7 @@ class ChecklistItemsController < ApplicationController
             turbo_stream: turbo_stream.replace(
               "checklist_item_form",
               partial: "checklist_items/checklist_item_form",
-              locals: { item: item, template: template },
+              locals: { item: item, template: template, inline: true },
             ),
             status: :unprocessable_content,
           )
@@ -68,11 +67,18 @@ class ChecklistItemsController < ApplicationController
 
   def destroy
     item = template.checklist_items.find(params[:id])
-    item.destroy!
+
+    ChecklistItems::Destroy.new(item).call
 
     respond_to do |format|
       format.turbo_stream do
-        render(turbo_stream: turbo_stream.remove("checklist_item_#{item.id}"))
+        render(
+          turbo_stream: turbo_stream.replace(
+            "checklist_items",
+            partial: "checklist_items/reorder",
+            locals: { template: template },
+          ),
+        )
       end
     end
   end

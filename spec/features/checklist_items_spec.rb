@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "ChecklistItems", type: :feature do
+RSpec.describe "ChecklistItems", :js, type: :feature do
   describe "adding an item" do
     it "creates a new checklist item in an existing category" do
       country = create(:country)

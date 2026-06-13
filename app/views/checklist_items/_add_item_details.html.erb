@@ -1,0 +1,11 @@
+<details id="add_item_details_<%= category.parameterize %>" class="mt-2">
+  <summary class="text-sm text-blue-600 cursor-pointer hover:underline list-none">
+    + <%= t("inspection_templates.edit.add_item") %>
+  </summary>
+  <div class="mt-3">
+    <%= render partial: "checklist_items/checklist_item_form",
+               locals: { item: template.checklist_items.build(category: category),
+                         template: template,
+                         inline: false } %>
+  </div>
+</details>

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ChecklistItems::ManagePositionService
+class ChecklistItems::Create
   attr_reader :item, :template, :category
 
   def initialize(item)
@@ -16,19 +16,22 @@ class ChecklistItems::ManagePositionService
 
       item.save!
     end
-  rescue ActiveRecord::RecordNotUnique
+  rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid
     false
   end
 
   private
 
   def shift_items_up
-    scope = template
+    ids = template
       .checklist_items
       .where("position >= ?", position)
+      .pluck(:id)
 
-    scope.update_all("position = -position")
-    scope.update_all("position = -position + 1")
+    return if ids.empty?
+
+    template.checklist_items.where(id: ids).update_all("position = -position")
+    template.checklist_items.where(id: ids).update_all("position = -position + 1")
   end
 
   def position

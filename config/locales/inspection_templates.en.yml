@@ -33,9 +33,7 @@ en:
     edit:
       add_item: Add Item
       back: "← Back to Template"
-      cancel: Cancel
       items_title: Checklist Items
-      submit: Save Changes
       title: Edit %{name}
     index:
       confirm_delete: Are you sure?
