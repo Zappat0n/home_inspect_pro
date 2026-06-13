@@ -23,3 +23,4 @@ ignore:
   - devise.sessions.*
   - devise.unlocks.*
   - errors.messages.*
+  - activerecord.errors.*

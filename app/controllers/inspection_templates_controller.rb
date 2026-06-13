@@ -11,6 +11,8 @@ class InspectionTemplatesController < ApplicationController
       locals: {
         system_templates: system_templates,
         custom_templates: custom_templates,
+        max_custom_templates: InspectionTemplate::MAX_CUSTOM_TEMPLATES,
+        limit_reached: custom_templates.count >= InspectionTemplate::MAX_CUSTOM_TEMPLATES,
       },
     )
   end

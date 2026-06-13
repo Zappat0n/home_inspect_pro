@@ -45,6 +45,9 @@ en:
       items_count:
         one: 1 item
         other: "%{count} items"
+      limit_indicator: You have %{count} of %{max} custom templates
+      limit_reached_tooltip: You've reached the maximum of %{max} custom templates.
+        Delete one to create or customize another.
       my_templates: My Templates
       new_template: New Template
       system_templates: System Templates
