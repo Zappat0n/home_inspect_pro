@@ -48,9 +48,11 @@
           <%= t("checklist_items.form.cancel") %>
         </button>
       <% else %>
-        <%= link_to t("checklist_items.form.cancel"),
-              edit_inspection_template_path(template),
-              class: "px-3 py-1.5 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200" %>
+        <button type="button"
+                class="px-3 py-1.5 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
+                data-action="collapse#close">
+          <%= t("checklist_items.form.cancel") %>
+        </button>
       <% end %>
     </div>
   <% end %>

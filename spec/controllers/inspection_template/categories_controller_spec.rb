@@ -23,8 +23,8 @@ RSpec.describe InspectionTemplate::CategoriesController, type: :controller do
 
       expect(response).to have_http_status(:ok)
       expect(response.media_type).to eq("text/vnd.turbo-stream.html")
-      expect(response.body).to include('action="append"')
-      expect(response.body).to include('target="checklist_items"')
+      expect(response.body).to include('action="before"')
+      expect(response.body).to include('target="new_group_form"')
       expect(response.body).to include('action="replace"')
       expect(response.body).to include('target="new_group_form"')
       expect(response.body).to include("Roof")

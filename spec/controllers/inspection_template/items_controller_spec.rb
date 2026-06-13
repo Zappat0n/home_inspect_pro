@@ -110,7 +110,7 @@ RSpec.describe InspectionTemplate::ItemsController, type: :controller do
       expect(item.name).to eq("Updated Item")
       expect(response).to have_http_status(:ok)
       expect(response.media_type).to eq("text/vnd.turbo-stream.html")
-      expect(response.body).to include("checklist_item_#{item.id}")
+      expect(response.body).to include("inspection_template_item_#{item.id}")
     end
 
     it "raises RecordNotFound for item on another user's custom template" do

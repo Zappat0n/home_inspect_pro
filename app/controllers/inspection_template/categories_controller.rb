@@ -60,12 +60,7 @@ class InspectionTemplate::CategoriesController < ApplicationController
 
   def reorder
     categories_data = params.require(:categories)
-
-    InspectionTemplate::Category.transaction do
-      category_ids = categories_data.map { |cat| cat[:id] }
-      template.categories.where(id: category_ids).update_all("position = -position")
-      template.categories.upsert_all(categories_data)
-    end
+    ReorderPositionService.new(template.categories, categories_data).call
 
     respond_to do |format|
       format.turbo_stream do

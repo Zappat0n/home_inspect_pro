@@ -1,5 +1,8 @@
-<div class="mb-6">
-  <h3 class="text-lg font-medium border-b pb-2 mb-3"><%= category.name %></h3>
+<div class="mb-6" data-category-id="<%= category.id %>"
+     data-action="dragover->category-reorder#dragover drop->category-reorder#drop dragend->category-reorder#dragend">
+  <h3 class="text-lg font-medium border-b pb-2 mb-3 cursor-grab" draggable="true"
+      data-category-handle="<%= category.id %>"
+      data-action="dragstart->category-reorder#dragstart"><%= category.name %></h3>
 
   <div id="checklist_items_<%= category.name.parameterize %>">
     <ul class="space-y-2">
