@@ -18,11 +18,18 @@ class InspectionTemplates::EditPage
   end
 
   def has_heading?(template)
-    has_content?(I18n.t("inspection_templates.edit.title", name: template.name))
+    has_css?(
+      "[data-testid='edit-template-heading']",
+      text: I18n.t("inspection_templates.edit.title", name: template.name),
+    )
+  end
+
+  def has_create_success_message?
+    has_css?("[data-testid='flash-notice']", text: I18n.t("inspection_templates.create.success"))
   end
 
   def has_error?
-    has_content?("prohibited this inspection template from being saved")
+    has_css?("[data-testid='template-form-errors']")
   end
 
   def add_item(category, name:, description: "", severity: "info")
@@ -32,10 +39,10 @@ class InspectionTemplates::EditPage
         find("[data-testid='add-item-details']", visible: :all),
       )
       within("[data-testid='add-item-details']") do
-        fill_in "Name", with: name
-        fill_in "Description", with: description
-        select I18n.t("checklist_items.severity.#{severity}"), from: "Severity"
-        click_on I18n.t("checklist_items.form.submit")
+        find("[data-testid='checklist-item-name-input']").set(name)
+        find("[data-testid='checklist-item-description-input']").set(description)
+        find("[data-testid='checklist-item-severity-select']").find("option[value='#{severity}']").select_option
+        find("[data-testid='checklist-item-submit']").click
       end
     end
   end
@@ -46,25 +53,25 @@ class InspectionTemplates::EditPage
         "arguments[0].classList.remove('hidden')",
         find("[data-testid='inline-edit-form']", visible: :all),
       )
-      fill_in "Name", with: new_name
-      click_on I18n.t("checklist_items.form.submit")
+      find("[data-testid='checklist-item-name-input']").set(new_name)
+      find("[data-testid='checklist-item-submit']").click
     end
   end
 
   def delete_item(item)
     within("##{dom_id(item)}") do
       page.accept_confirm do
-        click_on I18n.t("checklist_items.delete.button")
+        find("[data-testid='item-delete-button']").click
       end
     end
   end
 
   def has_item?(name)
-    has_content?(name)
+    has_css?("[data-testid='item-name']", text: name)
   end
 
   def has_no_item?(name)
-    has_no_content?(name)
+    has_no_css?("[data-testid='item-name']", text: name)
   end
 
   def has_updated_name?(name)
@@ -73,20 +80,20 @@ class InspectionTemplates::EditPage
 
   def click_edit_item(item)
     within("##{dom_id(item)}") do
-      click_on I18n.t("checklist_items.edit.button")
+      find("[data-testid='item-edit-button']").click
     end
   end
 
   def update_item_name(item, new_name)
     within("##{dom_id(item)}") do
-      fill_in I18n.t("checklist_items.form.name"), with: new_name
-      click_on I18n.t("checklist_items.form.submit")
+      find("[data-testid='checklist-item-name-input']").set(new_name)
+      find("[data-testid='checklist-item-submit']").click
     end
   end
 
   def cancel_edit_item(item)
     within("##{dom_id(item)}") do
-      click_on I18n.t("checklist_items.form.cancel")
+      find("[data-testid='checklist-item-cancel']").click
     end
   end
 
@@ -106,7 +113,7 @@ class InspectionTemplates::EditPage
 
   def cancel_add_item(category_name)
     within(category_section(category_name)) do
-      click_on I18n.t("checklist_items.form.cancel")
+      find("[data-testid='checklist-item-cancel']").click
     end
   end
 
@@ -130,13 +137,13 @@ class InspectionTemplates::EditPage
 
   def fill_new_group_name(name)
     within("[data-testid='new-group-form']") do
-      fill_in I18n.t("checklist_items.form.category"), with: name
+      find("[data-testid='new-group-name-input']").set(name)
     end
   end
 
   def create_group
     within("[data-testid='new-group-form']") do
-      click_on I18n.t("inspection_templates.edit.create_group")
+      find("[data-testid='new-group-submit']").click
     end
   end
 

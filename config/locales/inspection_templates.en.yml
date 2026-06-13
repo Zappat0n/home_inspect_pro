@@ -32,7 +32,7 @@ en:
       success: Template duplicated — you can now customize it
     edit:
       add_item: Add Item
-      back: "← Back to Template"
+      back: "← Back to Templates"
       create_group: Create Group
       items_title: Checklist Items
       new_group: New Group
@@ -42,6 +42,8 @@ en:
       delete: Delete
       duplicate: Customize
       edit: Edit
+      empty_state: You haven't created any custom templates yet. Customize a system
+        template above to get started.
       items_count:
         one: 1 item
         other: "%{count} items"

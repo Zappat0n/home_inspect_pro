@@ -8,7 +8,7 @@
       <span class="text-sm text-gray-500 font-mono w-6 shrink-0"><%= item.position %></span>
 
       <div class="flex-1 min-w-0">
-        <p class="font-medium"><%= item.name %></p>
+        <p class="font-medium" data-testid="item-name"><%= item.name %></p>
 
         <% if item.description.present? %>
           <p class="text-sm text-gray-500"><%= item.description %></p>
@@ -30,7 +30,8 @@
       <div class="flex gap-2 shrink-0">
         <button type="button"
                 class="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded hover:bg-gray-200 cursor-pointer"
-                data-action="inline-edit#toggle">
+                data-action="inline-edit#toggle"
+                data-testid="item-edit-button">
           <%= t("checklist_items.edit.button") %>
         </button>
 
@@ -39,6 +40,7 @@
             method: :delete,
             class: "px-2 py-1 text-xs bg-red-100 text-red-700 rounded hover:bg-red-200 cursor-pointer",
             data: {
+              testid: "item-delete-button",
               turbo_confirm: t("checklist_items.delete.confirm"),
               turbo_stream: true,
             } %>
