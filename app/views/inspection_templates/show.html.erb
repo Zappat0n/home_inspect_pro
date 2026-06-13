@@ -6,7 +6,7 @@
   <div class="flex justify-between items-start mb-8">
     <div>
       <h1 class="text-2xl font-bold"><%= template.name %></h1>
-      <p class="text-gray-500"><%= t(".items_count", count: template.checklist_items.count) %></p>
+      <p class="text-gray-500"><%= t(".items_count", count: template.items.count) %></p>
     </div>
     <% if template.custom? && template.user == current_user %>
       <%= link_to t(".edit"), edit_inspection_template_path(template),
@@ -14,11 +14,11 @@
     <% end %>
   </div>
 
-  <% template.checklist_items.ordered.group_by(&:category).each do |category, items| %>
+  <% template.categories.ordered.each do |category| %>
     <div class="mb-8">
-      <h2 class="text-lg font-semibold border-b pb-2 mb-4"><%= category %></h2>
+      <h2 class="text-lg font-semibold border-b pb-2 mb-4"><%= category.name %></h2>
       <ul class="space-y-3">
-        <% items.each do |item| %>
+        <% category.items.ordered.each do |item| %>
           <li class="flex items-start gap-3 p-3 bg-gray-50 rounded">
             <span class="text-sm text-gray-500 font-mono w-6"><%= item.position %></span>
             <div class="flex-1">

@@ -35,7 +35,7 @@
         </button>
 
         <%= button_to t("checklist_items.delete.button"),
-            inspection_template_checklist_item_path(item.inspection_template, item),
+            inspection_template_item_path(item.inspection_template, item),
             method: :delete,
             class: "px-2 py-1 text-xs bg-red-100 text-red-700 rounded hover:bg-red-200 cursor-pointer",
             data: {
@@ -46,7 +46,7 @@
     </div>
 
     <div class="hidden mt-3" data-inline-edit-target="form">
-      <%= render partial: "checklist_items/checklist_item_form", locals: { item: item, template: item.inspection_template, inline: true } %>
+      <%= render partial: "inspection_template/items/form", locals: { item: item, template: item.inspection_template, inline: true } %>
     </div>
   </div>
 <% end %>

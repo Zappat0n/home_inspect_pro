@@ -3,23 +3,35 @@
 require "rails_helper"
 
 RSpec.describe "Inspection photos", type: :feature do
-  it "shows add photo button for items with allows_photo on draft inspection" do
+  def setup_checklist_item(allows_photo: true)
     country = create(:country, code: "US")
     user = create(:user, country: country)
     inspection_template = create(:inspection_template, country: country, published: true)
+    category = create(:inspection_template_category, inspection_template: inspection_template, name: "Roof")
     checklist_item = create(
       :checklist_item,
       inspection_template: inspection_template,
-      category: "Roof",
+      inspection_template_category: category,
       name: "Shingles",
       description: "Check shingles condition",
       position: 1,
-      allows_photo: true,
+      allows_photo: allows_photo,
     )
-    inspection = create(
-      :inspection,
+    {
+      country: country,
       user: user,
       inspection_template: inspection_template,
+      category: category,
+      checklist_item: checklist_item,
+    }
+  end
+
+  it "shows add photo button for items with allows_photo on draft inspection" do
+    setup = setup_checklist_item(allows_photo: true)
+    inspection = create(
+      :inspection,
+      user: setup[:user],
+      inspection_template: setup[:inspection_template],
       property_address: "123 Main St",
       client_name: "John Doe",
       client_email: "john@example.com",
@@ -27,10 +39,10 @@ RSpec.describe "Inspection photos", type: :feature do
     inspection_item = create(
       :inspection_item,
       inspection: inspection,
-      checklist_item: checklist_item,
+      checklist_item: setup[:checklist_item],
     )
 
-    sign_in user
+    sign_in setup[:user]
 
     page_obj = Inspections::ShowPage.new(inspection)
     page_obj.visit_page
@@ -40,22 +52,11 @@ RSpec.describe "Inspection photos", type: :feature do
   end
 
   it "does not show add photo button when allows_photo is false" do
-    country = create(:country, code: "US")
-    user = create(:user, country: country)
-    inspection_template = create(:inspection_template, country: country, published: true)
-    checklist_item = create(
-      :checklist_item,
-      inspection_template: inspection_template,
-      category: "Roof",
-      name: "Shingles",
-      description: "Check shingles condition",
-      position: 1,
-      allows_photo: false,
-    )
+    setup = setup_checklist_item(allows_photo: false)
     inspection = create(
       :inspection,
-      user: user,
-      inspection_template: inspection_template,
+      user: setup[:user],
+      inspection_template: setup[:inspection_template],
       property_address: "123 Main St",
       client_name: "John Doe",
       client_email: "john@example.com",
@@ -63,10 +64,10 @@ RSpec.describe "Inspection photos", type: :feature do
     inspection_item = create(
       :inspection_item,
       inspection: inspection,
-      checklist_item: checklist_item,
+      checklist_item: setup[:checklist_item],
     )
 
-    sign_in user
+    sign_in setup[:user]
 
     page_obj = Inspections::ShowPage.new(inspection)
     page_obj.visit_page
@@ -76,22 +77,11 @@ RSpec.describe "Inspection photos", type: :feature do
   end
 
   it "does not show add photo button on completed inspection" do
-    country = create(:country, code: "US")
-    user = create(:user, country: country)
-    inspection_template = create(:inspection_template, country: country, published: true)
-    checklist_item = create(
-      :checklist_item,
-      inspection_template: inspection_template,
-      category: "Roof",
-      name: "Shingles",
-      description: "Check shingles condition",
-      position: 1,
-      allows_photo: true,
-    )
+    setup = setup_checklist_item(allows_photo: true)
     inspection = create(
       :inspection,
-      user: user,
-      inspection_template: inspection_template,
+      user: setup[:user],
+      inspection_template: setup[:inspection_template],
       property_address: "123 Main St",
       client_name: "John Doe",
       client_email: "john@example.com",
@@ -100,10 +90,10 @@ RSpec.describe "Inspection photos", type: :feature do
     inspection_item = create(
       :inspection_item,
       inspection: inspection,
-      checklist_item: checklist_item,
+      checklist_item: setup[:checklist_item],
     )
 
-    sign_in user
+    sign_in setup[:user]
 
     page_obj = Inspections::ShowPage.new(inspection)
     page_obj.visit_page
@@ -113,22 +103,11 @@ RSpec.describe "Inspection photos", type: :feature do
   end
 
   it "shows thumbnail for existing photo" do
-    country = create(:country, code: "US")
-    user = create(:user, country: country)
-    inspection_template = create(:inspection_template, country: country, published: true)
-    checklist_item = create(
-      :checklist_item,
-      inspection_template: inspection_template,
-      category: "Roof",
-      name: "Shingles",
-      description: "Check shingles condition",
-      position: 1,
-      allows_photo: true,
-    )
+    setup = setup_checklist_item(allows_photo: true)
     inspection = create(
       :inspection,
-      user: user,
-      inspection_template: inspection_template,
+      user: setup[:user],
+      inspection_template: setup[:inspection_template],
       property_address: "123 Main St",
       client_name: "John Doe",
       client_email: "john@example.com",
@@ -136,9 +115,9 @@ RSpec.describe "Inspection photos", type: :feature do
     create(
       :inspection_item,
       inspection: inspection,
-      checklist_item: checklist_item,
+      checklist_item: setup[:checklist_item],
     )
-    photo = build(:inspection_photo, inspection: inspection, checklist_item: checklist_item)
+    photo = build(:inspection_photo, inspection: inspection, checklist_item: setup[:checklist_item])
     photo.photo.attach(
       io: File.open(Rails.root.join("spec/fixtures/files/test_image.jpg")),
       filename: "test.jpg",
@@ -146,7 +125,7 @@ RSpec.describe "Inspection photos", type: :feature do
     )
     photo.save!
 
-    sign_in user
+    sign_in setup[:user]
 
     page_obj = Inspections::ShowPage.new(inspection)
     page_obj.visit_page
@@ -157,22 +136,11 @@ RSpec.describe "Inspection photos", type: :feature do
   end
 
   it "deletes a photo" do
-    country = create(:country, code: "US")
-    user = create(:user, country: country)
-    inspection_template = create(:inspection_template, country: country, published: true)
-    checklist_item = create(
-      :checklist_item,
-      inspection_template: inspection_template,
-      category: "Roof",
-      name: "Shingles",
-      description: "Check shingles condition",
-      position: 1,
-      allows_photo: true,
-    )
+    setup = setup_checklist_item(allows_photo: true)
     inspection = create(
       :inspection,
-      user: user,
-      inspection_template: inspection_template,
+      user: setup[:user],
+      inspection_template: setup[:inspection_template],
       property_address: "123 Main St",
       client_name: "John Doe",
       client_email: "john@example.com",
@@ -180,9 +148,9 @@ RSpec.describe "Inspection photos", type: :feature do
     create(
       :inspection_item,
       inspection: inspection,
-      checklist_item: checklist_item,
+      checklist_item: setup[:checklist_item],
     )
-    photo = build(:inspection_photo, inspection: inspection, checklist_item: checklist_item)
+    photo = build(:inspection_photo, inspection: inspection, checklist_item: setup[:checklist_item])
     photo.photo.attach(
       io: File.open(Rails.root.join("spec/fixtures/files/test_image.jpg")),
       filename: "test.jpg",
@@ -190,7 +158,7 @@ RSpec.describe "Inspection photos", type: :feature do
     )
     photo.save!
 
-    sign_in user
+    sign_in setup[:user]
 
     page_obj = Inspections::ShowPage.new(inspection)
     page_obj.visit_page
@@ -207,22 +175,11 @@ RSpec.describe "Inspection photos", type: :feature do
   end
 
   it "does not show delete button on completed inspection" do
-    country = create(:country, code: "US")
-    user = create(:user, country: country)
-    inspection_template = create(:inspection_template, country: country, published: true)
-    checklist_item = create(
-      :checklist_item,
-      inspection_template: inspection_template,
-      category: "Roof",
-      name: "Shingles",
-      description: "Check shingles condition",
-      position: 1,
-      allows_photo: true,
-    )
+    setup = setup_checklist_item(allows_photo: true)
     inspection = create(
       :inspection,
-      user: user,
-      inspection_template: inspection_template,
+      user: setup[:user],
+      inspection_template: setup[:inspection_template],
       property_address: "123 Main St",
       client_name: "John Doe",
       client_email: "john@example.com",
@@ -231,9 +188,9 @@ RSpec.describe "Inspection photos", type: :feature do
     create(
       :inspection_item,
       inspection: inspection,
-      checklist_item: checklist_item,
+      checklist_item: setup[:checklist_item],
     )
-    photo = build(:inspection_photo, inspection: inspection, checklist_item: checklist_item)
+    photo = build(:inspection_photo, inspection: inspection, checklist_item: setup[:checklist_item])
     photo.photo.attach(
       io: File.open(Rails.root.join("spec/fixtures/files/test_image.jpg")),
       filename: "test.jpg",
@@ -241,7 +198,7 @@ RSpec.describe "Inspection photos", type: :feature do
     )
     photo.save!
 
-    sign_in user
+    sign_in setup[:user]
 
     page_obj = Inspections::ShowPage.new(inspection)
     page_obj.visit_page

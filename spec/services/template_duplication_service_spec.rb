@@ -8,10 +8,12 @@ RSpec.describe TemplateDuplicationService do
       country = create(:country)
       user = create(:user, country: country)
       template = create(:inspection_template, country: country, published: true, template_type: :system)
+      roof_category = create(:inspection_template_category, inspection_template: template, name: "Roof")
+      electrical_category = create(:inspection_template_category, inspection_template: template, name: "Electrical")
       create(
         :checklist_item,
         inspection_template: template,
-        category: "Roof",
+        inspection_template_category: roof_category,
         name: "Shingles",
         description: "Check for damaged shingles",
         severity: :major,
@@ -21,7 +23,7 @@ RSpec.describe TemplateDuplicationService do
       create(
         :checklist_item,
         inspection_template: template,
-        category: "Electrical",
+        inspection_template_category: electrical_category,
         name: "Outlets",
         description: "Test all outlets",
         severity: :critical,
@@ -37,27 +39,27 @@ RSpec.describe TemplateDuplicationService do
       expect(new_template.country).to eq(country)
       expect(new_template.published).to be(false)
 
-      expect(new_template.checklist_items.count).to eq(2)
-      expect(new_template.checklist_items.find_by(position: 1)).to have_attributes(
+      expect(new_template.items.count).to eq(2)
+      expect(new_template.items.find_by(position: 1)).to have_attributes(
         name: "Shingles",
         description: "Check for damaged shingles",
-        category: "Roof",
         severity: "major",
         position: 1,
         allows_photo: true,
       )
-      expect(new_template.checklist_items.find_by(position: 2)).to have_attributes(
+      expect(new_template.items.find_by(position: 1).inspection_template_category.name).to eq("Roof")
+      expect(new_template.items.find_by(position: 2)).to have_attributes(
         name: "Outlets",
         description: "Test all outlets",
-        category: "Electrical",
         severity: "critical",
         position: 2,
         allows_photo: false,
       )
+      expect(new_template.items.find_by(position: 2).inspection_template_category.name).to eq("Electrical")
 
       template.reload
       expect(template).to be_system
-      expect(template.checklist_items.count).to eq(2)
+      expect(template.items.count).to eq(2)
     end
   end
 end

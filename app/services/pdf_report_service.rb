@@ -61,8 +61,8 @@ class PdfReportService
     inspection
       .inspection_items
       .includes(:checklist_item)
-      .order("checklist_items.position")
-      .group_by { |item| item.checklist_item.category }
+      .order("inspection_template_items.position")
+      .group_by { |item| item.checklist_item.inspection_template_category.name }
   end
 
   def defects

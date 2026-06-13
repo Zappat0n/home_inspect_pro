@@ -1,4 +1,4 @@
-class AddUserAndTypeToInspectionTemplates < ActiveRecord::Migration[8.2]
+class AddUserAndTypeToInspectionTemplates < ActiveRecord::Migration[8.1]
   def up
     change_table(:inspection_templates, bulk: true) do |t|
       t.column(:user_id, :bigint)

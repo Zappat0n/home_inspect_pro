@@ -6,9 +6,9 @@ class Inspections::InitializeChecklistService
   end
 
   def call
-    checklist_items = inspection.inspection_template.checklist_items.ordered
+    items = inspection.inspection_template.items.ordered
 
-    checklist_items.each do |item|
+    items.each do |item|
       inspection.inspection_items.create!(
         checklist_item: item,
         status: :na, # Default status

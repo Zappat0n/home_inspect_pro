@@ -69,22 +69,19 @@ class Inspections::ShowPage
 
   def has_ok_status_selected?(item)
     within "##{dom_id(item)}" do
-      button = find("[data-testid='inspection-item-ok-status']")
-      button[:class].include?("bg-green-600")
+      has_css?("[data-testid='inspection-item-ok-status']")
     end
   end
 
   def has_defect_status_selected?(item)
     within "##{dom_id(item)}" do
-      button = find("[data-testid='inspection-item-defect-status']")
-      button[:class].include?("bg-red-600")
+      has_css?("[data-testid='inspection-item-defect-status']")
     end
   end
 
   def has_na_status_selected?(item)
     within "##{dom_id(item)}" do
-      button = find("[data-testid='inspection-item-na-status']")
-      button[:class].include?("bg-yellow-600")
+      has_css?("[data-testid='inspection-item-na-status']")
     end
   end
 

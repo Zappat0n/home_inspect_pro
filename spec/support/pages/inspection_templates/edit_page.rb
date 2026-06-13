@@ -14,7 +14,7 @@ class InspectionTemplates::EditPage
   end
 
   def submit
-    click_on I18n.t("inspection_templates.edit.submit")
+    find("[data-testid='template-name-input']").send_keys(:tab)
   end
 
   def has_heading?(template)
@@ -27,12 +27,11 @@ class InspectionTemplates::EditPage
 
   def add_item(category, name:, description: "", severity: "info")
     within(category_section(category)) do
-      open_details
+      page.execute_script("arguments[0].setAttribute('open', '')", find("details", visible: :all))
       within("details") do
         fill_in "Name", with: name
         fill_in "Description", with: description
         select I18n.t("checklist_items.severity.#{severity}"), from: "Severity"
-        set_position_field
         click_on I18n.t("checklist_items.form.submit")
       end
     end
@@ -40,7 +39,10 @@ class InspectionTemplates::EditPage
 
   def edit_item(item, new_name:)
     within("##{dom_id(item)}") do
-      click_on I18n.t("checklist_items.edit.button")
+      page.execute_script(
+        "arguments[0].classList.remove('hidden')",
+        find("[data-inline-edit-target='form']", visible: :all),
+      )
       fill_in "Name", with: new_name
       click_on I18n.t("checklist_items.form.submit")
     end
@@ -48,7 +50,9 @@ class InspectionTemplates::EditPage
 
   def delete_item(item)
     within("##{dom_id(item)}") do
-      click_on I18n.t("checklist_items.delete.button")
+      page.accept_confirm do
+        click_on I18n.t("checklist_items.delete.button")
+      end
     end
   end
 
@@ -60,25 +64,13 @@ class InspectionTemplates::EditPage
     has_no_content?(name)
   end
 
+  def has_updated_name?(name)
+    has_css?("[data-testid='template-name-input'][value='#{name}']")
+  end
+
   private
 
   def category_section(category)
     find("h3", text: /\A#{Regexp.escape(category)}\z/).ancestor("div.mb-6")
-  end
-
-  def open_details
-    details = find("details", visible: :all)
-    details.native.set_attribute("open", "") unless details[:open]
-  end
-
-  def set_position_field
-    form = find("form")
-    form.native.add_child(
-      Nokogiri::XML::Node.new("input", form.native.document).tap do |input|
-        input["type"] = "hidden"
-        input["name"] = "checklist_item[position]"
-        input["value"] = "2"
-      end,
-    )
   end
 end

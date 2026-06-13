@@ -11,7 +11,7 @@
           <div class="flex justify-between items-start gap-4">
             <div class="min-w-0">
               <h3 class="font-medium"><%= template.name %></h3>
-              <p class="text-sm text-gray-500"><%= t(".items_count", count: template.checklist_items.count) %></p>
+              <p class="text-sm text-gray-500"><%= t(".items_count", count: template.items.count) %></p>
             </div>
             <%= button_to t(".duplicate"),
               duplicate_inspection_template_path(template),
@@ -35,7 +35,7 @@
           <div class="flex justify-between items-start gap-4">
             <div class="min-w-0">
               <h3 class="font-medium"><%= link_to template.name, inspection_template_path(template) %></h3>
-              <p class="text-sm text-gray-500"><%= t(".items_count", count: template.checklist_items.count) %></p>
+              <p class="text-sm text-gray-500"><%= t(".items_count", count: template.items.count) %></p>
             </div>
             <div class="flex gap-2 shrink-0">
               <%= link_to t(".edit"), edit_inspection_template_path(template),

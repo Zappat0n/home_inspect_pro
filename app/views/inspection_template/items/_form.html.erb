@@ -1,8 +1,8 @@
-<% form_frame_id = item.persisted? ? "#{dom_id(item)}_form" : "new_checklist_item_#{item.category.to_s.parameterize.presence || "new"}" %>
+<% form_frame_id = item.persisted? ? "#{dom_id(item)}_form" : "new_checklist_item_#{item.inspection_template_category.name.to_s.parameterize}" %>
 <%= turbo_frame_tag form_frame_id do %>
   <%= form_with(
+        url: item.persisted? ? inspection_template_item_path(template, item) : inspection_template_items_path(template),
         model: item,
-        url: item.persisted? ? inspection_template_checklist_item_path(template, item) : inspection_template_checklist_items_path(template),
         class: "space-y-3",
         data: { testid: "checklist-item-form" },
       ) do |form| %>
@@ -21,16 +21,12 @@
             class: "w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
     </div>
 
-    <div>
-      <%= form.label :category, t("checklist_items.form.category"), class: "block text-sm font-medium text-gray-700 mb-1" %>
-      <%= form.text_field :category,
-            class: "w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
-    </div>
+    <%= form.hidden_field :inspection_template_category_id %>
 
     <div>
       <%= form.label :severity, t("checklist_items.form.severity"), class: "block text-sm font-medium text-gray-700 mb-1" %>
       <%= form.select :severity,
-            ChecklistItem.severities.keys.map { |s| [t("checklist_items.severity.#{s}"), s] },
+            InspectionTemplate::Item.severities.keys.map { |s| [t("checklist_items.severity.#{s}"), s] },
             {},
             class: "w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
     </div>

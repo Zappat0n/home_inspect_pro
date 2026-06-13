@@ -20,12 +20,13 @@
 #
 # Foreign Keys
 #
-#  fk_rails_...  (checklist_item_id => checklist_items.id)
+#  fk_rails_...  (checklist_item_id => inspection_template_items.id)
 #  fk_rails_...  (inspection_id => inspections.id)
 #
 class InspectionPhoto < ApplicationRecord
   belongs_to :inspection
-  belongs_to :checklist_item
+  belongs_to :checklist_item,
+             class_name: "InspectionTemplate::Item"
   has_one_attached :photo
 
   validates :position,

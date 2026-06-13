@@ -85,16 +85,20 @@ class InspectionTemplatesController < ApplicationController
     end
 
     if template.update(template_params)
-      redirect_to(
-        inspection_template_path(template),
-        notice: t("inspection_templates.update.success"),
-      )
+      respond_to do |format|
+        format.turbo_stream { render(:update, locals: { template: template }) }
+        format.html do
+          redirect_to(
+            inspection_template_path(template),
+            notice: t("inspection_templates.update.success"),
+          )
+        end
+      end
     else
-      render(
-        :edit,
-        locals: { template: template },
-        status: :unprocessable_content,
-      )
+      respond_to do |format|
+        format.turbo_stream { render(:update, locals: { template: template }) }
+        format.html { render(:edit, locals: { template: template }, status: :unprocessable_content) }
+      end
     end
   end
 

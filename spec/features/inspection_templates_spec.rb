@@ -100,7 +100,7 @@ RSpec.describe "InspectionTemplates", type: :feature do
   end
 
   describe "editing a custom template" do
-    it "updates the template name" do
+    it "updates the template name", :js do
       country = create(:country, code: "US")
       user = create(:user, country: country)
       template = create(:inspection_template, :custom, name: "My Template", user: user, country: country)
@@ -120,10 +120,8 @@ RSpec.describe "InspectionTemplates", type: :feature do
       edit_page.submit
 
       template.reload
-      show_page = InspectionTemplates::ShowPage.new
-      expect(show_page).to have_heading(template)
-      expect(show_page).to have_update_success_message
       expect(template.name).to eq("Updated Template")
+      expect(edit_page).to have_updated_name("Updated Template")
     end
   end
 

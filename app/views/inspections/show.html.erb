@@ -113,10 +113,10 @@
   <% end %>
 
   <div class="space-y-8">
-    <% inspection_items.group_by { |item| item.checklist_item.category }.each do |category, items| %>
+    <% inspection_items.group_by { |item| item.checklist_item.inspection_template_category.name }.each do |category_name, items| %>
       <div>
         <h2 class="text-xl font-semibold text-gray-900 mb-4 px-2">
-          <%= category %>
+          <%= category_name %>
         </h2>
 
         <div class="card divide-y divide-gray-200 overflow-hidden">

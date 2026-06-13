@@ -27,7 +27,14 @@
 class InspectionTemplate < ApplicationRecord
   belongs_to :country
   belongs_to :user, optional: true
-  has_many :checklist_items, -> { ordered }, dependent: :destroy
+  has_many :items,
+           -> { ordered },
+           class_name: "InspectionTemplate::Item",
+           dependent: :destroy
+  has_many :categories,
+           -> { ordered },
+           class_name: "InspectionTemplate::Category",
+           dependent: :destroy
   has_many :inspections, dependent: :destroy
 
   validates :name, presence: true

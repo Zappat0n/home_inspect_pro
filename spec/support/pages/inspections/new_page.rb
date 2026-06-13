@@ -40,7 +40,7 @@ class Inspections::NewPage
 
   def has_template_card?(template)
     has_content?(template.name) &&
-      has_content?(I18n.t("inspections.form.template_item_count", count: template.checklist_items.count))
+      has_content?(I18n.t("inspections.form.template_item_count", count: template.items.count))
   end
 
   def has_custom_badge?
