@@ -17,11 +17,11 @@ class InspectionTemplates::IndexPage
   end
 
   def has_template_card?(name)
-    has_css?("h3", text: /\A#{Regexp.escape(name)}\z/)
+    has_css?("[data-testid='template-name']", text: /\A#{Regexp.escape(name)}\z/)
   end
 
   def has_no_template_card?(name)
-    has_no_css?("h3", text: /\A#{Regexp.escape(name)}\z/)
+    has_no_css?("[data-testid='template-name']", text: /\A#{Regexp.escape(name)}\z/)
   end
 
   def duplicate_template(name)
@@ -69,6 +69,6 @@ class InspectionTemplates::IndexPage
   private
 
   def template_card(name)
-    find("h3", text: name).find(:xpath, "./ancestor::div[contains(@class, 'rounded-lg')]")
+    find("[data-testid='template-card']", text: name)
   end
 end

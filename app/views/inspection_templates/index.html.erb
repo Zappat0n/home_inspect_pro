@@ -7,10 +7,10 @@
     <h2 class="text-lg font-semibold text-gray-500 mb-4"><%= t(".system_templates") %></h2>
     <div class="grid gap-4 md:grid-cols-2">
       <% system_templates.each do |template| %>
-        <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+        <div class="border rounded-lg p-4 hover:shadow-md transition-shadow" data-testid="template-card">
           <div class="flex justify-between items-start gap-4">
             <div class="min-w-0">
-              <h3 class="font-medium"><%= template.name %></h3>
+              <h3 class="font-medium" data-testid="template-name"><%= template.name %></h3>
               <p class="text-sm text-gray-500"><%= t(".items_count", count: template.items.count) %></p>
             </div>
             <% if limit_reached %>
@@ -48,10 +48,10 @@
     </p>
     <div class="grid gap-4 md:grid-cols-2">
       <% custom_templates.each do |template| %>
-        <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+        <div class="border rounded-lg p-4 hover:shadow-md transition-shadow" data-testid="template-card">
           <div class="flex justify-between items-start gap-4">
             <div class="min-w-0">
-              <h3 class="font-medium"><%= link_to template.name, inspection_template_path(template) %></h3>
+              <h3 class="font-medium" data-testid="template-name"><%= link_to template.name, inspection_template_path(template) %></h3>
               <p class="text-sm text-gray-500"><%= t(".items_count", count: template.items.count) %></p>
             </div>
             <div class="flex gap-2 shrink-0">

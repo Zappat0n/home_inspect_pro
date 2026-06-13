@@ -27,8 +27,11 @@ class InspectionTemplates::EditPage
 
   def add_item(category, name:, description: "", severity: "info")
     within(category_section(category)) do
-      page.execute_script("arguments[0].setAttribute('open', '')", find("details", visible: :all))
-      within("details") do
+      page.execute_script(
+        "arguments[0].setAttribute('open', '')",
+        find("[data-testid='add-item-details']", visible: :all),
+      )
+      within("[data-testid='add-item-details']") do
         fill_in "Name", with: name
         fill_in "Description", with: description
         select I18n.t("checklist_items.severity.#{severity}"), from: "Severity"
@@ -41,7 +44,7 @@ class InspectionTemplates::EditPage
     within("##{dom_id(item)}") do
       page.execute_script(
         "arguments[0].classList.remove('hidden')",
-        find("[data-inline-edit-target='form']", visible: :all),
+        find("[data-testid='inline-edit-form']", visible: :all),
       )
       fill_in "Name", with: new_name
       click_on I18n.t("checklist_items.form.submit")
@@ -88,16 +91,16 @@ class InspectionTemplates::EditPage
   end
 
   def has_inline_form_visible?(item)
-    has_css?("##{dom_id(item)} [data-inline-edit-target='form']:not(.hidden)", visible: :visible)
+    has_css?("##{dom_id(item)} [data-testid='inline-edit-form']", visible: :visible)
   end
 
   def has_inline_form_hidden?(item)
-    has_no_css?("##{dom_id(item)} [data-inline-edit-target='form']:not(.hidden)", visible: :visible)
+    has_no_css?("##{dom_id(item)} [data-testid='inline-edit-form']", visible: :visible)
   end
 
   def open_add_item_form(category_name)
     within(category_section(category_name)) do
-      find("summary", text: I18n.t("inspection_templates.edit.add_item")).click
+      find("[data-testid='add-item-summary']", text: I18n.t("inspection_templates.edit.add_item")).click
     end
   end
 
@@ -108,44 +111,54 @@ class InspectionTemplates::EditPage
   end
 
   def has_add_item_form_open?(category_name)
-    has_css?("details[id='add_item_details_#{category_name.parameterize}'][open]", visible: :all)
+    has_css?(
+      "[data-testid='add-item-details'][data-category-name='#{category_name.parameterize}'][open]",
+      visible: :all,
+    )
   end
 
   def has_add_item_form_closed?(category_name)
-    has_no_css?("details[id='add_item_details_#{category_name.parameterize}'][open]", visible: :all)
+    has_no_css?(
+      "[data-testid='add-item-details'][data-category-name='#{category_name.parameterize}'][open]",
+      visible: :all,
+    )
   end
 
   def open_new_group_form
-    find("#new_group_form summary", visible: :all).click
+    find("[data-testid='new-group-summary']", visible: :all).click
   end
 
   def fill_new_group_name(name)
-    within("#new_group_form") do
+    within("[data-testid='new-group-form']") do
       fill_in I18n.t("checklist_items.form.category"), with: name
     end
   end
 
   def create_group
-    within("#new_group_form") do
+    within("[data-testid='new-group-form']") do
       click_on I18n.t("inspection_templates.edit.create_group")
     end
   end
 
   def has_category?(category_name)
-    has_css?("h3[data-category-handle]", text: /\A#{Regexp.escape(category_name)}\z/)
+    has_css?("[data-testid='category-heading']", text: /\A#{Regexp.escape(category_name)}\z/)
   end
 
   def has_no_category?(category_name)
-    has_no_css?("h3[data-category-handle]", text: /\A#{Regexp.escape(category_name)}\z/)
+    has_no_css?("[data-testid='category-heading']", text: /\A#{Regexp.escape(category_name)}\z/)
   end
 
   def has_categories_in_order?(names)
-    category_names = all("h3[data-category-handle]", visible: :all, wait: Capybara.default_max_wait_time).map(&:text)
+    category_names = all(
+      "[data-testid='category-heading']",
+      visible: :all,
+      wait: Capybara.default_max_wait_time,
+    ).map(&:text)
     category_names == names
   end
 
   def has_new_group_form_closed?
-    has_no_css?("#new_group_form[open]", visible: :all)
+    has_no_css?("[data-testid='new-group-form'][open]", visible: :all)
   end
 
   def reorder_categories(template, new_order)
@@ -162,12 +175,15 @@ class InspectionTemplates::EditPage
   end
 
   def has_item_form_error?
-    has_css?(".field_with_errors")
+    has_css?("[data-testid='item-form-errors']")
   end
 
   private
 
   def category_section(category)
-    find("h3", text: /\A#{Regexp.escape(category)}\z/).ancestor("div.mb-6")
+    find(
+      "[data-testid='category-heading']",
+      text: /\A#{Regexp.escape(category)}\z/,
+    ).ancestor("[data-testid='category-section']")
   end
 end

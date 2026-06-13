@@ -123,6 +123,19 @@ RSpec.describe InspectionTemplatesController, type: :controller do
       expect(response).to redirect_to(inspection_templates_path)
       expect(flash[:alert]).to eq(I18n.t("inspection_templates.not_authorized"))
     end
+
+    it "redirects with alert for another user's custom template" do
+      country = create(:country)
+      user_a = create(:user, country: country)
+      user_b = create(:user, country: country)
+      template = create(:inspection_template, :custom, user: user_b, country: country)
+      sign_in(user_a)
+
+      get :edit, params: { id: template.id }
+
+      expect(response).to redirect_to(inspection_templates_path)
+      expect(flash[:alert]).to eq(I18n.t("inspection_templates.not_authorized"))
+    end
   end
 
   describe "PATCH #update" do
@@ -160,6 +173,21 @@ RSpec.describe InspectionTemplatesController, type: :controller do
 
       expect(response).to redirect_to(inspection_templates_path)
       expect(flash[:alert]).to eq(I18n.t("inspection_templates.not_authorized"))
+    end
+
+    it "redirects with alert for another user's custom template" do
+      country = create(:country)
+      user_a = create(:user, country: country)
+      user_b = create(:user, country: country)
+      template = create(:inspection_template, :custom, user: user_b, country: country, name: "User B Template")
+      sign_in(user_a)
+
+      patch :update, params: { id: template.id, inspection_template: { name: "Hacked" } }
+
+      expect(response).to redirect_to(inspection_templates_path)
+      expect(flash[:alert]).to eq(I18n.t("inspection_templates.not_authorized"))
+      template.reload
+      expect(template.name).to eq("User B Template")
     end
   end
 
@@ -202,6 +230,21 @@ RSpec.describe InspectionTemplatesController, type: :controller do
       sign_in(user)
 
       delete :destroy, params: { id: template.id }
+
+      expect(response).to redirect_to(inspection_templates_path)
+      expect(flash[:alert]).to eq(I18n.t("inspection_templates.not_authorized"))
+    end
+
+    it "redirects with alert for another user's custom template" do
+      country = create(:country)
+      user_a = create(:user, country: country)
+      user_b = create(:user, country: country)
+      template = create(:inspection_template, :custom, user: user_b, country: country)
+      sign_in(user_a)
+
+      expect do
+        delete :destroy, params: { id: template.id }
+      end.not_to change { InspectionTemplate.count }
 
       expect(response).to redirect_to(inspection_templates_path)
       expect(flash[:alert]).to eq(I18n.t("inspection_templates.not_authorized"))
