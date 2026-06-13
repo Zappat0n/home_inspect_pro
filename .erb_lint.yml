@@ -1,0 +1,7 @@
+---
+linters:
+  NoDataTestidHash:
+    enabled: true
+exclude:
+  - "**/vendor/**/*"
+  - "**/node_modules/**/*"

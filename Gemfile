@@ -43,6 +43,7 @@ group :development, :test do
   gem "capybara"
   gem "cuprite"
   gem "debug", platforms: %i[mri windows], require: "debug/prelude"
+  gem "erb_lint", require: false
   gem "factory_bot_rails"
   gem "i18n-tasks"
   gem "rspec-rails", "~> 8.0.0"

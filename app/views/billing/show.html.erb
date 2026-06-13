@@ -27,8 +27,7 @@
         data-controller="paddle-checkout"
         data-paddle-checkout-client-token-value="<%= paddle_client_token %>"
         data-paddle-checkout-environment-value="<%= paddle_environment %>"
-        data-paddle-checkout-customer-id-value="<%= customer_id %>"
-      >
+        data-paddle-checkout-customer-id-value="<%= customer_id %>">
       <div class="grid md:grid-cols-2 gap-8">
         <div class="card p-8 flex flex-col">
           <h2 class="text-2xl font-bold text-gray-900 mb-2"><%= t(".monthly") %></h2>
@@ -55,8 +54,7 @@
           <button
             data-action="click->paddle-checkout#openCheckout"
             data-paddle-checkout-price-id-param="<%= monthly_price_id %>"
-            class="btn btn-primary btn-lg mt-auto w-full"
-          >
+            class="btn btn-primary btn-lg mt-auto w-full">
             <%= t(".subscribe_monthly") %>
           </button>
         </div>
@@ -89,8 +87,7 @@
           <button
             data-action="click->paddle-checkout#openCheckout"
             data-paddle-checkout-price-id-param="<%= yearly_price_id %>"
-            class="btn btn-primary btn-lg mt-auto w-full"
-          >
+            class="btn btn-primary btn-lg mt-auto w-full">
             <%= t(".subscribe_yearly") %>
           </button>
         </div>

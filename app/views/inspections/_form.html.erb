@@ -45,7 +45,7 @@
                      class: "form-label" %>
       <%= form.text_field :property_address,
                           class: "form-input form-input-lg",
-                          data: { testid: "property_address_field" } %>
+                          'data-testid': "property_address_field" %>
     </div>
 
     <div>
@@ -54,7 +54,7 @@
                      class: "form-label" %>
       <%= form.text_field :client_name,
                           class: "form-input form-input-lg",
-                          data: { testid: "client_name_field" } %>
+                          'data-testid': "client_name_field" %>
     </div>
 
     <div>
@@ -63,7 +63,7 @@
                      class: "form-label" %>
       <%= form.email_field :client_email,
                            class: "form-input form-input-lg",
-                           data: { testid: "client_email_field" } %>
+                           'data-testid': "client_email_field" %>
     </div>
 
   </div>
@@ -71,10 +71,10 @@
   <div class="flex items-center gap-4">
     <%= form.submit t("inspections.new.submit"),
                     class: "btn btn-primary",
-                    data: { testid: "submit_button" } %>
+                    'data-testid': "submit_button" %>
     <%= link_to t("inspections.new.cancel"),
                 inspections_path,
                 class: "text-sm font-medium text-gray-600 hover:text-gray-800",
-                data: { testid: "cancel_link" } %>
+                'data-testid': "cancel_link" %>
   </div>
 <% end %>
