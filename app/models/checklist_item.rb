@@ -5,7 +5,7 @@
 #
 #  id                     :bigint           not null, primary key
 #  allows_photo           :boolean          default(FALSE), not null
-#  category               :string
+#  category               :string           default("General"), not null
 #  description            :text
 #  name                   :string
 #  position               :integer
@@ -29,6 +29,7 @@ class ChecklistItem < ApplicationRecord
   has_many :inspection_photos, dependent: :destroy
 
   validates :name, presence: true
+  validates :category, presence: true
   validates :position, presence: true, uniqueness: { scope: :inspection_template_id }
 
   enum :severity,
