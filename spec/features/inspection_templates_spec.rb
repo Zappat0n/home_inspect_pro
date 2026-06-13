@@ -143,4 +143,128 @@ RSpec.describe "InspectionTemplates", type: :feature do
       expect(index_page).to have_no_template_card("My Template")
     end
   end
+
+  describe "editing template items and categories" do
+    it "updates an item name via inline edit", :js do
+      country = create(:country, code: "US")
+      user = create(:user, country: country)
+      template = create(:inspection_template, :custom, name: "My Template", user: user, country: country)
+      category = create(:inspection_template_category, name: "Electrical", inspection_template: template, position: 1)
+      item = create(
+        :inspection_template_item,
+        name: "Check wiring",
+        inspection_template: template,
+        inspection_template_category: category,
+        position: 1,
+      )
+
+      sign_in user
+
+      edit_page = InspectionTemplates::EditPage.new
+      edit_page.visit_page(template)
+      expect(edit_page).to have_heading(template)
+
+      edit_page.click_edit_item(item)
+      edit_page.update_item_name(item, "Verify grounding")
+
+      expect(edit_page).to have_item("Verify grounding")
+      expect(edit_page).to have_inline_form_hidden(item)
+
+      item.reload
+      expect(item.name).to eq("Verify grounding")
+    end
+
+    it "cancels add item form", :js do
+      country = create(:country, code: "US")
+      user = create(:user, country: country)
+      template = create(:inspection_template, :custom, name: "My Template", user: user, country: country)
+      category = create(:inspection_template_category, name: "Electrical", inspection_template: template, position: 1)
+
+      sign_in user
+
+      edit_page = InspectionTemplates::EditPage.new
+      edit_page.visit_page(template)
+      expect(edit_page).to have_heading(template)
+
+      edit_page.open_add_item_form(category.name)
+      expect(edit_page).to have_add_item_form_open("Electrical")
+
+      edit_page.cancel_add_item(category.name)
+      expect(edit_page).to have_add_item_form_closed("Electrical")
+    end
+
+    it "reorders categories", :js do
+      country = create(:country, code: "US")
+      user = create(:user, country: country)
+      template = create(:inspection_template, :custom, name: "My Template", user: user, country: country)
+      cat1 = create(:inspection_template_category, name: "Electrical", inspection_template: template, position: 1)
+      cat2 = create(:inspection_template_category, name: "Plumbing", inspection_template: template, position: 2)
+
+      sign_in user
+
+      edit_page = InspectionTemplates::EditPage.new
+      edit_page.visit_page(template)
+      expect(edit_page).to have_heading(template)
+      expect(edit_page).to have_categories_in_order(%w[Electrical Plumbing])
+
+      edit_page.reorder_categories(template, [cat2.id, cat1.id])
+
+      expect(edit_page).to have_categories_in_order(%w[Plumbing Electrical])
+
+      cat1.reload
+      cat2.reload
+      expect(cat1.position).to be > cat2.position
+    end
+
+    it "creates a new category group", :js do
+      country = create(:country, code: "US")
+      user = create(:user, country: country)
+      template = create(:inspection_template, :custom, name: "My Template", user: user, country: country)
+
+      sign_in user
+
+      edit_page = InspectionTemplates::EditPage.new
+      edit_page.visit_page(template)
+      expect(edit_page).to have_heading(template)
+
+      edit_page.open_new_group_form
+      edit_page.fill_new_group_name("Roofing")
+      edit_page.create_group
+
+      expect(edit_page).to have_category("Roofing")
+      expect(edit_page).to have_new_group_form_closed
+
+      new_category = template.categories.find_by(name: "Roofing")
+      expect(new_category).to be_present
+    end
+
+    it "shows error when updating item with blank name", :js do
+      country = create(:country, code: "US")
+      user = create(:user, country: country)
+      template = create(:inspection_template, :custom, name: "My Template", user: user, country: country)
+      category = create(:inspection_template_category, name: "Electrical", inspection_template: template, position: 1)
+      item = create(
+        :inspection_template_item,
+        name: "Check wiring",
+        inspection_template: template,
+        inspection_template_category: category,
+        position: 1,
+      )
+
+      sign_in user
+
+      edit_page = InspectionTemplates::EditPage.new
+      edit_page.visit_page(template)
+      expect(edit_page).to have_heading(template)
+
+      edit_page.click_edit_item(item)
+      edit_page.update_item_name(item, "")
+
+      expect(edit_page).to have_inline_form_visible(item)
+      expect(edit_page).to have_item_form_error
+
+      item.reload
+      expect(item.name).to eq("Check wiring")
+    end
+  end
 end

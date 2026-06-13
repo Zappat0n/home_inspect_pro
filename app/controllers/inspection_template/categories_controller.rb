@@ -11,8 +11,8 @@ class InspectionTemplate::CategoriesController < ApplicationController
         format.turbo_stream do
           render(
             turbo_stream: [
-              turbo_stream.append(
-                "checklist_items",
+              turbo_stream.before(
+                "new_group_form",
                 partial: "inspection_template/items/category_section",
                 locals: { template: template, category: category, items: [] },
               ),
@@ -60,12 +60,7 @@ class InspectionTemplate::CategoriesController < ApplicationController
 
   def reorder
     categories_data = params.require(:categories)
-
-    InspectionTemplate::Category.transaction do
-      category_ids = categories_data.map { |cat| cat[:id] }
-      template.categories.where(id: category_ids).update_all("position = -position")
-      template.categories.upsert_all(categories_data)
-    end
+    ReorderPositionService.new(template.categories, categories_data).call
 
     respond_to do |format|
       format.turbo_stream do

@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "checklist_items", data: { controller: "item-reorder", item_reorder_reorder_url_value: reorder_inspection_template_items_path(template) } do %>
+<%= turbo_frame_tag "checklist_items", data: { controller: "item-reorder category-reorder", item_reorder_reorder_url_value: reorder_inspection_template_items_path(template), category_reorder_reorder_url_value: reorder_inspection_template_categories_path(template) } do %>
   <% template.categories.ordered.each do |category| %>
     <% items = category.items.ordered %>
     <%= render partial: "inspection_template/items/category_section", locals: { template: template, category: category, items: items } %>
