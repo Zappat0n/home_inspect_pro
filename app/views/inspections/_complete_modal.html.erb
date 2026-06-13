@@ -70,10 +70,8 @@
         <%= form.submit(
               t("inspections.complete.button"),
               class: "btn btn-success",
-              data: {
-                testid: "complete-inspection-button",
-                complete_modal_target: "submitButton",
-              },
+              "data-testid": "complete-inspection-button",
+              data: { complete_modal_target: "submitButton" },
             ) %>
       </div>
     <% end %>

@@ -89,10 +89,8 @@
               accept: "image/*",
               class: "hidden",
               "data-camera-bridge-target": "webInput",
-              data: {
-                action: "change->photo-upload#upload",
-                testid: "photo-upload-input",
-              } %>
+              "data-action": "change->photo-upload#upload",
+              "data-testid": "photo-upload-input" %>
           <% end %>
 
           <button type="button"
