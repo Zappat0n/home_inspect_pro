@@ -39,7 +39,7 @@ class InspectionTemplatesController < ApplicationController
 
     if tpl.save
       redirect_to(
-        inspection_template_path(tpl),
+        edit_inspection_template_path(tpl),
         notice: t("inspection_templates.create.success"),
       )
     else

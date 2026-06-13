@@ -2,7 +2,7 @@
 <%= form_with(model: template, url: inspection_template_path(template), method: :patch,
       data: { controller: "auto-submit", turbo_stream: true }) do |form| %>
   <% if template.errors.any? %>
-    <div class="bg-red-50 border border-red-200 rounded p-4 mb-6">
+    <div data-testid="template-form-errors" class="bg-red-50 border border-red-200 rounded p-4 mb-6">
       <h2 class="text-red-800 font-medium mb-2"><%= t("errors.messages.not_saved", count: template.errors.count, resource: template.model_name.human.downcase) %></h2>
       <ul class="list-disc list-inside text-sm text-red-700">
         <% template.errors.full_messages.each do |msg| %>

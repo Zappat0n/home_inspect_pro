@@ -32,7 +32,7 @@ es:
       success: Plantilla duplicada — ahora puedes personalizarla
     edit:
       add_item: Agregar Elemento
-      back: "← Volver a Plantilla"
+      back: "← Volver a Plantillas"
       create_group: Crear Grupo
       items_title: Elementos de la Lista
       new_group: Nuevo Grupo
@@ -42,6 +42,8 @@ es:
       delete: Eliminar
       duplicate: Personalizar
       edit: Editar
+      empty_state: Aún no has creado ninguna plantilla personalizada. Personaliza
+        una plantilla del sistema arriba para empezar.
       items_count:
         one: 1 elemento
         other: "%{count} elementos"

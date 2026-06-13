@@ -46,25 +46,31 @@
     <p class="text-sm text-gray-500 mb-4">
       <%= t(".limit_indicator", count: custom_templates.count, max: max_custom_templates) %>
     </p>
-    <div class="grid gap-4 md:grid-cols-2">
-      <% custom_templates.each do |template| %>
-        <div class="border rounded-lg p-4 hover:shadow-md transition-shadow" data-testid="template-card">
-          <div class="flex justify-between items-start gap-4">
-            <div class="min-w-0">
-              <h3 class="font-medium" data-testid="template-name"><%= link_to template.name, inspection_template_path(template) %></h3>
-              <p class="text-sm text-gray-500"><%= t(".items_count", count: template.items.count) %></p>
-            </div>
-            <div class="flex gap-2 shrink-0">
-              <%= link_to t(".edit"), edit_inspection_template_path(template),
-                class: "px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200" %>
-              <%= button_to t(".delete"), inspection_template_path(template),
-                method: :delete,
-                class: "px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200",
-                data: { turbo_confirm: t(".confirm_delete") } %>
+    <% if custom_templates.empty? %>
+      <p class="text-sm text-gray-400 italic" data-testid="empty-state">
+        <%= t(".empty_state") %>
+      </p>
+    <% else %>
+      <div class="grid gap-4 md:grid-cols-2">
+        <% custom_templates.each do |template| %>
+          <div class="border rounded-lg p-4 hover:shadow-md transition-shadow" data-testid="template-card">
+            <div class="flex justify-between items-start gap-4">
+              <div class="min-w-0">
+                <h3 class="font-medium" data-testid="template-name"><%= link_to template.name, inspection_template_path(template) %></h3>
+                <p class="text-sm text-gray-500"><%= t(".items_count", count: template.items.count) %></p>
+              </div>
+              <div class="flex gap-2 shrink-0">
+                <%= link_to t(".edit"), edit_inspection_template_path(template),
+                  class: "px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200" %>
+                <%= button_to t(".delete"), inspection_template_path(template),
+                  method: :delete,
+                  class: "px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200",
+                  data: { turbo_confirm: t(".confirm_delete") } %>
+              </div>
             </div>
           </div>
-        </div>
-      <% end %>
-    </div>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>

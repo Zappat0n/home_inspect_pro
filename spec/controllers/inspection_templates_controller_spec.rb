@@ -55,7 +55,7 @@ RSpec.describe InspectionTemplatesController, type: :controller do
       expect(template.user).to eq(user)
       expect(template.template_type).to eq("custom")
       expect(template.name).to eq("My Custom Template")
-      expect(response).to redirect_to(inspection_template_path(template))
+      expect(response).to redirect_to(edit_inspection_template_path(template))
     end
 
     it "re-renders new with unprocessable status when name is blank" do

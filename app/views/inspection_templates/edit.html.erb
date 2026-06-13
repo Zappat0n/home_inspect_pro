@@ -1,15 +1,14 @@
 <div class="max-w-4xl mx-auto px-4 py-8">
   <div class="mb-6">
-    <%= link_to t(".back"), inspection_template_path(template), class: "text-blue-600 hover:underline" %>
+    <%= link_to t(".back"), inspection_templates_path, class: "text-blue-600 hover:underline" %>
   </div>
 
-  <h1 class="text-2xl font-bold mb-8"><%= t(".title", name: template.name) %></h1>
+  <h1 data-testid="edit-template-heading" class="text-2xl font-bold mb-8"><%= t(".title", name: template.name) %></h1>
 
   <div id="template_name_form">
     <%= render partial: "name_form", locals: { template: template } %>
   </div>
 
-  <!-- Checklist Items -->
   <section>
     <h2 class="text-xl font-semibold mb-4"><%= t(".items_title") %></h2>
 

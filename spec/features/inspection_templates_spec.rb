@@ -73,9 +73,9 @@ RSpec.describe "InspectionTemplates", type: :feature do
       template = InspectionTemplate.custom_templates.find_by(name: "My Home Inspection")
       expect(template).to be_present
 
-      show_page = InspectionTemplates::ShowPage.new
-      expect(show_page).to have_heading(template)
-      expect(show_page).to have_success_message
+      edit_page = InspectionTemplates::EditPage.new
+      expect(edit_page).to have_heading(template)
+      expect(edit_page).to have_create_success_message
 
       index_page.visit_page
       expect(index_page).to have_my_templates_section
