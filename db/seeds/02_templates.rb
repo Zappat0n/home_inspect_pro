@@ -15,15 +15,18 @@ Rails.root.join("lib/templates").glob("*.yml").each do |template_file|
 
   position = 0
 
-  template_data["categories"].each do |category|
-    category["items"].each do |item|
+  template_data["categories"].each do |category_data|
+    category = InspectionTemplate::Category.find_or_create_by!(
+      inspection_template: template,
+      name: category_data["name"],
+    )
+
+    category_data["items"].each do |item|
       position += 1
 
-      ChecklistItem.find_or_create_by!(
+      category.items.find_or_create_by!(
         name: item["name"],
-        inspection_template: template,
       ) do |ci|
-        ci.category = category["name"]
         ci.severity = item["severity"]
         ci.position = position
         ci.allows_photo = item["allows_photo"]
@@ -31,7 +34,7 @@ Rails.root.join("lib/templates").glob("*.yml").each do |template_file|
     end
   end
 
-  puts "Seeded template: #{template.name} (#{template.checklist_items.size} items)"
+  puts "Seeded template: #{template.name} (#{template.items.size} items)"
 end
 
-puts "Total: #{InspectionTemplate.count} templates, #{ChecklistItem.count} items"
+puts "Total: #{InspectionTemplate.count} templates, #{InspectionTemplate::Item.count} items"

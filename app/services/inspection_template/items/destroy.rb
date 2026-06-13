@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ChecklistItems::Destroy
+class InspectionTemplate::Items::Destroy
   attr_reader :item, :position, :template
 
   def initialize(item)
@@ -22,13 +22,14 @@ class ChecklistItems::Destroy
 
   def shift_items_down
     ids = template
-      .checklist_items
+      .items
+      .where(inspection_template_category: item.inspection_template_category)
       .where("position > ?", position)
       .pluck(:id)
 
     return if ids.empty?
 
-    template.checklist_items.where(id: ids).update_all("position = -position")
-    template.checklist_items.where(id: ids).update_all("position = -position - 1")
+    template.items.where(id: ids).update_all("position = -position")
+    template.items.where(id: ids).update_all("position = -position - 1")
   end
 end

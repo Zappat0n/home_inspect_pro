@@ -19,7 +19,13 @@ Rails.application.routes.draw do
   resources :inspection_templates, only: %i[index show new create edit update destroy] do
     post :duplicate, on: :member
 
-    resources :checklist_items, only: %i[create update destroy] do
+    resources :categories, controller: "inspection_template/categories", only: %i[create destroy] do
+      collection do
+        patch :reorder
+      end
+    end
+
+    resources :items, controller: "inspection_template/items", only: %i[create update destroy] do
       collection do
         patch :reorder
       end

@@ -1,0 +1,19 @@
+<div class="mb-6">
+  <h3 class="text-lg font-medium border-b pb-2 mb-3"><%= category.name %></h3>
+
+  <div id="checklist_items_<%= category.name.parameterize %>">
+    <ul class="space-y-2">
+      <% items.each do |item| %>
+        <li draggable="true"
+            data-item-reorder-target="item"
+            data-item-reorder-id="<%= item.id %>"
+            data-item-reorder-position="<%= item.position %>"
+            data-action="dragstart->item-reorder#dragstart dragover->item-reorder#dragover drop->item-reorder#drop dragend->item-reorder#dragend">
+          <%= render partial: "inspection_template/items/item", locals: { item: item } %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <%= render partial: "inspection_template/items/add_item_details", locals: { template: template, category: category } %>
+</div>

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-class ChecklistItems::Create
+class InspectionTemplate::Items::Create
   attr_reader :item, :template, :category
 
   def initialize(item)
     @item = item
     @template = item.inspection_template
-    @category = item.category
+    @category = item.inspection_template_category
   end
 
   def call
@@ -24,20 +24,21 @@ class ChecklistItems::Create
 
   def shift_items_up
     ids = template
-      .checklist_items
+      .items
+      .where(inspection_template_category: category)
       .where("position >= ?", position)
       .pluck(:id)
 
     return if ids.empty?
 
-    template.checklist_items.where(id: ids).update_all("position = -position")
-    template.checklist_items.where(id: ids).update_all("position = -position + 1")
+    template.items.where(id: ids).update_all("position = -position")
+    template.items.where(id: ids).update_all("position = -position + 1")
   end
 
   def position
     @_position ||= template
-      .checklist_items
-      .where(category: category)
+      .items
+      .where(inspection_template_category: category)
       .maximum(:position)
       .to_i + 1
   end

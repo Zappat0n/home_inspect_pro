@@ -7,10 +7,11 @@ RSpec.describe "Inspection items", type: :feature do
     country = create(:country, code: "US", locale: "en")
     user = create(:user, country: country)
     inspection_template = create(:inspection_template, country: country, published: true)
+    category = create(:inspection_template_category, inspection_template: inspection_template, name: "Roof")
     checklist_item = create(
       :checklist_item,
       inspection_template: inspection_template,
-      category: "Roof",
+      inspection_template_category: category,
       name: "Shingles",
       description: "Check shingles condition",
       position: 1,
@@ -54,10 +55,11 @@ RSpec.describe "Inspection items", type: :feature do
     country = create(:country, code: "US", locale: "en")
     user = create(:user, country: country)
     inspection_template = create(:inspection_template, country: country, published: true)
+    category = create(:inspection_template_category, inspection_template: inspection_template, name: "Roof")
     checklist_item = create(
       :checklist_item,
       inspection_template: inspection_template,
-      category: "Roof",
+      inspection_template_category: category,
       name: "Shingles",
       description: "Check shingles condition",
       position: 1,

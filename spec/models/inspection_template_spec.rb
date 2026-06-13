@@ -16,20 +16,41 @@ RSpec.describe InspectionTemplate, type: :model do
       expect(inspection_template.user).to eq(user)
     end
 
-    it "has many checklist items ordered by position" do
+    it "has many items ordered by position" do
       inspection_template = create(:inspection_template)
-      item2 = create(:checklist_item, inspection_template: inspection_template, position: 2)
-      item1 = create(:checklist_item, inspection_template: inspection_template, position: 1)
-      item3 = create(:checklist_item, inspection_template: inspection_template, position: 3)
+      category = create(:inspection_template_category, inspection_template: inspection_template)
+      item2 = create(
+        :inspection_template_item,
+        inspection_template: inspection_template,
+        inspection_template_category: category,
+        position: 2,
+      )
+      item1 = create(
+        :inspection_template_item,
+        inspection_template: inspection_template,
+        inspection_template_category: category,
+        position: 1,
+      )
+      item3 = create(
+        :inspection_template_item,
+        inspection_template: inspection_template,
+        inspection_template_category: category,
+        position: 3,
+      )
 
-      expect(inspection_template.checklist_items).to eq([item1, item2, item3])
+      expect(inspection_template.items).to eq([item1, item2, item3])
     end
 
-    it "destroys associated checklist items on destroy" do
+    it "destroys associated items on destroy" do
       inspection_template = create(:inspection_template)
-      create(:checklist_item, inspection_template: inspection_template)
+      category = create(:inspection_template_category, inspection_template: inspection_template)
+      create(
+        :inspection_template_item,
+        inspection_template: inspection_template,
+        inspection_template_category: category,
+      )
 
-      expect { inspection_template.destroy! }.to change { ChecklistItem.count }.by(-1)
+      expect { inspection_template.destroy! }.to change { InspectionTemplate::Item.count }.by(-1)
     end
 
     it "destroys associated inspections on destroy" do

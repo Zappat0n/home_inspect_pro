@@ -11,11 +11,11 @@ es:
       allows_photo: Permite foto
       cancel: Cancelar
       category: Categoría
+      category_placeholder: p.ej. Techo, Eléctrico
       description: Descripción
       name: Nombre
       severity: Gravedad
       submit: Guardar Elemento
-    no_items: Aún no hay elementos en la lista
     severity:
       critical: Crítico
       info: Informativo
@@ -33,7 +33,9 @@ es:
     edit:
       add_item: Agregar Elemento
       back: "← Volver a Plantilla"
+      create_group: Crear Grupo
       items_title: Elementos de la Lista
+      new_group: Nuevo Grupo
       title: Editar %{name}
     index:
       confirm_delete: "¿Estás seguro?"

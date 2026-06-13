@@ -13,34 +13,6 @@
   <section>
     <h2 class="text-xl font-semibold mb-4"><%= t(".items_title") %></h2>
 
-    <%= turbo_frame_tag "checklist_items", data: { controller: "item-reorder", item_reorder_reorder_url_value: reorder_inspection_template_checklist_items_path(template) } do %>
-      <% grouped_items = template.checklist_items.ordered.group_by(&:category) %>
-
-      <% if grouped_items.any? %>
-        <% grouped_items.each do |category, items| %>
-          <div class="mb-6">
-            <h3 class="text-lg font-medium border-b pb-2 mb-3"><%= category %></h3>
-
-            <div id="checklist_items_<%= category.parameterize %>">
-              <ul class="space-y-2">
-                <% items.each do |item| %>
-                  <li draggable="true"
-                      data-item-reorder-target="item"
-                      data-item-reorder-id="<%= item.id %>"
-                      data-item-reorder-position="<%= item.position %>"
-                      data-action="dragstart->item-reorder#dragstart dragover->item-reorder#dragover drop->item-reorder#drop dragend->item-reorder#dragend">
-                    <%= render partial: "checklist_items/checklist_item", locals: { item: item, template: template } %>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
-
-            <%= render partial: "checklist_items/add_item_details", locals: { template: template, category: category } %>
-          </div>
-        <% end %>
-      <% else %>
-        <p class="text-gray-500"><%= t("checklist_items.no_items") %></p>
-      <% end %>
-    <% end %>
+    <%= render partial: "inspection_template/items/reorder", locals: { template: template } %>
   </section>
 </div>

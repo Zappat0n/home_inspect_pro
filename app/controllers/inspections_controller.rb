@@ -14,7 +14,7 @@ class InspectionsController < ApplicationController
 
   def show
     inspection = current_user.inspections.find(params[:id])
-    inspection_items = inspection.inspection_items.joins(:checklist_item).order("checklist_items.position")
+    inspection_items = inspection.inspection_items.joins(:checklist_item).order("inspection_template_items.position")
 
     render(
       locals: {

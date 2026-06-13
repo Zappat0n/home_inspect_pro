@@ -8,18 +8,20 @@ RSpec.describe PdfReportService do
       country = create(:country, locale: "en")
       create(:report_template, country: country, locale: "en")
       template = create(:inspection_template, country: country, published: true)
+      roof_category = create(:inspection_template_category, inspection_template: template, name: "Roof")
+      electrical_category = create(:inspection_template_category, inspection_template: template, name: "Electrical")
       inspection = create(:inspection, inspection_template: template)
       roof_item = create(
         :checklist_item,
         inspection_template: template,
-        category: "Roof",
+        inspection_template_category: roof_category,
         name: "Shingles",
         position: 1,
       )
       electrical_item = create(
         :checklist_item,
         inspection_template: template,
-        category: "Electrical",
+        inspection_template_category: electrical_category,
         name: "Outlet",
         position: 2,
       )
@@ -72,11 +74,12 @@ RSpec.describe PdfReportService do
       create(:report_template, country: country, locale: "en")
       user = create(:user, country: country)
       template = create(:inspection_template, :custom, user: user, country: country, published: true)
+      roof_category = create(:inspection_template_category, inspection_template: template, name: "Roof")
       inspection = create(:inspection, inspection_template: template)
       item = create(
         :checklist_item,
         inspection_template: template,
-        category: "Roof",
+        inspection_template_category: roof_category,
         name: "Shingles",
         position: 1,
       )

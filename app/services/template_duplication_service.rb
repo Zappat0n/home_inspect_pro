@@ -25,11 +25,13 @@ class TemplateDuplicationService
   attr_reader :source_template, :user
 
   def duplicate_checklist_items(new_template)
-    source_template.checklist_items.each do |item|
-      new_template.checklist_items.create!(
+    source_template.items.includes(:inspection_template_category).find_each do |item|
+      category = new_template.categories.find_or_create_by!(name: item.inspection_template_category.name)
+
+      category.items.create!(
+        inspection_template: new_template,
         name: item.name,
         description: item.description,
-        category: item.category,
         severity: item.severity,
         position: item.position,
         allows_photo: item.allows_photo,

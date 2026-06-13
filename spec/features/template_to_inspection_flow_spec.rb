@@ -12,10 +12,11 @@ RSpec.describe "Template to Inspection Flow", type: :feature do
       country: country,
       published: true,
     )
+    safety_category = create(:inspection_template_category, inspection_template: system_template, name: "Safety")
     create(
       :checklist_item,
       inspection_template: system_template,
-      category: "Safety",
+      inspection_template_category: safety_category,
       name: "Check wiring",
       position: 1,
     )

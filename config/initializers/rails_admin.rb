@@ -52,6 +52,14 @@ RailsAdmin.config do |config|
     field :updated_at
   end
 
+  config.model("InspectionTemplate::Item") do
+    label_plural "Checklist items"
+  end
+
+  config.model("InspectionTemplate::Category") do
+    visible false
+  end
+
   config.actions do
     dashboard                     # mandatory
     index                         # mandatory

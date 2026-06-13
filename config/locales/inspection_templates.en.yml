@@ -11,11 +11,11 @@ en:
       allows_photo: Allows photo
       cancel: Cancel
       category: Category
+      category_placeholder: e.g. Roofing, Electrical
       description: Description
       name: Name
       severity: Severity
       submit: Save Item
-    no_items: No checklist items yet
     severity:
       critical: Critical
       info: Info
@@ -33,7 +33,9 @@ en:
     edit:
       add_item: Add Item
       back: "← Back to Template"
+      create_group: Create Group
       items_title: Checklist Items
+      new_group: New Group
       title: Edit %{name}
     index:
       confirm_delete: Are you sure?

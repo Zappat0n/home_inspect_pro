@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
-class ChecklistItemsController < ApplicationController
+class InspectionTemplate::ItemsController < ApplicationController
   before_action :require_subscription
 
   def create
-    item = template.checklist_items.new(item_params)
+    item = template.items.new(item_params)
 
-    if ChecklistItems::Create.new(item).call
+    if InspectionTemplate::Items::Create.new(item).call
       respond_to do |format|
         format.turbo_stream do
           render(
             turbo_stream: turbo_stream.replace(
               "checklist_items",
-              partial: "checklist_items/reorder",
+              partial: "inspection_template/items/reorder",
               locals: { template: template },
             ),
           )
@@ -23,8 +23,8 @@ class ChecklistItemsController < ApplicationController
         format.turbo_stream do
           render(
             turbo_stream: turbo_stream.replace(
-              "new_checklist_item_#{item.category.to_s.parameterize}",
-              partial: "checklist_items/checklist_item_form",
+              "new_checklist_item_#{item.inspection_template_category.name.to_s.parameterize}",
+              partial: "inspection_template/items/form",
               locals: { item: item, template: template, inline: false },
             ),
             status: :unprocessable_content,
@@ -35,7 +35,7 @@ class ChecklistItemsController < ApplicationController
   end
 
   def update
-    item = template.checklist_items.find(params[:id])
+    item = template.items.find(params[:id])
 
     if item.update(item_params)
       respond_to do |format|
@@ -43,7 +43,7 @@ class ChecklistItemsController < ApplicationController
           render(
             turbo_stream: turbo_stream.replace(
               "checklist_item_#{item.id}",
-              partial: "checklist_items/checklist_item",
+              partial: "inspection_template/items/item",
               locals: { item: item },
             ),
           )
@@ -55,7 +55,7 @@ class ChecklistItemsController < ApplicationController
           render(
             turbo_stream: turbo_stream.replace(
               "checklist_item_form",
-              partial: "checklist_items/checklist_item_form",
+              partial: "inspection_template/items/form",
               locals: { item: item, template: template, inline: true },
             ),
             status: :unprocessable_content,
@@ -66,16 +66,16 @@ class ChecklistItemsController < ApplicationController
   end
 
   def destroy
-    item = template.checklist_items.find(params[:id])
+    item = template.items.find(params[:id])
 
-    ChecklistItems::Destroy.new(item).call
+    InspectionTemplate::Items::Destroy.new(item).call
 
     respond_to do |format|
       format.turbo_stream do
         render(
           turbo_stream: turbo_stream.replace(
             "checklist_items",
-            partial: "checklist_items/reorder",
+            partial: "inspection_template/items/reorder",
             locals: { template: template },
           ),
         )
@@ -86,10 +86,21 @@ class ChecklistItemsController < ApplicationController
   def reorder
     items_data = params.require(:items)
 
-    ChecklistItem.transaction do
+    InspectionTemplate::Item.transaction do
       item_ids = items_data.map { |item| item[:id] }
-      template.checklist_items.where(id: item_ids).update_all("position = -position")
-      template.checklist_items.upsert_all(items_data)
+      items = template.items.where(id: item_ids)
+      items.update_all("position = -position")
+
+      # Include category_id for NOT NULL constraint in upsert
+      item_categories = items.pluck(:id, :inspection_template_category_id).to_h
+      items_with_keys = items_data.map do |item_data|
+        {
+          id: item_data[:id],
+          position: item_data[:position],
+          inspection_template_category_id: item_categories[item_data[:id].to_i],
+        }
+      end
+      template.items.upsert_all(items_with_keys)
     end
 
     respond_to do |format|
@@ -97,7 +108,7 @@ class ChecklistItemsController < ApplicationController
         render(
           turbo_stream: turbo_stream.replace(
             "checklist_items",
-            partial: "checklist_items/reorder",
+            partial: "inspection_template/items/reorder",
             locals: { template: template },
           ),
         )
@@ -112,6 +123,14 @@ class ChecklistItemsController < ApplicationController
   end
 
   def item_params
-    params.expect(checklist_item: [:name, :description, :category, :severity, :position, :allows_photo])
+    params.expect(
+      inspection_template_item: [:name,
+                                 :description,
+                                 :inspection_template_category_id,
+                                 :severity,
+                                 :position,
+                                 :allows_photo,
+      ],
+    )
   end
 end

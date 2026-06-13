@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_13_012522) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_13_023210) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -51,20 +51,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_13_012522) do
     t.index ["email"], name: "index_admin_users_on_email", unique: true
   end
 
-  create_table "checklist_items", force: :cascade do |t|
-    t.boolean "allows_photo", default: false, null: false
-    t.string "category", default: "General", null: false
-    t.datetime "created_at", null: false
-    t.text "description"
-    t.bigint "inspection_template_id", null: false
-    t.string "name"
-    t.integer "position"
-    t.integer "severity"
-    t.datetime "updated_at", null: false
-    t.index ["inspection_template_id", "position"], name: "idx_checklist_items_on_template_and_position", unique: true
-    t.index ["inspection_template_id"], name: "index_checklist_items_on_inspection_template_id"
-  end
-
   create_table "countries", force: :cascade do |t|
     t.boolean "available"
     t.string "code"
@@ -96,6 +82,31 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_13_012522) do
     t.index ["checklist_item_id"], name: "index_inspection_photos_on_checklist_item_id"
     t.index ["inspection_id", "position"], name: "idx_inspection_photos_on_inspection_and_position", unique: true
     t.index ["inspection_id"], name: "index_inspection_photos_on_inspection_id"
+  end
+
+  create_table "inspection_template_categories", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "inspection_template_id", null: false
+    t.string "name", null: false
+    t.integer "position"
+    t.datetime "updated_at", null: false
+    t.index ["inspection_template_id", "name"], name: "idx_categories_on_template_and_name", unique: true
+    t.index ["inspection_template_id"], name: "index_inspection_template_categories_on_inspection_template_id"
+  end
+
+  create_table "inspection_template_items", force: :cascade do |t|
+    t.boolean "allows_photo", default: false, null: false
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.bigint "inspection_template_category_id", null: false
+    t.bigint "inspection_template_id", null: false
+    t.string "name"
+    t.integer "position"
+    t.integer "severity"
+    t.datetime "updated_at", null: false
+    t.index ["inspection_template_category_id", "position"], name: "idx_items_on_category_and_position", unique: true
+    t.index ["inspection_template_category_id"], name: "idx_on_inspection_template_category_id_d9aada3866"
+    t.index ["inspection_template_id"], name: "index_inspection_template_items_on_inspection_template_id"
   end
 
   create_table "inspection_templates", force: :cascade do |t|
@@ -258,11 +269,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_13_012522) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "checklist_items", "inspection_templates"
-  add_foreign_key "inspection_items", "checklist_items"
+  add_foreign_key "inspection_items", "inspection_template_items", column: "checklist_item_id"
   add_foreign_key "inspection_items", "inspections"
-  add_foreign_key "inspection_photos", "checklist_items"
+  add_foreign_key "inspection_photos", "inspection_template_items", column: "checklist_item_id"
   add_foreign_key "inspection_photos", "inspections"
+  add_foreign_key "inspection_template_categories", "inspection_templates"
+  add_foreign_key "inspection_template_items", "inspection_template_categories"
+  add_foreign_key "inspection_template_items", "inspection_templates"
   add_foreign_key "inspection_templates", "countries"
   add_foreign_key "inspection_templates", "users"
   add_foreign_key "inspections", "inspection_templates"
