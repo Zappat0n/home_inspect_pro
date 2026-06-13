@@ -144,6 +144,61 @@ RSpec.describe "InspectionTemplates", type: :feature do
     end
   end
 
+  describe "viewing template show page" do
+    it "displays categories with items, severity badges, and photo badges" do
+      country = create(:country, code: "US")
+      user = create(:user, country: country)
+      template = create(:inspection_template, :custom, name: "My Template", user: user, country: country)
+      category = create(:inspection_template_category, name: "Roof", inspection_template: template, position: 1)
+      create(
+        :inspection_template_item,
+        name: "Check shingles",
+        inspection_template: template,
+        inspection_template_category: category,
+        severity: :major,
+        allows_photo: true,
+        position: 1,
+      )
+      create(
+        :inspection_template_item,
+        name: "Check flashing",
+        inspection_template: template,
+        inspection_template_category: category,
+        severity: :info,
+        allows_photo: false,
+        position: 2,
+      )
+      sign_in user
+
+      show_page = InspectionTemplates::ShowPage.new
+      show_page.visit_page(template)
+
+      expect(show_page).to have_heading(template)
+      expect(show_page).to have_items_count(2)
+      expect(show_page).to have_category("Roof")
+      expect(show_page).to have_edit_link
+      expect(show_page).to have_item_in_category("Roof", "Check shingles")
+      expect(show_page).to have_item_in_category("Roof", "Check flashing")
+    end
+
+    it "does not show edit link for system or another user's custom template" do
+      country = create(:country, code: "US")
+      user_a = create(:user, country: country)
+      user_b = create(:user, country: country)
+      system_template = create(:inspection_template, name: "System Template", country: country, published: true)
+      other_template = create(:inspection_template, :custom, name: "User B Template", user: user_b, country: country)
+      sign_in user_a
+
+      show_page = InspectionTemplates::ShowPage.new
+
+      show_page.visit_page(system_template)
+      expect(show_page).to have_no_edit_link
+
+      show_page.visit_page(other_template)
+      expect(show_page).to have_no_edit_link
+    end
+  end
+
   describe "editing template items and categories" do
     it "updates an item name via inline edit", :js do
       country = create(:country, code: "US")

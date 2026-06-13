@@ -1,6 +1,6 @@
-<div class="mb-6" data-category-id="<%= category.id %>"
+<div class="mb-6" data-testid="category-section" data-category-id="<%= category.id %>"
      data-action="dragover->category-reorder#dragover drop->category-reorder#drop dragend->category-reorder#dragend">
-  <h3 class="text-lg font-medium border-b pb-2 mb-3 cursor-grab" draggable="true"
+  <h3 class="text-lg font-medium border-b pb-2 mb-3 cursor-grab" data-testid="category-heading" draggable="true"
       data-category-handle="<%= category.id %>"
       data-action="dragstart->category-reorder#dragstart"><%= category.name %></h3>
 
