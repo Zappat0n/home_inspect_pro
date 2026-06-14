@@ -7,19 +7,17 @@ es:
       client_name: Nombre del Cliente
       comment: Comentario
       date: Fecha de Inspección
+      defects_stats: "%{total} defectos en total, %{critical} críticos, %{major} graves"
       defects_summary: Resumen de Defectos
+      generated_at: Generado el
       generated_by: Generado por Home Inspect Pro
       inspector: Inspector
       item: Elemento
       logo_text: Home Inspect Pro
       property_address: Dirección de la Propiedad
-      severities:
-        critical: Crítico
-        info: Informativo
-        major: Grave
-        minor: Leve
-      severity: Gravedad
+      report_id: ID del Informe
       signature: Firma del Cliente
       signature_alt: Firma del cliente
+      table_of_contents: Tabla de Contenidos
       template: Estándar de Inspección
       title: Informe de Inspección

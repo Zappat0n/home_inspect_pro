@@ -25,6 +25,7 @@ Rails.root.join("lib/templates").glob("*.yml").each do |template_file|
       position += 1
 
       category.items.find_or_create_by!(
+        inspection_template: category.inspection_template,
         name: item["name"],
       ) do |ci|
         ci.severity = item["severity"]

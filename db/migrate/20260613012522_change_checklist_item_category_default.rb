@@ -1,7 +1,23 @@
 class ChangeChecklistItemCategoryDefault < ActiveRecord::Migration[8.1]
-  def change
-    ChecklistItem.where(category: [nil, ""]).update_all(category: "General")
-    change_column_null :checklist_items, :category, false
-    change_column_default :checklist_items, :category, from: nil, to: "General"
+  def up
+    execute(<<~SQL.squish)
+      UPDATE checklist_items
+      SET category = 'General'
+      WHERE category IS NULL OR category = ''
+    SQL
+
+    execute(<<~SQL.squish)
+      ALTER TABLE checklist_items
+        ALTER COLUMN category SET NOT NULL,
+        ALTER COLUMN category SET DEFAULT 'General'
+    SQL
+  end
+
+  def down
+    execute(<<~SQL.squish)
+      ALTER TABLE checklist_items
+        ALTER COLUMN category DROP NOT NULL,
+        ALTER COLUMN category DROP DEFAULT
+    SQL
   end
 end

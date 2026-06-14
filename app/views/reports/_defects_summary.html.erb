@@ -1,36 +1,44 @@
-<%# locals: (defects:) %>
-<% if defects.any? %>
-  <div>
+<%# locals: (defects_grouped:, defect_counts:) %>
+<% if defects_grouped.any? %>
+  <div class="page-break">
     <h2 class="defects-heading">
       <%= t("reports.show.defects_summary") %>
     </h2>
 
-    <table>
-      <thead>
-        <tr>
-          <th><%= t("reports.show.category") %></th>
-          <th><%= t("reports.show.item") %></th>
-          <th><%= t("reports.show.severity") %></th>
-          <th><%= t("reports.show.comment") %></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% defects.each do |inspection_item| %>
-          <% checklist_item = inspection_item.checklist_item %>
-          <tr>
-            <td class="defects-cell"><%= checklist_item.inspection_template_category.name %></td>
-            <td class="defects-cell--name"><%= checklist_item.name %></td>
-            <td class="defects-cell">
-              <span class="severity-badge severity-badge--<%= checklist_item.severity %>">
-                <%= t("reports.show.severities.#{checklist_item.severity}") %>
-              </span>
-            </td>
-            <td class="defects-cell--comment">
-              <%= inspection_item.comment.presence || "—" %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <p class="defects-stats">
+      <%= t("reports.show.defects_stats", total: defect_counts[:total], critical: defect_counts[:critical], major: defect_counts[:major]) %>
+    </p>
+
+    <% defects_grouped.each do |group| %>
+      <div class="severity-group">
+        <h3 class="severity-group-heading">
+          <span class="severity-badge severity-badge--<%= group[:severity] %>">
+            <%= t(group[:translation_key]) %>
+          </span>
+        </h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th><%= t("reports.show.category") %></th>
+              <th><%= t("reports.show.item") %></th>
+              <th><%= t("reports.show.comment") %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% group[:items].each do |inspection_item| %>
+              <% checklist_item = inspection_item.checklist_item %>
+              <tr>
+                <td class="defects-cell"><%= checklist_item.inspection_template_category.name %></td>
+                <td class="defects-cell--name"><%= checklist_item.name %></td>
+                <td class="defects-cell--comment">
+                  <%= inspection_item.comment.presence || "—" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
   </div>
 <% end %>
