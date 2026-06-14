@@ -4,8 +4,10 @@
 # Database name: primary
 #
 #  id                     :bigint           not null, primary key
+#  certification_number   :string
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
+#  license_number         :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
@@ -39,6 +41,7 @@ class User < ApplicationRecord
   before_create :set_trial
 
   belongs_to :country
+  has_one_attached :company_logo
   has_many :inspections, dependent: :destroy
   has_many :inspection_templates, dependent: :nullify
 

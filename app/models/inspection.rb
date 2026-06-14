@@ -9,8 +9,12 @@
 #  completed_at           :datetime
 #  pdf_url                :string
 #  property_address       :text
+#  property_size          :integer
 #  signature_data         :text
 #  status                 :integer
+#  utilities_status       :jsonb
+#  weather_conditions     :string
+#  year_built             :integer
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  inspection_template_id :bigint           not null
@@ -33,6 +37,7 @@ class Inspection < ApplicationRecord
   has_many :inspection_items, dependent: :destroy
   has_many :inspection_photos, dependent: :destroy
   has_one_attached :pdf
+  has_one_attached :property_cover_photo
 
   validates :property_address, presence: true
   validates :client_name, presence: true

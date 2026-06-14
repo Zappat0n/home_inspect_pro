@@ -64,4 +64,44 @@ RSpec.describe Inspection, type: :model do
       expect(inspection).to be_completed
     end
   end
+
+  describe "custom fields" do
+    it "allows setting weather_conditions" do
+      inspection = build_stubbed(:inspection, weather_conditions: "Sunny")
+
+      expect(inspection.weather_conditions).to eq("Sunny")
+    end
+
+    it "allows setting utilities_status" do
+      utilities = { "electricity" => "connected", "water" => "connected" }
+      inspection = build_stubbed(:inspection, utilities_status: utilities)
+
+      expect(inspection.utilities_status).to eq(utilities)
+    end
+
+    it "allows setting property_size" do
+      inspection = build_stubbed(:inspection, property_size: 1500)
+
+      expect(inspection.property_size).to eq(1500)
+    end
+
+    it "allows setting year_built" do
+      inspection = build_stubbed(:inspection, year_built: 1985)
+
+      expect(inspection.year_built).to eq(1985)
+    end
+
+    it "has one attached property_cover_photo" do
+      inspection = create(:inspection)
+
+      inspection.property_cover_photo.attach(
+        io: File.open(Rails.root.join("spec/fixtures/files/test.txt")),
+        filename: "cover.txt",
+        content_type: "text/plain",
+      )
+      inspection.save!
+
+      expect(inspection.property_cover_photo).to be_attached
+    end
+  end
 end

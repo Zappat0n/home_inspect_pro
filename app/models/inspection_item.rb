@@ -5,6 +5,7 @@
 #
 #  id                :bigint           not null, primary key
 #  comment           :text
+#  repair_priority   :integer
 #  status            :integer
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
@@ -33,6 +34,15 @@ class InspectionItem < ApplicationRecord
          defect: 1,
          na: 2,
        }
+
+  enum :repair_priority,
+       {
+         immediate: 0,
+         within_30_days: 1,
+         within_6_months: 2,
+         monitor: 3,
+       },
+       prefix: true
 
   validates :checklist_item_id,
             uniqueness: { scope: :inspection_id }

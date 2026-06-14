@@ -92,4 +92,12 @@ RSpec.describe InspectionPhoto, type: :model do
       end
     end
   end
+
+  describe "custom fields" do
+    it "allows setting caption" do
+      inspection_photo = build_stubbed(:inspection_photo, caption: "Front door")
+
+      expect(inspection_photo.caption).to eq("Front door")
+    end
+  end
 end
