@@ -1,12 +1,14 @@
-<%# locals: (inspection:, items_grouped:, defects:) %>
+<%# locals: (inspection:, items_grouped:, defects:, defects_grouped:, defect_counts:, categories:, report_url:, generated_at:) %>
 <div class="report-pdf">
   <%= render "reports/header", inspection: inspection %>
 
-  <%= render "reports/checklist", inspection: inspection, items_grouped: items_grouped %>
+  <%= render "reports/table_of_contents", categories: categories %>
 
-  <%= render "reports/defects_summary", defects: defects %>
+  <%= render "reports/defects_summary", defects_grouped: defects_grouped, defect_counts: defect_counts %>
+
+  <%= render "reports/checklist", inspection: inspection, items_grouped: items_grouped %>
 
   <%= render "reports/signature", inspection: inspection %>
 
-  <%= render "reports/footer" %>
+  <%= render "reports/footer", inspection: inspection, report_url: report_url, generated_at: generated_at %>
 </div>

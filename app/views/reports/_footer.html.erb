@@ -1,5 +1,17 @@
+<%# locals: (inspection:, report_url:, generated_at:) %>
 <div class="footer">
-  <p class="footer-text">
-    <%= t("reports.show.generated_by") %>
-  </p>
+  <div class="footer-qr">
+    <%= qr_code_svg(report_url, size: 80) %>
+  </div>
+  <div class="footer-info">
+    <p class="footer-text">
+      <%= t("reports.show.report_id") %>: <%= inspection.id %>
+    </p>
+    <p class="footer-text">
+      <%= t("reports.show.generated_at") %>: <%= l(generated_at, format: :long) %>
+    </p>
+    <p class="footer-text">
+      <%= t("reports.show.generated_by") %>
+    </p>
+  </div>
 </div>

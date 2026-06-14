@@ -1,0 +1,20 @@
+<%# locals: (categories:) %>
+<div class="table-of-contents">
+  <h2 class="toc-heading">
+    <%= t("reports.show.table_of_contents") %>
+  </h2>
+
+  <ul class="toc-list">
+    <% categories.each do |category| %>
+      <li class="toc-entry">
+        <a href="#category-<%= category[:name].parameterize %>" class="toc-entry-link">
+          <% if category[:has_defects] %>
+            <span class="toc-dot toc-dot--defects"></span>
+          <% end %>
+          <%= category[:name] %>
+        </a>
+        <span class="toc-page-number"></span>
+      </li>
+    <% end %>
+  </ul>
+</div>

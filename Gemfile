@@ -25,6 +25,8 @@ gem "geocoder"
 gem "lucide-rails"
 # PDF generation via Puppeteer [https://github.com/Studiosity/grover]
 gem "grover"
+# SVG QR-code generation for PDF reports [https://github.com/whomwah/rqrcode]
+gem "rqrcode", "~> 2.0"
 # Payment processing via Paddle (MoR) [https://github.com/pay-rails/pay]
 gem "paddle"
 gem "pay"
