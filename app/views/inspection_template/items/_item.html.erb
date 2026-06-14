@@ -39,8 +39,8 @@
             inspection_template_item_path(item.inspection_template, item),
             method: :delete,
             class: "px-2 py-1 text-xs bg-red-100 text-red-700 rounded hover:bg-red-200 cursor-pointer",
+            'data-testid': "item-delete-button",
             data: {
-              testid: "item-delete-button",
               turbo_confirm: t("checklist_items.delete.confirm"),
               turbo_stream: true,
             } %>

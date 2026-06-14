@@ -13,11 +13,11 @@
         <%= form.text_field :name,
               class: "border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
               placeholder: t("checklist_items.form.category_placeholder"),
-              data: { testid: "new-group-name-input" } %>
+              'data-testid': "new-group-name-input" %>
       </div>
       <%= form.submit t("inspection_templates.edit.create_group"),
             class: "px-3 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer",
-            data: { testid: "new-group-submit" } %>
+            'data-testid': "new-group-submit" %>
     <% end %>
   </div>
 </details>

@@ -25,7 +25,7 @@
       <%= form.text_area :description,
             rows: 2,
             class: "w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
-            data: { testid: "checklist-item-description-input" } %>
+            'data-testid': "checklist-item-description-input" %>
     </div>
 
     <%= form.hidden_field :inspection_template_category_id %>
@@ -36,7 +36,7 @@
             InspectionTemplate::Item.severities.keys.map { |s| [t("checklist_items.severity.#{s}"), s] },
             {},
             class: "w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
-            data: { testid: "checklist-item-severity-select" } %>
+            'data-testid': "checklist-item-severity-select" %>
     </div>
 
     <div class="flex items-center gap-2">
@@ -48,7 +48,7 @@
     <div class="flex gap-2">
       <%= form.submit t("checklist_items.form.submit"),
             class: "px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700",
-            data: { testid: "checklist-item-submit" } %>
+            'data-testid': "checklist-item-submit" %>
 
       <% if inline %>
         <button type="button"

@@ -156,12 +156,13 @@ class InspectionTemplates::EditPage
   end
 
   def has_categories_in_order?(names)
-    category_names = all(
-      "[data-testid='category-heading']",
-      visible: :all,
-      wait: Capybara.default_max_wait_time,
-    ).map(&:text)
-    category_names == names
+    page.document.synchronize do
+      category_names = all("[data-testid='category-heading']", visible: :all).map(&:text)
+      raise Capybara::ExpectationNotMet unless category_names == names
+    end
+    true
+  rescue Capybara::ExpectationNotMet
+    false
   end
 
   def has_new_group_form_closed?
