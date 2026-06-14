@@ -63,6 +63,31 @@ RSpec.describe User, type: :model do
 
       expect(user.stripe_customer_id).to eq("cus_123")
     end
+
+    it "allows setting license_number" do
+      user = build_stubbed(:user, license_number: "LIC123456")
+
+      expect(user.license_number).to eq("LIC123456")
+    end
+
+    it "allows setting certification_number" do
+      user = build_stubbed(:user, certification_number: "CERT123456")
+
+      expect(user.certification_number).to eq("CERT123456")
+    end
+
+    it "has one attached company_logo" do
+      user = create(:user)
+
+      user.company_logo.attach(
+        io: File.open(Rails.root.join("spec/fixtures/files/test.txt")),
+        filename: "logo.txt",
+        content_type: "text/plain",
+      )
+      user.save!
+
+      expect(user.company_logo).to be_attached
+    end
   end
 
   describe "subscription helpers" do

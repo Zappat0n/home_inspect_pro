@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_13_023210) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_14_033704) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -66,6 +66,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_13_023210) do
     t.text "comment"
     t.datetime "created_at", null: false
     t.bigint "inspection_id", null: false
+    t.integer "repair_priority"
     t.integer "status"
     t.datetime "updated_at", null: false
     t.index ["checklist_item_id"], name: "index_inspection_items_on_checklist_item_id"
@@ -74,6 +75,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_13_023210) do
   end
 
   create_table "inspection_photos", force: :cascade do |t|
+    t.string "caption"
     t.bigint "checklist_item_id", null: false
     t.datetime "created_at", null: false
     t.bigint "inspection_id", null: false
@@ -131,10 +133,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_13_023210) do
     t.bigint "inspection_template_id", null: false
     t.string "pdf_url"
     t.text "property_address"
+    t.integer "property_size"
     t.text "signature_data"
     t.integer "status"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.jsonb "utilities_status"
+    t.string "weather_conditions"
+    t.integer "year_built"
     t.index ["inspection_template_id"], name: "index_inspections_on_inspection_template_id"
     t.index ["status"], name: "index_inspections_on_status"
     t.index ["user_id"], name: "index_inspections_on_user_id"
@@ -252,10 +258,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_13_023210) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "certification_number"
     t.bigint "country_id", null: false
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.string "license_number"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"

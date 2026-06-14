@@ -98,6 +98,44 @@ RSpec.describe InspectionItem, type: :model do
     end
   end
 
+  describe "repair_priority enum" do
+    it "allows immediate priority" do
+      inspection_item = build_stubbed(:inspection_item, repair_priority: :immediate)
+
+      expect(inspection_item.repair_priority).to eq("immediate")
+    end
+
+    it "allows within_30_days priority" do
+      inspection_item = build_stubbed(:inspection_item, repair_priority: :within_30_days)
+
+      expect(inspection_item.repair_priority).to eq("within_30_days")
+    end
+
+    it "allows within_6_months priority" do
+      inspection_item = build_stubbed(:inspection_item, repair_priority: :within_6_months)
+
+      expect(inspection_item.repair_priority).to eq("within_6_months")
+    end
+
+    it "allows monitor priority" do
+      inspection_item = build_stubbed(:inspection_item, repair_priority: :monitor)
+
+      expect(inspection_item.repair_priority).to eq("monitor")
+    end
+
+    it "provides prefixed predicate methods" do
+      immediate = build_stubbed(:inspection_item, repair_priority: :immediate)
+      within_30 = build_stubbed(:inspection_item, repair_priority: :within_30_days)
+      within_6 = build_stubbed(:inspection_item, repair_priority: :within_6_months)
+      monitor = build_stubbed(:inspection_item, repair_priority: :monitor)
+
+      expect(immediate.repair_priority_immediate?).to be true
+      expect(within_30.repair_priority_within_30_days?).to be true
+      expect(within_6.repair_priority_within_6_months?).to be true
+      expect(monitor.repair_priority_monitor?).to be true
+    end
+  end
+
   describe "scopes" do
     describe ".with_defects" do
       it "returns inspection items with defect status" do
